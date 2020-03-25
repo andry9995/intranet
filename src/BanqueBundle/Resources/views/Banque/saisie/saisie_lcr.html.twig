@@ -1,0 +1,48 @@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="col-md-1 control-label">N° Relevé</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="relevelcr" value="">
+            </div>
+            <label class="col-md-2 control-label">Date Reglement</label>
+            <div class="col-md-2 no-padding">
+                <input type="text" class="input form-control verif-date" id="dateregl" value="">
+            </div>
+            <label class="col-md-2 control-label">Date Echéance</label>
+            <div class="col-md-2 no-padding">
+                <input type="text" class="input form-control" id="dateech" value="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="col-md-1 control-label">Nb lignes</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control" id="nombreligne" value="0">
+            </div>
+            <label class="col-md-2 control-label">Total releve</label>
+            <div class="col-md-2 no-padding">
+                <input type="text" class="input form-control verif-total" id="totallcr" value="0">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 pull-right">
+        <span id="js_form_lcrbanque_submit" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Valider</span>
+    </div>
+    {{ include('BanqueBundle:Banque/saisie:banque_saisie_a_saisir.html.twig') }}
+</div>
+
+
+<div class="row row-grid">
+    <div class="col-lg-12" style="margin-top: 10px;">
+        <table id="lcr-list"></table>
+    </div>
+</div>

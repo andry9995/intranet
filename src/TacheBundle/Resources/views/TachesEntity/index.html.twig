@@ -1,0 +1,32 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/tache/css/taches.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/footable/footable.all.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches_entity/taches-item.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches-date.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches_entity/taches-date.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches_entity/taches-entity.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches_entity/taches-libre-date.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches_entity/index.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} {{ entity == 0 ? 'Client' : 'Dossier' }}
+{% endblock %}
+
+{% block content %}
+    <input type="hidden" id="id_param_entity" value="{{ entity }}">
+    {{ include('@Tache/TachesEntity/filtre.html.twig') }}
+    <div id="id_table_tache_container"></div>
+    <div id="taches_entity_test"></div>
+{% endblock %}

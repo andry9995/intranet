@@ -1,0 +1,95 @@
+{# src/ParametreBundle/Resources/views/Parametre/Organisation/index.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        'css/plugins/diagram/diagram.css'
+        '@ParametreBundle/Resources/public/css/organisation.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        'js/plugins/diagram/diagram.js'
+        '@ParametreBundle/Resources/public/js/organisation.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} ORGANISATION
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="org" style="position:relative;">
+                <button class="btn btn-primary hidden" id="btn-create-diagram" style="position:absolute;right: 0;top:10px;z-index:10;">
+                    <i class="fa fa-plus-circle"></i> Créer
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    {#Modal New Diagram  #}
+    <div class="modal" id="diagram-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog animated fadeInRight">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="diagram-modal-title">Ajouter</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;">
+                    <form class="form-horizontal">
+                        <input type="hidden" id="diagram-id" name="diagram-id" value="0">
+                        <input type="hidden" id="poste-id-update" name="poste-id-update" value="0">
+                        {#<input type="hidden" id="diagram-parent-id" name="diagram-parent-id">#}
+                        <div class="form-group">
+                            <label for="diagram-parent" class="control-label col-sm-3">Parent</label>
+                            <div class="col-sm-9">
+                                <select name="diagram-parent" id="diagram-parent" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {#<label for="diagram-titre" class="control-label col-sm-3">Niveau</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="diagram-titre" class="form-control">
+                            </div>#}
+                            <label for="diagram-titre" class="control-label col-sm-3">Niveau</label>
+                            <div class="col-sm-9">
+                                <select name="diagram-titre" id="diagram-titre" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="diagram-nom" class="control-label col-sm-3">Nom</label>
+                            {#<div class="col-sm-9">
+                                <input type="text" id="diagram-nom" class="form-control">
+                            </div>
+                            #}
+                            <div class="col-sm-9">
+                                <select name="diagram-nom" id="diagram-nom" class="form-control"></select>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-diagram" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

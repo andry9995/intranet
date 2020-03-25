@@ -1,0 +1,15 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Client</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="client">
+                {% if clients|length > 1 %}
+                    <option value="0">Tous</option>
+                {% endif %}
+                {% for client in clients %}
+                    <option value="{{ client.id }}">{{ (client.nom != '') ? client.nom : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

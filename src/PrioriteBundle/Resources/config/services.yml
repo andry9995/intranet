@@ -1,0 +1,4 @@
+services:
+#    priorite.example:
+#        class: PrioriteBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

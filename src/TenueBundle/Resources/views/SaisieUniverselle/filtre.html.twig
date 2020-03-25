@@ -1,0 +1,207 @@
+
+<div class="col-lg-12">
+    <div class="col-md-2">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="groupe" class="col-md-3 control-label">
+                    <span>Groupe</span>
+                </label>
+                <div class="col-md-12">
+                    <select class="form-control" name="filtre-groupe" id="groupe">
+                        <option value="0">Tous</option>
+                        {% for responsable in responsables %}
+                            <option value="{{ responsable.operateur_id }}">{{ responsable.prenom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="client" class="col-md-3 control-label">Client</label>
+                <div class="col-md-12">
+                    <select id="client" class="form-control filtre-client">
+                        <option value=""></option>
+                        <option value="0">Tous</option>
+                        {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="site" class="col-md-3 control-label">Site</label>
+                <div class="col-md-12">
+                    <select id="site" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="dossier" class="col-md-2 control-label">Dossier</label>
+                <div class="col-md-12">
+                    <select id="dossier" data-placeholder="Séléctionner un dossier" class="form-control filtre-dossier">
+                    </select>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form class="form-horizontal">
+            <div class="form-group">
+                {{ render(controller('AppBundle:Commun:exercices', {tous: 0, attr_id: 'exercice', in_form: false, select_col:'12', label_col: '2', classes: 'filtre-exercice'})) }}
+            </div>
+        </form>
+    </div>
+    <div class="col-md-1">
+        <div class="row">
+            <label class="col-md-3 control-label" style="visibility: hidden;">
+                <span>Test</span>
+            </label>
+            <div class="col-md-offset-1 col-md-10">
+                <div class="btn-group" style="width: 150px;">
+                    <button id="btn-situation-image" class="btn btn-primary btn-block" style="width: 50%;"><i class="fa fa-check"></i> Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 pull-right">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="radio radio-inline">
+                    <input type="radio" name="show-filter-item" id="show-filter-item-tous"
+                           value="Tous">
+                    <label for="show-filter-item-tous">
+                        Tous
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="radio radio-warning radio-inline">
+                    <input type="radio" name="show-filter-item" id="show-filter-item-suspendu"
+                           value="Suspendu">
+                    <label for="show-filter-item-suspendu" class="text-suspendu-image">
+                        Suspendu
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="radio radio-success radio-inline">
+                    <input type="radio" name="show-filter-item" id="show-filter-item-actif"
+                           value="Actif" checked>
+                    <label for="show-filter-item-actif" class="text-actif">
+                        Actif
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="radio radio-danger radio-inline">
+                    <input type="radio" name="show-filter-item"
+                           id="show-filter-item-radie" value="Radié">
+                    <label for="show-filter-item-radie" class="text-radie">
+                        Radié
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="show-aucun-image-container" class="checkbox checkbox-inline">
+                    <input type="checkbox" id="show-aucun-image" class="styled" checked>
+                    <label for="show-aucun-image">
+                        Masquer aucun image
+                    </label>
+                </div>
+            </div>
+        </div>
+        {#<div class="row">#}
+            {#<div class="col-md-12">#}
+                {#<div id="show-tri-container" class="checkbox checkbox-inline">#}
+                    {#<input type="checkbox" id="show-tri" class="styled">#}
+                    {#<label for="show-tri">#}
+                        {#Trier#}
+                    {#</label>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    </div>
+</div>
+
+
+{#<div class="col-lg-12">#}
+    {#<div class="form-group">#}
+        {#<div class="row">#}
+            {#<div class="col-md-3"><label class="control-label">Client</label>#}
+                {#<label for="client"></label><select data-placeholder="Séléctionner un client" class="form-control filtre-client">#}
+                    {#<option value="-1"></option>#}
+                    {#{% for client in clients %}#}
+                        {#<option value="{{ client.id }}">{{ client.nom }}</option>#}
+                    {#{% endfor %}#}
+                {#</select>#}
+            {#</div>#}
+            {#<div class="col-md-3"><label for="dossier" class="control-label">Dossier</label>#}
+                {#<select data-placeholder="Séléctionner un dossier" class="form-control filtre-dossier" id="dossier">#}
+                    {#<option value=""></option>#}
+                {#</select>#}
+            {#</div>#}
+            {#<div class="col-md-2"><label for="exercice" class="control-label">Exercice</label>#}
+                {#<select class="form-control filtre-exercice" id="exercice">#}
+                    {#<option value=""></option>#}
+                {#</select>#}
+            {#</div>#}
+            {#<div class="col-md-2 col-md-offset-1"><label  for="status" class="control-label">Statut</label>#}
+                {#<select class="form-control filtre-statut">#}
+                {#</select>#}
+            {#</div>#}
+        {#</div>#}
+
+        {#<div class="row" style="margin-top: 7px;">#}
+
+            {#<div class="col-md-3"><label for="categorie" class="control-label">Catégorie</label>#}
+                {#<select class="form-control filtre-categorie">#}
+                    {#<option value="-1">TOUTES</option>#}
+                    {#{% for categorie in categories %}#}
+                        {#<option value="{{ categorie.id }}">{{ categorie.libelleNew }}</option>#}
+                    {#{% endfor %}#}
+                {#</select>#}
+            {#</div>#}
+            {#<div class="col-md-3"><label for="souscategorie" class="control-label">Sous catégorie</label>#}
+                {#<select class="form-control filtre-souscategorie"></select>#}
+            {#</div>#}
+            {#<div class="col-md-3"><label for="soussouscategorie" class="control-label">SS catégorie</label>#}
+                {#<select class="form-control filtre-soussouscategorie"></select>#}
+            {#</div>#}
+            {#<div class="col-md-2"><label for="date-scan" class="control-label">Date envoi</label>#}
+                {#<select class="form-control filtre-date-scan"></select>#}
+            {#</div>#}
+
+            {#<div class="col-md-1">#}
+                {#<label class="control-label"></label>#}
+                {#<button class="btn btn-sm btn-primary btn-block btn-go" ><i class="fa fa-check"></i> Go</button>#}
+            {#</div>#}
+        {#</div>#}
+
+        {#<div class="row" style="margin-bottom: 7px;">#}
+            {#<div class="col-md-3 col-md-offset-9">#}
+                {#<label class="control-label"></label>#}
+                {#<span class="btn btn-info btn-block" id="btn-import">#}
+                    {#<i class="fa fa-upload"></i>&nbsp;&nbsp;Importer#}
+                {#</span>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

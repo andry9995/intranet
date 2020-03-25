@@ -1,0 +1,15 @@
+{% if type == 0 %}
+<select>
+{% endif %}
+    <option value="-1"></option>
+    {% for pcc in pccs %}
+        {% if pcc.collectifTiers == -1 %}
+            <option value="0-{{ pcc.id }}">{{ pcc.compte }} - {{ pcc.intitule }}</option>
+        {% endif %}
+    {% endfor %}
+    {% for tier in tiers %}
+        <option value="1-{{ tier.id }}">{{ tier.compteStr }} - {{ tier.intitule }}</option>
+    {% endfor %}
+{% if type == 0 %}
+</select>
+{% endif %}

@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 192.168.0.21
+    database_port: 3306
+    database_name: dbboost
+    database_user: dbboost
+    database_password: Ricr1^42
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: eb9041e73bdeb238db2388a22575596114b306f0kfldl124587fdsfkdkfkf125478

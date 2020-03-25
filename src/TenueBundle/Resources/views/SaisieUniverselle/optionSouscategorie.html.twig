@@ -1,0 +1,4 @@
+<option value="-1">{{ (toutes is not defined) ? '' : (toutes == 1) ? 'TOUTES' : '' }}</option>
+{% for souscategorie in souscategories %}
+    <option value="{{ souscategorie.id }}" {{ (souscategories|length == 1) ? 'selected' : '' }}>{{ souscategorie.libelleNew }}</option>
+{% endfor %}

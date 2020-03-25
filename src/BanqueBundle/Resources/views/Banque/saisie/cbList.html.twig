@@ -1,0 +1,8 @@
+<option value="-1"></option>
+{% for cb in cbs %}
+    {% set typecb = -1 %}
+    {% if cb.typeCb is not null %}
+        {% set typecb = cb.typeCb %}
+    {% endif %}
+    <option value="{{ cb.id }}" data-banque-compte="{{ cb.banqueCompte.id }}" data-type="{{ typecb }}">{{ cb.numCb }}</option>
+{% endfor %}

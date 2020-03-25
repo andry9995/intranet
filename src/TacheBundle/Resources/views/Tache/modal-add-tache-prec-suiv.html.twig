@@ -1,0 +1,71 @@
+{# Modal pour ajouter ou modifier Tâche Suivante - Tâche Précédente #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-prev-suiv">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden>&times;</span></button>
+                <h4 id="modal-tache-prev-suiv-title" class="modal-title">Tâches Suivantes et Précédentes</h4>
+            </div>
+            <div class="modal-body">
+                <h3 id="tache-principale-nom" data-tache="" class="bg-primary padding-sm"></h3>
+                <div class="alert alert-danger hidden" id="tache-prev-suiv-erreur">
+
+                </div>
+                <div class="row">
+                    <div id="tache-prec-container" class="col-md-6 tache-prec-suiv-container">
+                        <h4 class="bg-danger padding-sm">
+                            <i class="fa fa-arrow-circle-o-left"></i> Tâches précédentes
+                        </h4>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="select-tache-prec">Ajouter</label>
+                                <select id="select-tache-prec" class="form-control" style="width: 305px;">
+                                    {#Liste des tâches#}
+                                </select>
+                            </div>
+                            <button id="btn-add-tache-prec" type="button" class="btn btn-sm btn-primary">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </form>
+                        <div style="min-height: 300px; max-height: 450px; overflow: auto; border-top: 2px solid #ccc; margin-top: 5px;">
+                            <ul id="tache-prec-item" class="sortable-list connectList agile-list">
+                                {#Liste taches précédentes#}
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="tache-suiv-container" class="col-md-6 tache-prec-suiv-container">
+                        <h4 class="bg-danger padding-sm">
+                            <i class="fa fa-arrow-circle-o-right"></i> Tâches suivantes
+                        </h4>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="select-tache-suiv">Ajouter</label>
+                                <select id="select-tache-suiv" class="form-control" style="width: 305px;">
+                                    {#Liste des tâches#}
+                                </select>
+                            </div>
+                            <button id="btn-add-tache-suiv" type="button" class="btn btn-sm btn-primary">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </form>
+                        <div style="min-height: 300px; max-height: 450px; overflow: auto; border-top: 2px solid #ccc; margin-top: 5px;">
+                            <ul id="tache-suiv-item" class="sortable-list connectList agile-list">
+                                {#Liste taches suivantes#}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" id="tache-prev-suiv-save">
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

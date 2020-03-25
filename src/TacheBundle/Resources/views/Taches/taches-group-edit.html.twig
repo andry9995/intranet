@@ -1,0 +1,22 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_taches_group_nom">Nom</label>
+        <div class="col-lg-10">
+            <input type="text" id="id_taches_group_nom" placeholder="Nom du groupe" value="{{ (tacheGroup is null) ? '' : tacheGroup.nom }}" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_taches_group_regime">Nom</label>
+        <div class="col-lg-10">
+            <select id="id_taches_group_regime" data-placeholder="Regimes fiscaux" class="chosen-select" multiple style="width:100%;" tabindex="4">
+                {% for regimeFiscal in regimefiscals %}
+                    <option value="{{ regimeFiscal.id }}" {{ (regimeFiscal.id in regimeFiscalIdsSelected) ? 'selected' : '' }}>{{ regimeFiscal.libelle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_edit_taches_group" data-action="1" data-id="{{ (tacheGroup is null) ? 0 : tacheGroup.id }}"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

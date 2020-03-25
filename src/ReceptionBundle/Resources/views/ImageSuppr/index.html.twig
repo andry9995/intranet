@@ -1,0 +1,19 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Image Suppr
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/reception/js/image-suppr.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row ibox-content">
+        {{ include('@Reception/ImageSuppr/filtre.html.twig') }}
+    </div>
+    <div class="row ibox-content">
+        <table id="image-list"></table>
+    </div>
+{% endblock %}

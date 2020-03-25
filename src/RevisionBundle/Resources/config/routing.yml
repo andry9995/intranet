@@ -1,0 +1,133 @@
+revision_dashboard:
+    path:     /
+    defaults: { _controller: 'RevisionBundle:Dashboard:index' }
+
+revision_dashboard_list:
+    path: /dashboard/liste/{client}/{dossier}/{exercice}
+    defaults: { _controller: 'RevisionBundle:Dashboard:liste' }
+    options:
+        expose: true
+    requirements:
+        client: \d+
+        dossier: \d*
+
+revision_agenda:
+    path:     /agenda
+    defaults: { _controller: 'RevisionBundle:Agenda:index' }
+
+revision_affectation:
+    path:     /affectation/{json}
+    defaults: { _controller: 'RevisionBundle:Revision:affectation', json: 0 }
+    requirements:
+        json: 0|1
+    options:
+        expose: true
+
+revision_panier:
+    path:     /panier
+    defaults: { _controller: 'RevisionBundle:Revision:affectation', json: 0 }
+    requirements:
+        json: 0|1
+    options:
+        expose: true
+revision_un:
+  path:     /un
+  defaults: { _controller: 'RevisionBundle:Un:index' }
+
+revision_un_rev:
+    path: /un/rev
+    defaults: { _controller: 'RevisionBundle:Un:rev' }
+    methods: [POST]
+    options:
+        expose: true
+
+revision_dashboard_lot:
+    path: /dashboard/lot
+    defaults: { _controller: 'RevisionBundle:Dashboard:lot' }
+    methods: [POST]
+    options:
+        expose: true        
+  
+revision_event_client:
+    path:   /event/client/{periode}
+    defaults: { _controller: 'RevisionBundle:Agenda:eventClient' }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      periode: \d{4}-\d{2}-\d{2}
+
+revision_event_by_date:
+    path:   /event/by-date/{periode}/{jqgrid}
+    defaults: { _controller: 'RevisionBundle:Agenda:eventByDate', jqgrid: 0 }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      periode: \d{4}-\d{2}-\d{2}
+      jqgrid: 0|1
+
+revision_event_update:
+    path: /event/update
+    defaults: { _controller: 'RevisionBundle:Agenda:updateEvent' }
+    methods: [POST]
+    options:
+      expose: true
+
+revision_event_date_update:
+    path: /event/date-update
+    defaults: { _controller: 'RevisionBundle:Agenda:reportEventByDrop' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+
+revision_liste_images_recues:
+    path:   /liste/image/{client}/{dossier}/{exercice}/{periode}/{perioddeb}/{periodfin}/{typedate}/{analyse}/{tab}/{filtre_nb}/{operateur_nb}/{value_nb}
+    defaults: { _controller: 'RevisionBundle:Image:listeImage', filtre_nb: '', operateur_nb: '', value_nb: '' }
+    methods: [GET]
+    options:
+        expose: true
+
+revision_reputation_images:
+    path:   /reputation/image/{client}/{exercice}
+    defaults: { _controller: 'RevisionBundle:Image:reputationImage' }
+    methods: [GET]
+    options:
+        expose: true
+
+revision_clients_by_responsable:
+    path:   /client/by-responsable/{responsable}
+    defaults: { _controller: 'RevisionBundle:Image:listClientsByResponsable' }
+    methods: [GET]
+    options:
+        expose: true
+
+revision_stocks_images:
+    path:   /stocks/image/{groupe}/{client}/{dossier}/{exercice}
+    defaults: { _controller: 'RevisionBundle:Image:stocksImages' }
+    methods: [GET]
+    options:
+        expose: true
+
+revision_dossier:
+    path: /filtre-dossier
+    defaults: { _controller: 'ReceptionBundle:Doublon:dossier' }
+    methods: [POST]
+    options:
+        expose: true
+
+details_export:
+    path: /details-export
+    defaults: { _controller: RevisionBundle:Image:exportDetails }
+    methods: [POST]
+    options:
+        expose: true
+
+revision_dossier_client:
+    path: /dossiers-client/{client}/{exercice}
+    defaults: { _controller: 'AppBundle:Commun:getDossiersActifByClient' }
+    methods: [GET]
+    options:
+      expose: true

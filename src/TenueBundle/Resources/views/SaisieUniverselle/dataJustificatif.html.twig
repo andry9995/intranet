@@ -1,0 +1,56 @@
+{% extends '@Tenue/SaisieUniverselle/dataFournisseur.html.twig' %}
+{% block codePostal %}
+    <label class="col-lg-2 control-label" for="codepostal">Code Postal</label>
+    <div class="col-lg-4">
+        <input class="form-control" type="text" id="codepostal" name="codepostal" value="{{ codePos }}">
+    </div>
+{% endblock %}
+
+{% block justificatif %}
+    <input type="hidden" id="justificatif">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="jfsousnature">Nature</label>
+            <div class="col-lg-4">
+                <select class="form-control" name="jfsousnature" id="jfsousnature">
+                    <option value="-1"></option>
+                    {% for sousnature in jfSounatures  %}
+                        <option value="{{ sousnature.id }}" {{ (jfSousnatureId == sousnature.id) ? 'selected' : '' }}>
+                            {{ sousnature.libelle }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <label class="col-lg-2 control-label" for="mention">Mention Manuscrite</label>
+            <div class="col-lg-4">
+                <select class="form-control" name="mention" id="mention">
+                    <option value="-1"></option>
+                    {% for mention in jfMentions%}
+                        <option value="{{ mention.id }}" {{ (mentionId == mention.id) ? 'selected' : '' }}>
+                            {{ mention.libelle }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="beneficiaire">Bénéficiaire</label>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <select class="form-control" id="beneficiaire" name="beneficiaire">
+                        <option value="-1"></option>
+                        {% for beneficiaire in beneficiaires %}
+                            {{ include('TenueBundle:SaisieUniverselle:optionBeneficiaire.html.twig' , {'beneficiaireId': beneficiaireId }) }}
+                        {% endfor %}
+                    </select>
+                    <span class="input-group-addon"><i class="fa fa-edit pointer" id="ben-edit"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-plus pointer" id="ben-add"></i></span>
+                </div>
+            </div>
+            <label class="col-lg-2 control-label" for="nbcouvert">Nb Couvert</label>
+            <div class="col-lg-4">
+                <input class="form-control" id="nbcouvert" name="nbcouvert" value="{{ nbCouvert }}">
+            </div>
+        </div>
+    </div>
+{% endblock %}

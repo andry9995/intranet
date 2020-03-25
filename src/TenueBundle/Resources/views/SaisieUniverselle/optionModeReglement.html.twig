@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for modeReglement in modeReglements %}
+        <option value="{{ modeReglement.id }}">{{ modeReglement.libelle }}</option>
+    {% endfor %}
+</select>

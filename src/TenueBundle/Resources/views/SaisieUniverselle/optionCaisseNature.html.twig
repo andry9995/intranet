@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for caisseNature in caisseNatures %}
+        <option value="{{ caisseNature.id }}">{{ caisseNature.libelle }}</option>
+    {% endfor %}
+</select>

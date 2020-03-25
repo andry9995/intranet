@@ -1,0 +1,32 @@
+{% if (postesChoisis|length) > 0 %}
+    <select id="select-poste-{{ processId }}" class="hidden" data-id="{{ processId }}">
+        {% for cle, value in postesChoisis %}
+            <option value="{{ value.id }}" data-parent="0"></option>
+        {% endfor %}
+    </select>
+    <div class="btn-group">
+        {% if (postesChoisis|length) > 1 %}
+            <button data-toggle="dropdown" class="btn btn-white btn-block dropdown-toggle" style="width:280px">
+                Plusieurs <span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu folder-list m-b-md" style="width:280px; height: 250px;margin:0px; padding:0px">
+                {% for cle, value in postesChoisis %}
+                    <li  style="padding:5px">{{ value.nom }} </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if (postesChoisis|length) > 0 %}
+                {% for cle, value in  postesChoisis %}
+                    <button class="btn btn-white btn-block dropdown-toggle" data-id="{{ value.id }}" data-parent="0" style="width:280px">
+                        {{ value.nom }}
+                    </button>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center"><em>Pas de poste ...</em></p>
+            {% endif %}
+        {% endif %}
+    </div>
+{% else %}
+    <p style="text-align: center"><em>Pas de poste ...</em></p>
+{% endif %}
+

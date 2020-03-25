@@ -1,0 +1,258 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Mon panier
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+    '@ReceptionBundle/Resources/public/js/reception-panier.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <div class="col-lg-12">
+                <h5 class="col-sm-2 text-danger">Mon panier au <span class="current-date">{{ "now"|format_date('dd MMMM') }}</span></h5>
+                <div class="pull-right">
+                    <span class="btn btn-xs btn-primary" id="btn_controle_decoupage"><i class="fa fa-scissors"></i> Contrôle découpage</span>
+                    {# <span class="btn btn-xs btn-primary" id="btn_controle_separation"><i class="fa fa-files-o"></i> Contrôle séparation</span> #}
+                    <span>
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle"><i class="fa fa-files-o"></i> Contrôle séparation</span> <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li id="btn_controle_separation"><a>Lancer contrôle séparation</a></li>
+                                {% if show_parametrage %}
+                                    <li id="btn_parametrage_separation"><a>Paramétrage</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </span>
+                    <span class="btn btn-xs btn-danger" id="btn_correction_separation"><i class="fa fa-files-o"></i> Correction séparation</span>
+
+                    <span class="ibox-tools" style="display: inline-block !important;">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content gray-bg p-b-none">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Stock panier découpage à
+                                <span class="label label-info pull-right current-hour">{{ current_date|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-lotN1" class="box-value">{{ lotN1|length }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-imageN1" class="box-value">{{ imageN1 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Stock panier séparation à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-lotN2" class="box-value">{{ lotN2|length }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-imageN2" class="box-value">{{ imageN2 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Traité(s) découpage à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {#<div id="fini-lotN1" class="box-value">{{ lot_finiN1|length }}</div>#}
+                                    <div id="fini-lotN1" class="box-value">{{ lot_fini1_today|length }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {#<div id="fini-imageN1" class="box-value">{{ image_finiN1 }}</div>#}
+                                    <div id="fini-imageN1" class="box-value">{{ image_fini1_today }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Traité(s) séparation à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {#<div id="fini-lotN2" class="box-value">{{ lot_finiN2|length }}</div>#}
+                                    <div id="fini-lotN2" class="box-value">{{ lot_fini2_today|length }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {#<div id="fini-imageN2" class="box-value">{{ image_finiN2 }}</div>#}
+                                    <div id="fini-imageN2" class="box-value">{{ image_fini2_today }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="bg-danger" style="padding: 5px">Traitement</h4>
+                <table class="table table-bordered table-panier" id="table-panier-reception">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Dossier</th>
+                        <th>Exercice</th>
+                        <th>Date scan</th>
+                        <th>Lot</th>
+                        <th>Nb Img</th>
+                        <th>Traitement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for panier in lotN1 %}
+                        <tr data-client="{{ panier.client }}" data-dossier="{{ panier.dossier }}" data-exercice="{{ panier.exercice }}"
+                            data-date-scan="{{ panier.datescan|date('Y-m-d')}}" data-lot="{{ panier.lot}}"
+                            data-nb-image="{{ panier.nbimage }}" data-lot-id="{{ panier.lot_id }}"
+                            data-user-id="{{ panier.operateur_id }}" data-traitement-id="{{ panier.etape_traitement_id }}"
+                            data-app="DEC_NIV_1">
+                            <td>{{ panier.client }}</td>
+                            <td>{{ panier.dossier }}</td>
+                            <td >{{ panier.exercice }}</td>
+                            <td >{{ panier.datescan|date('d-m-Y') }}</td>
+                            <td >{{ panier.lot }}</td>
+                            <td >{{ panier.nbimage }}</td>
+                            <td>
+                                Découpage <span class="pull-right"><i class="fa fa-desktop"></i></span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for panier in lotN2 %}
+                        <tr data-client="{{ panier.client }}" data-dossier="{{ panier.dossier }}" data-exercice="{{ panier.exercice }}"
+                            data-date-scan="{{ panier.datescan|date('Y-m-d')}}" data-lot="{{ panier.lot}}"
+                            data-nb-image="{{ panier.nbimage }}" data-lot-id="{{ panier.lot_id }}"
+                            data-user-id="{{ panier.operateur_id }}" data-traitement-id="{{ panier.etape_traitement_id }}"
+                            data-app="DEC_NIV_2">
+                            <td>{{ panier.client }}</td>
+                            <td>{{ panier.dossier }}</td>
+                            <td>{{ panier.exercice }}</td>
+                            <td>{{ panier.datescan|date('d-m-Y') }}</td>
+                            <td>{{ panier.lot }}</td>
+                            <td>{{ panier.nbimage }}</td>
+                            <td>
+                                Séparation <span class="pull-right"><i class="fa fa-object-ungroup"></i></span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="bg-primary" style="padding: 5px">Lot(s) déjà traité(s), depuis {{ date_depuis }} j'ai traité {{ (lot_finiN1 + lot_finiN2 )|length }} lot(s) avec {{ image_finiN1 + image_finiN2 }} image(s)</h4>
+                <table class="table table-bordered table-panier" id="table-fini-reception">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Dossier</th>
+                        <th class="text-center">Exercice</th>
+                        <th class="text-center">Date scan</th>
+                        <th class="text-center">Lot</th>
+                        <th class="text-center">Nb Img</th>
+                        <th class="text-center">Traitement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in lot_finiN1 %}
+                        <tr>
+                            <td>{{ item.client }}</td>
+                            <td>{{ item.dossier }}</td>
+                            <td class="text-center" class="text-center">{{ item.exercice }}</td>
+                            <td class="text-center" class="text-center">{{ item.datescan|date('d-m-Y') }}</td>
+                            <td class="text-center" class="text-center">{{ item.lot }}</td>
+                            <td class="text-center" class="text-center">{{ item.nbimage }}</td>
+                            <td class="text-center">Découpage</td>
+                        </tr>
+                    {% endfor %}
+                    {% for item in lot_finiN2 %}
+                        <tr>
+                            <td>{{ item.client }}</td>
+                            <td>{{ item.dossier }}</td>
+                            <td class="text-center" class="text-center">{{ item.exercice }}</td>
+                            <td class="text-center" class="text-center">{{ item.datescan|date('d-m-Y') }}</td>
+                            <td class="text-center" class="text-center">{{ item.lot }}</td>
+                            <td class="text-center" class="text-center">{{ item.nbimage }}</td>
+                            <td class="text-center">Séparation</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

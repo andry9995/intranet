@@ -1,0 +1,104 @@
+<div class="row contenue-a-tirer" style="padding-left: 10px">
+    <input type="hidden" value="{{ liste_client_N1|json_encode() }}" id="idInputClientHide">
+    <input type="hidden" value="{{ liste_dossier_N1|json_encode() }}" id="idInputDossierHide">
+    {% set iCpt = 1 %}
+
+    {% set iNbImage = 0 %}
+
+    {% for lot in lot_N1 %}
+        {#{% if lot.priorite is defined and lot.priorite != null %}
+            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+        {% else %}
+            {% set date_priorite = '' %}
+        {% endif %}#}
+        {% set iNbImage = iNbImage +  lot.nbimage %}
+
+        {#<div style="background-color:{{ lot.color }}" data-lot="{{ lot.id }}"
+             data-image="{{ lot.nbimage }}"
+             data-client="{{ lot.client }}"
+             data-site="{{ lot.site }}"
+             data-dossier="{{ lot.dossier }}"
+             data-datescan="{{ lot.date_scan }}"
+             data-priorite="{{ lot.priorite }}"
+             data-order="{{ lot.order }}"
+             data-tache="{{ lot.tache }}"
+             data-exercice="{{ lot.exercice }}"
+             data-lot2="{{ lot.lot }}"
+             data-toggle="tooltip"
+             title="{{ lot.client ~ '/' ~ lot.dossier ~ '/' ~ lot.exercice ~ '/' ~ lot.date_scan|date('d-m-Y') ~ '/' ~ lot.lot }}"
+             class="lot ligne-lot-a-telecharger">
+            {{ lot.nbimage }}&nbsp;
+                <i class="infos-recherche hidden fa fa-star fa-spin" style="position:absolute;  top:0px;color: yellow"></i>
+        </div>#}
+        {% set codeCouleurValue = '#1e90ff' %}
+        {% for codeCouleur in code_couleur %}
+            {% if codeCouleur.min < lot.jourdif  and lot.jourdif <= codeCouleur.max %}
+                {% set codeCouleurValue = codeCouleur.codeCouleur %}
+            {% endif %}
+        {% endfor %}
+        <div style="background-color:{{ codeCouleurValue }}" data-lot="{{ lot.id }}"
+             data-image="{{ lot.nbimage }}"
+             data-client="{{ lot.client }}"
+             data-site="{{ lot.site }}"
+             data-dossier="{{ lot.dossier }}"
+             data-datescan="{{ lot.date_scan }}"
+             data-priorite="{{ lot.priorite }}"
+             data-jourdif="{{ lot.jourdif }}"
+             data-exercice="{{ lot.exercice }}"
+             data-lot2="{{ lot.lot }}"
+             data-toggle="tooltip"
+             title="{{ lot.client ~ '/' ~ lot.dossier ~ '/' ~ lot.exercice ~ '/' ~ lot.date_scan|date('d-m-Y') ~ '/' ~ lot.lot }}"
+             class="lot ligne-lot-a-telecharger">
+            {{ lot.nbimage }}&nbsp;
+            <i class="infos-recherche hidden fa fa-star fa-spin" style="position:absolute;  top:0px;color: yellow"></i>
+        </div>
+
+        {% set iCpt = iCpt + 1 %}
+    {% endfor %}
+
+    {% if iNbImage == 0 %}
+        <div class=""><p style="text-align: center"><i>Aucun lot à télécharger</i></p></div>
+    {% endif %}
+
+    {#Stocker temporairement les lots pour l'ordre de priorité#}
+    {% set iCpt = 1 %}
+
+    {% set iNbImage = 0 %}
+    <select id="lot-numeroter" class="hidden">
+    {% for lot in lot_N1 %}
+        {#% if lot.priorite is defined and lot.priorite != null %}
+            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+        {% else %}
+            {% set date_priorite = '' %}
+        {% endif %}#}
+        {% set iNbImage = iNbImage +  lot.nbimage %}
+        {% set codeCouleurValue = '#1e90ff' %}
+        {% for codeCouleur in code_couleur %}
+            {% if codeCouleur.min < lot.jourdif  and lot.jourdif <= codeCouleur.max %}
+                {% set codeCouleurValue = codeCouleur.codeCouleur %}
+            {% endif %}
+        {% endfor %}
+        <option data-index="{{ iCpt }}" style="background-color:{{ codeCouleurValue }} "
+                data-lot="{{ lot.id }}"
+                data-image="{{ lot.nbimage }}"
+                data-client="{{ lot.client }}"
+                data-site="{{ lot.site }}"
+                data-dossier="{{ lot.dossier }}"
+                data-datescan="{{ lot.date_scan }}"
+                data-priorite="{{ lot.priorite }}"
+                data-exercice="{{ lot.exercice }}"
+                data-lot2="{{ lot.lot }}"
+                data-color="{{ codeCouleurValue }}"
+                data-flag="0">{{ lot.nbimage }}&nbsp;
+        </option>
+
+
+        {% set iCpt = iCpt + 1 %}
+    {% endfor %}
+    </select>
+
+    <input type="hidden" id="idNbLot" value="{{ lot_N1|length }}">
+    <input type="hidden" id="idNbImage" value="{{ iNbImage }}">
+    <input  type="hidden" id="idListeClientN1" value="{{ liste_client_N1|json_encode() }}">
+    <input  type="hidden" id="idListeDossierN1" value="{{ liste_dossier_N1|json_encode() }}">
+</div>

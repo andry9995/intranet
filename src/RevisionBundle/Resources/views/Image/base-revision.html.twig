@@ -1,0 +1,47 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %} {{ parent() }} | PILOTAGE {% endblock %}
+{% block menu_left %}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <div class="menu-scroll">
+                <ul class="nav metismenu side-menu" id="side-menu">
+                    {# {% if is_granted('ROLE_ADMIN') %} #}
+                        <li>
+                            <a href="{{ path('pilotage_general_images') }}" title="Général"><i class="fa fa-picture-o"></i> <span class="nav-label">Général</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pilotage_reception') }}" title="Réception"><i class="fa fa-cart-plus"></i> <span class="nav-label">Réception</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pilotage_separation') }}" title="Séparation"><i class="fa fa-clone"></i> <span class="nav-label">Séparation</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Saisie"><i class="fa fa-wpforms"></i> <span class="nav-label">Saisie</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Imputation"><i class="fa fa-calculator"></i> <span class="nav-label">Imputation</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Picbank"><i class="fa fa-bank"></i> <span class="nav-label">Picbank</span></a>
+                        </li>
+                    {# {% endif %} #}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block menu_top_center %}
+    <li><a data-toggle="dropdown" class="dropdown-toggle" href="#">Office</a>
+        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+            <li><a href="#"><i class="fa fa-file-word-o blue"></i> Word</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-file-excel-o green"></i> Excel</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-file-powerpoint-o red"></i> Powerpoint</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i> Outlook</a></li>
+        </ul>
+    </li>
+{% endblock %}

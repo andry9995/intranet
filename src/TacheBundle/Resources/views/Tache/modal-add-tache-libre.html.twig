@@ -1,0 +1,61 @@
+{# Modal pour ajouter ou modifier une Tache Libre #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden>&times;</span></button>
+                <h4 id="modal-tache-title" class="modal-title">Ajouter une tâche</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hidden" id="add-tache-error"></div>
+                <form class="form-horizontal">
+                    <input type="hidden" id="add-tache-id">
+
+                    <div class="form-group">
+                        <label for="add-tache-domaine" class="col-md-3 control-label">Domaine</label>
+                        <div class="col-md-9">
+                            <select id="add-tache-domaine" class="form-control">
+                                <option value="0">Séléctionner un domaine</option>
+                                {% for domaine in domaines %}
+                                    <option value="{{ domaine.id }}">{{ domaine.domaine }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-nom" class="col-md-3 control-label">Tâche</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="add-tache-nom"
+                                   placeholder="nom de la tâche">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-description"
+                               class="col-md-3 control-label">Description</label>
+
+                        <div class="col-md-9">
+                                <textarea class="form-control" id="add-tache-description" placeholder="description"
+                                          rows="6" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-jalon" class="col-md-3 control-label">Tâche Jalon</label>
+
+                        <div class="col-md-9" style="padding-top: 5px;">
+                            <input id="add-tache-jalon" type="checkbox" class="i-checks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" id="btn-add-tache-save">Enregistrer
+                </button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -1,0 +1,207 @@
+<div class="col-lg-5" id="pdf-resize">
+    <div id="pdf"></div>
+</div>
+
+<div class="col-lg-7" id="form-resize" style="margin-right: 0 !important;">
+    <div class="ibox">
+        {#<div class="form-group">#}
+            {#{{ include('@Tenue/SaisieUniverselle/btnInfoPerdosRecategorisation.html.twig') }}#}
+        {#</div>#}
+        <div class="row">
+            {{ include('@Tenue/SaisieUniverselle/dataCategorie.html.twig') }}
+        </div>
+        <div class="row">
+            {{ include('@Tenue/SaisieUniverselle/infoperdos.html.twig') }}
+        </div>
+    </div>
+
+    <div class="ibox">
+        <div class="ibox-title" id="title-saisie">
+           {{ include('@Tenue/SaisieUniverselle/titleSaisie.html.twig') }}
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="form-horizontal" id="form-fiscal">
+                        {% set organismeId = -1 %}
+                        {% set natureId = -1 %}
+                        {% set sousnatureId = -1 %}
+                        {% set montant = 0 %}
+                        {% set dateEcheance = '' %}
+                        {% set dateReglement = '' %}
+                        {% set modeReglementId = -1 %}
+                        {% set souscategorieId = -1 %}
+                        {% set soussouscategorieId = -1 %}
+                        {% set cerfaId = -1 %}
+
+
+                        {% if saisie is not null %}
+                            {% set organismeId = (saisie.organisme is null) ? -1 : saisie.organisme.id %}
+
+                            {% if saisie.sousnature is not null %}
+                                {% set sousnatureId = saisie.sousnature.id %}
+                                {% set natureId = saisie.sousnature.nature.id %}
+                            {% endif %}
+
+                            {% if saisie.soussouscategorie is not null %}
+                                {% set souscategorieId = saisie.soussouscategorie.souscategorie.id %}
+                                {% set soussouscategorieId = saisie.soussouscategorie.id %}
+                            {% endif %}
+
+                            {% set dateEcheance = (saisie.dateEcheance is null) ? '' : saisie.dateEcheance|date|date('d/m/Y') %}
+                            {% set dateReglement = (saisie.dateReglement is null) ? '' : saisie.dateReglement|date('d/m/Y') %}
+                            {% set modeReglementId = (saisie.modeReglement is null) ? '' : saisie.modeReglement.id %}
+                            {% set montant = saisie.montantTtc|number_format(2, '.', ' ') %}
+
+                            {% set cerfaId = (saisie.cerfa is null) ? -1 : saisie.cerfa.id %}
+
+                        {% endif %}
+
+                        <input type="hidden" name="image" id="image" value="{{ image.id }}">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="organisme">Organisme</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="organisme" name="organisme" >
+                                        <option value="-1"></option>
+                                        {% for organisme in organismes %}
+                                            <option value="{{ organisme.id }}" {{ (organisme.id == organismeId) ? 'selected' : '' }}>
+                                                {{ organisme.libelle }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="cerfa">Cerfa N°</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="cerfa" name="cerfa">
+                                        <option value="-1"></option>
+                                        {% for cerfa in cerfas %}
+                                            <option value="{{ cerfa.id }}" data-intitule="{{ cerfa.intitule }}" {{ (cerfaId == cerfa.id)? 'selected' : '' }}>{{ cerfa.numero }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <label class="col-lg-2 control-label" for="cerfa-intitule">Intitulé</label>
+                                <div class="col-lg-4">
+                                    <input class="form-control" type="text" disabled id="cerfa-intitule" value="{{ (cerfaId == -1) ? '' : (saisie.cerfa.intitule) }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="nature">Nature</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control nature" id="nature" name="nature">
+                                        <option value="-1"></option>
+                                        {% for nature in natures %}
+                                            <option value="{{ nature.id }}" {{ (natureId == nature.id) ? 'selected' : '' }}>
+                                                {{ nature.libelle }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                                <label class="col-lg-2 control-label" for="sousnature">Sous Nature</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control sousnature" id="sousnature" name="sousnature">
+                                        <option value="-1"></option>
+                                        {% for sousnature in sousnatures %}
+                                            <option value="{{ sousnature.id }}" {{ (sousnatureId == sousnature.id) ? 'selected' : '' }}>
+                                                {{ sousnature.libelle }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="fs-souscategorie">Sous catégorie</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="fs-souscategorie" name="fssouscategorie">
+                                        <option value="-1"></option>
+                                        {% for souscategorie in souscategories %}
+                                            <option value="{{ souscategorie.id }}" {{ (souscategorieId == souscategorie.id) ? 'selected' : '' }}>
+                                                {{ souscategorie.libelleNew }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                                <label class="col-lg-2 control-label" for="fs-soussouscategorie">Sous sous cat</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="fs-soussouscategorie" name="fssoussouscategorie">
+                                        <option value="-1"></option>
+                                        {% for soussouscategorie in soussouscategories %}
+                                            <option value="{{ soussouscategorie.id }}" {{ (soussouscategorieId == soussouscategorie.id) ? 'selected' : '' }}>
+                                                {{ soussouscategorie.libelleNew }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="montant">Montant</label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control montant" value="{{ montant }}" name="montant" id="montant">
+                                </div>
+
+                                <label class="col-lg-2 control-label" for="date-echeance">Date Echéance</label>
+                                <div class="col-lg-4">
+                                    <div class="input-group date">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                        <input type="text" class="form-control" value="{{ dateEcheance }}" name="dateecheance" id="date-echeance">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+
+                                <label class="col-lg-2 control-label" for="date-reglement">Date Règlement</label>
+                                <div class="col-lg-4">
+                                    <div class="input-group date">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                        <input type="text" class="form-control" value="{{ dateReglement }}" name="datereglement" id="date-reglement" >
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label" for="mode-reglement">Mode Rglt.</label>
+                                <div class="col-lg-4">
+                                    <select class="form-control reglement reglement-select" id="mode-reglement" name="modereglement" >
+                                        <option value="-1"></option>
+                                        {% for modereglement in modeReglements %}
+                                            <option value="{{ modereglement.id }}" {{ (modeReglementId == modereglement.id) ? 'selected' :  '' }}>{{ modereglement.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-2 pull-right">
+                                    <span class="btn btn-primary btn-xs btn-block" id="btn-save-fiscal"><i class="fa fa-check"></i>&nbsp;&nbsp;Valider</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

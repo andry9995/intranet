@@ -1,0 +1,91 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@GammeBundle/Resources/public/js/gamme.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@GammeBundle/Resources/public/css/gamme.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} GAMMES
+{% endblock %}
+
+{% block content %}
+<div class="tabs-container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tab-param-gamme">Paramétrage</a></li>
+        <li class=""><a data-toggle="tab" href="#tab-affectation-gamme">Affectation</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-param-gamme" class="tab-pane active">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding:10px;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i id="loader" class="loader fa fa-spinner fa-spin fa-lg fa-fw fa-pulse pull-left"></i>
+                            <button id="btn-new-gamme" class="btn btn-primary btn-sm btn-outline pull-right">Ajouter une gamme
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" id="gamme-container" style="overflow-y:auto;">
+                        <div class="panel-group" id="gamme-group"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab-affectation-gamme" class="tab-pane">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding:10px;">
+                    <div class="row" id="affectation-container" style="overflow-y:auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-sm-6 gamme-col hidden" id="new-gamme-item">
+        <div class="panel panel-default gamme">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#gamme-group"
+                       href="#collapse" class="collapsed text-gamme-nom"
+                       aria-expanded="false">Nouvelle Gamme</a>
+                    <input type="text" value="Nouvelle Gamme" class="input-gamme-nom hidden"
+                           style="width:80%;"/>
+                    <i class="fa fa-trash pull-right btn-remove-gamme"></i>
+                    <i class="fa fa-edit pull-right btn-edit-gamme-nom"></i>
+                    <i class="fa fa-check-circle-o pull-right hidden btn-save-gamme-nom"></i>
+                </h4>
+
+            </div>
+            <div id="collapse" class="panel-collapse">
+                <div class="panel-body">
+                    <div style="display:inline-block;width:88%;">
+                        <select class="form-control list-procedure-select" style="width:100%;"></select>
+                    </div>
+                    <button class="btn btn-white btn-bitbucket btn-add-procedure-to-gamme" style="width:10%;margin-top:6px;">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <ul class="list-group list-procedure" style="max-height:200px;overflow-y:scroll"></ul>
+                </div>
+                <div class="panel-footer">
+                    <div style="width:100%;text-align:center;">
+                        <button class="btn btn-primary btn-xs btn-blink btn-save-gamme-item">
+                            Enregistrer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

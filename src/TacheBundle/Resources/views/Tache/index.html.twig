@@ -1,0 +1,118 @@
+{#src/ParametreBundle/Resources/views/Tache/Tache/index.html.twig #}
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/footable/footable.core.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/tache/css/taches.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/commun.css') }}">
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@TacheBundle/Resources/public/css/tache.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/footable/footable.all.min.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/tache_liste_action.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/index.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches-group.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches-item.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches-action.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/taches/taches-date.js') }}"></script>
+    {% javascripts filter='?jsqueeze'
+        '@TacheBundle/Resources/public/js/tache-functions.js'
+        '@TacheBundle/Resources/public/js/util.js'
+        '@TacheBundle/Resources/public/js/tache-libre.js'
+        '@TacheBundle/Resources/public/js/tache-legale.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block title %}
+    {{ parent() }} TACHES
+{% endblock %}
+{% block content %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Liste des tâches</h5>
+            <div class="ibox-tools">
+                <a class="fullscreen-link">
+                    <i class="fa fa-expand"></i>
+                </a>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="tabs-container jqgrid-tabs">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-taches"><i class="fa fa-tasks" aria-hidden="true"></i> Tâches
+                            Légales</a></li>
+
+                    {#<li class=""><a data-toggle="tab" href="#tab-legal"><i class="fa fa-balance-scale"></i> Tâches
+                            Légales</a></li>#}
+                    <li class=""><a data-toggle="tab" href="#tab-libre"><i class="fa fa-clone"></i> Tâches Libres</a>
+                    <li class=""><a data-toggle="tab" href="#tab-domaine"><i class="fa fa-map"></i> Domaines</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-regime"><i class="fa fa-anchor"></i>
+                            Régimes fiscaux</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-action"><i class="fa fa-language" aria-hidden="true"></i> Actions</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-taches" class="tab-pane active">
+                        <div class="panel-body">
+                            {#tabs regime fiscal#}
+                            {{ include('@Tache/Taches/regime-fiscal.html.twig') }}
+                        </div>
+                    </div>
+
+                    {#<div id="tab-legal" class="tab-pane">
+                        <div class="panel-body">
+                            <table id="js_tache_legale_liste" class="js-jqgrid-table"></table>
+                            <div id="pager_liste_tache_legale"></div>
+                        </div>
+                    </div>#}
+
+                    <div id="tab-libre" class="tab-pane">
+                        <div class="panel-body">
+                            {#Liste des taches libres chargées avec AJAX#}
+                            <table id="js_tache_libre_liste" class="js-jqgrid-table"></table>
+                            <div id="pager_liste_tache_libre"></div>
+                        </div>
+                    </div>
+                    <div id="tab-domaine" class="tab-pane">
+                        <div class="panel-body">
+                            {#Liste des domaines des taches chargées avec AJAX#}
+                            <table id="js_domaine_liste" class="js-jqgrid-table"></table>
+                            <div id="pager_liste_domaine"></div>
+                        </div>
+                    </div>
+                    <div id="tab-regime" class="tab-pane">
+                        <div class="panel-body">
+                            {#Liste des regimes fiscaux chargées avec AJAX#}
+                            <table id="js_regime_liste" class="js-jqgrid-table"></table>
+                            <div id="pager_liste_regime"></div>
+                        </div>
+                    </div>
+                    <div id="tab-action" class="tab-pane">
+                        <div class="panel-body">
+                            {#Liste des actions chargées chargées avec AJAX#}
+                            <table id="js_tache_liste_action" class="js-jqgrid-table"></table>
+                            <div id="pager_tache_liste_action"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '@Tache/Tache/modal-add-tache-libre.html.twig' %}
+    {% include '@Tache/Tache/modal-add-tache-legale.html.twig' %}
+    {% include '@Tache/Tache/modal-add-tache-prec-suiv.html.twig' %}
+    {% include '@Tache/Tache/modal-tache-legale-action.html.twig' %}
+{% endblock %}

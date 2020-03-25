@@ -1,0 +1,32 @@
+{% set trouve = false %}
+{% set disabled = '' %}
+{# ns: non sousmis#}
+{% if ns is defined %}
+    {% if ns == true %}
+        {% set disabled = 'disabled' %}
+    {% endif %}
+{% endif %}
+
+{# et: engagement-tresorerie#}
+{% if et is defined %}
+    {#0: Engagement #}
+    {% if et == 0 %}
+        {% if type == 'ht' or type == 'tva' %}
+            {% set disabled = 'disabled' %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% if pcc is not null %}
+    <span class="btn btn-primary btn-block btn-xs btn-pcc {{ disabled }}" data-categorie="{{ categorie }}" data-type="{{ type }}" data-id="{{ pcc.id }}" data-table="pcc" style="font-size: 10px !important;">{{ pcc.compte }}</span>
+    {% set trouve = true %}
+{% else %}
+    {% if tiers is not null %}
+        <span class="btn btn-primary btn-block btn-xs btn-pcc" data-categorie="{{ categorie }}" data-type="{{ type }}" data-id="{{ tiers.id }}" data-table="tiers" style="font-size: 10px !important;">{{ tiers.compteStr }}</span>
+        {% set trouve = true %}
+    {% endif %}
+{% endif %}
+
+{% if trouve == false %}
+    <span class="btn btn-primary btn-block btn-xs btn-pcc {{ disabled }}" data-categorie="{{ categorie }}" data-type="{{ type }}" data-id="-1" data-table="pcc" style="font-size: 10px !important;">Clicker ici</span>
+{% endif %}

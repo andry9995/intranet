@@ -1,0 +1,350 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Tableau de bord
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/revision/css/un.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/revision/js/revision-un.js') }}"></script>
+	<script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/pdf/pdfobject.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">	
+{{ include('RevisionBundle:Un:filtre.html.twig')}}        
+</div>
+<div id="information" style="display:none">    <!---->
+    <div>
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="row ibox-title">
+					<h5>Information dossier</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+					</div>
+				</div>
+				<div class="row ibox-content" >
+					<div class="tabs-container">
+						<div class="col-lg-8" >
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#tab-1">Générale</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-2">Comptable</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-3">Fiscale</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-4">Instruction</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab-1" class="tab-pane active">
+									<div class="panel-body">
+										<div class="col-lg-6">
+											<table id ="generale">
+											</table>
+										</div>
+										<div class="col-lg-46">
+											<table id ="mandataire">
+											</table>
+										</div>
+									</div>
+								</div>
+								<div id="tab-2" class="tab-pane">
+									<div class="panel-body">
+										<div class="col-lg-12">
+											<table id ="comptable">
+											</table>
+										</div>
+									</div>
+								</div>
+								<div id="tab-3" class="tab-pane">
+									<div class="panel-body">
+										<div class="col-lg-12">
+											<table id ="fiscale">
+											</table>
+										</div>
+									</div>
+								</div>
+								<div id="tab-4" class="tab-pane">
+									<div class="panel-body">
+										<div class="col-lg-12">
+											<div class="tabs-container">
+												<div class="tabs-left">
+													<ul class="nav nav-tabs">
+														<li class="active"><a data-toggle="tab" href="#tab-6">Instruction Saisie</a></li>
+														<li class=""><a data-toggle="tab" href="#tab-7">Instruction tous Dossier</a></li>
+													</ul>
+													<div class="tab-content ">
+														<div id="tab-6" class="tab-pane active">
+															<div class="panel-body" id="isaisie">
+															   
+															</div>
+														</div>
+														<div id="tab-7" class="tab-pane">
+															<div class="panel-body" id="idossier">
+															   
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div id="canvas-holder" style="width:100%">
+									<canvas id="chart-area"></canvas>
+							</div>
+					    </div>						
+					</div>
+				</div>
+			</div>  
+		</div>        
+    </div>  
+	<!-- debut 3 boxes-->
+	<div>
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="row ibox-title">
+					<h5>Avancement dossier</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+					</div>
+				</div>
+				<div class="row ibox-content" >
+					<div class="tabs-container">
+						<div class="col-lg-2" >
+							 <div class="ibox-title">
+								<h5>Pieces à réviser</h5>
+   							</div>
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge badge-warning" id="precu">0</span>
+									Reçues
+								</li>
+								<li class="list-group-item ">
+									<span class="badge badge-warning" id="psaisie">0</span>
+									Saisies
+								</li>
+								<li class="list-group-item">
+									<span class="badge badge-info" id="pimpute">0</span>
+									Imputées
+								</li>
+								<li class="list-group-item">
+									<span class="badge badge-success" id="pinstance">0</span>
+									En Instance
+								</li>
+								<li class="list-group-item">
+									<span class="badge" id="pautres">0</span>
+									Autres
+								</li>
+								<li class="list-group-item">
+									<span class="badge badge-primary" id="previse">0</span>
+									Revisées
+								</li>
+								<li class="list-group-item">
+									<span class="badge badge-danger" id="parevise">0</span>
+									A reviser
+								</li>
+							</ul>
+						</div>
+						<div class="col-lg-4">
+							<div class="table-responsive">
+							    <div class="ibox-title">
+									<h5>Situation banques</h5>
+								</div>
+								<table class="table table-striped">
+									<thead>
+									<tr>
+										<th></th>
+										<th>
+											Manquant
+										</th>
+										<th>
+											Notifié mail
+										</th>
+										<th>
+											Notifié DRPT
+										</th>
+									</tr>
+									</thead>
+									<tbody id="rmanquant">
+									</tbody>
+								</table>
+							</div>
+					    </div>
+						<div class="col-lg-4">
+							<div class="ibox-title">
+								<h5>Informations manquantes</h5>
+							</div>
+							 <div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+									<tr>
+										<th></th>
+										<th>
+											En attente
+										</th>
+										<th>
+											Notifié mail
+										</th>
+										<th>
+											Notifié DRPT
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<th>DRT</th>
+										<td>1</td>
+										<td>15/05/2018</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>Piece manquante</th>
+										<td>50</td>
+										<td>10/06/2018</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>chèques inconnus</th>
+										<td>10</td>
+										<td>05/12/2017</td>
+										<td></td>
+									</tr>
+									</tbody>
+								</table>
+							</div>	
+					    </div>	
+						<div class="col-lg-2">
+							<div class="ibox-title">
+								<h5>Informations dossier</h5>
+							</div>
+
+							 <ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge">16</span>
+									comptes banque
+								</li>
+								<li class="list-group-item ">
+									<span class="badge">12</span>
+									mails
+								</li>
+								<li class="list-group-item">
+									<span class="badge">14/05/2018</span>
+									dernier import
+								</li>
+								<li class="list-group-item">
+									<span class="badge">15/05/2018</span>
+									dernier export
+								</li>
+								<li class="list-group-item">
+									<span class="badge">16/05/2018</span>
+									derniere revision
+								</li>
+							</ul>
+					    </div>										
+					</div>
+				</div>
+			</div>  
+		</div>        
+    </div>  
+	<!-- fin 3 boxes no-padding-->
+	<div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="row ibox-title">
+				<h5>Taches</h5>
+				<div class="ibox-tools">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+				</div>
+			</div>
+			<div class="row ibox-content" >
+				<div class="col-lg-4">
+					<table>
+					</table>
+				</div>
+			</div>
+		</div>  
+	</div>
+    <div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="row ibox-content" >
+				<div class="col-lg-1">       
+                    <table class="table table-bordered table-hover" id="imagable" >
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                            </tr>
+                        </thead>
+                        <tbody  id="retourListe">
+                        </tbody>
+                    </table>	
+				</div>
+                <div class="col-lg-7">
+                    <div id="pdf"></div>
+                </div>
+                    <div class="col-lg-4" id="infoimage">
+                        <form class="form-horizontal">
+                            <input type="hidden" value="" id="imagid">
+                            <div class="form-group"><label class="col-lg-2 control-label">Catégorie</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="icategorie">
+                                            <option value="0">Aucun</option>
+                                            {% for icat in icategorie %}
+                                            <option value="{{ icat.id }}">{{ icat.libelle_new }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-lg-2 control-label">Sous Catégorie</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="isouscategorie">
+                                            <option value="0">Aucun</option>
+                                            {% for iscat in isouscategorie %}
+                                            <option value="{{ iscat.id }}">{{ iscat.libelle_new }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>    
+                            </div>
+                            <div class="form-group"><label class="col-lg-2 control-label">Sous Sous Catégorie</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="isoussouscategorie">
+                                            <option value="0">Aucun</option>
+                                            {% for isscat in isoussouscategorie %}
+                                            <option value="{{ isscat.id }}">{{ isscat.libelle_new }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>    
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                     <button id="btn_valider" class="btn btn-sm btn-primary" ><i class="fa fa-check"></i>Valider</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>        
+			</div>
+		</div>  
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tenue/css/saisie-facturette.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+
+        <div class="col-md-1">
+            <div class="form-group" data-toggle="modal" data-target="#panierModal">
+                <span class="btn btn-primary btn-block" type="button">
+                    <i class="fa fa-shopping-basket"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-11">
+            <div class="col-md-2">
+                <div class="form-group"><label>Client</label>
+                    <input type="text" placeholder="Nom du cabinet" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group"><label>Dossier</label>
+                    <input type="text" placeholder="Nom du dossier" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label>Exercice</label>
+                    <input type="text" placeholder="Exercice" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label>Date-Scan</label>
+                    <input type="text" placeholder="Date Scan" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group"><label>Lot</label>
+                    <input type="text" placeholder="Lot" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group"><label>Nb Image</label>
+                    <input type="text" placeholder="Nb Image" class="form-control" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nb Images:</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="ibox">
+
+            </div>
+        </div>
+
+        <div class="col-md-5">
+
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>InfoPerdos</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="display: none;">
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Saisie Facturette</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">SIREN</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="SIREN" class="form-control" name="siren" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">RS</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="RS" class="form-control" name="rs" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">Date</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="ddmmyy" class="form-control" name="date" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">Code postal</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="Code postal" class="form-control" name="code-postal" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label" >Nature</label>
+                                <div class="col-lg-7">
+                                    <select class="form-control" name="nature" title="">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label" >Paiement</label>
+                                <div class="col-lg-7">
+                                    <select class="form-control" name="paiement" title="">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">Mention manuscrite</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="Mention manuscrite" class="form-control" name="mention" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5 control-label">Nb de couverts</label>
+                                <div class="col-lg-7">
+                                    <input type="text" placeholder="Nb de couverts" class="form-control" name="couvert" value="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="modal inmodal" id="panierModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <h4 class="modal-title">Liste des lots dans mon panier</h4>
+                </div>
+                <div class="modal-body">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

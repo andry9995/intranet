@@ -1,0 +1,4 @@
+<option value="-1">TOUTES</option>
+{% for categorie in categories %}
+    <option value="{{ categorie.id }}">{{ categorie.libelle }} [{{ categorie.nbre }}]</option>
+{% endfor %}

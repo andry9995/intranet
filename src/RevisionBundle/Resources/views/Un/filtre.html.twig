@@ -1,0 +1,109 @@
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="client" class="col-md-3 control-label">Client</label>
+                    <div class="col-md-12">
+                        <select id="client" data-placeholder="Séléctionner un client" class="form-control chosen-select-client">
+                            <option value=""></option>
+                            <option value="0">Tous</option>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="hidden">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site" class="col-md-2 control-label">Site</label>
+                    <div class="col-md-10">
+                        <select id="site" data-placeholder="Séléctionner un site" class="form-control chosen-select-site">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="dossier" class="col-md-2 control-label">Dossier</label>
+                    <div class="col-md-12">
+                        <select id="dossier" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier">
+                            <option value=""></option>
+                            {# Liste dossier #}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1"  style="display:none">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Catégorie</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="categorie">
+                                <option value=""></option>
+                            {# Catégorie #}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Exercice</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="exercice">
+                                <option value=""></option>
+                            {# Liste exercice #}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Status</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="status">
+                                <option value="">Tous</option>
+                                <option value="0">Recues</option>
+                                <option value="1">En Instance</option>
+                                <option value="2">Autres</option>
+                                <option value="4">Saisies</option>
+                                <option value="8">Imputées</option>
+                                <option value="9">Révisées</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1" style="display: block;">
+            <form class="form-horizontal">
+                <label class="col-md-3 control-label" style="visibility: hidden;">
+                    <span>Test</span>
+                </label>
+                <button id="btn_rev" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Go</button>
+            </form>
+        </div>     
+        <div class="col-md-1" style="display: block;">
+            <form class="form-horizontal">
+                <label class="col-md-3 control-label" style="visibility: hidden;">
+                    <span>Test</span>
+                </label>
+                <div id="loader" class="col-md-1" style="padding-top: 30px;">
+                </div>
+            </form>
+        </div>

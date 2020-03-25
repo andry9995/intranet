@@ -1,0 +1,42 @@
+{% set nbMenusFils = 0 %}
+{% for cle, value in menusChoisis %}
+    {% if value.parent != 0 %}
+        {% set nbMenusFils = nbMenusFils + 1 %}
+    {% endif %}
+{% endfor %}
+{% if nbMenusFils > 0 %}
+    <select id="select-{{ processId }}" class="hidden" data-id="{{ processId }}">
+        {% for cle, value in menusChoisis %}
+            <option value="{{ value.id }}" data-parent="{{ value.parent }}"></option>
+        {% endfor %}
+    </select>
+    <div class="btn-group">
+
+        {% if nbMenusFils > 1 %}
+            <button data-toggle="dropdown" class="btn btn-white btn-block dropdown-toggle" style="width:300px">
+                Plusieurs <span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu folder-list m-b-md" style="width:300px; height: 300px; margin:0px; padding:0px">
+                {% for cle, value in menusChoisis %}
+                    {% if value.parent != 0 %}
+                        <li style="padding:5px">{{ value.nom }} </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if nbMenusFils > 0 %}
+                {% for cle, value in menusChoisis %}
+                    {% if value.parent != 0 %}
+                        <button class="btn btn-white btn-block dropdown-toggle" data-id="{{ value.id }}" data-parent="{{ value.parent }}" style="width:300px">
+                            {{ value.nom }}
+                        </button>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center"><em>Pas de menu ...</em></p>
+            {% endif %}
+        {% endif %}
+    </div>
+{% else %}
+    <p style="text-align: center"><em>Pas de menu ...</em></p>
+{% endif %}

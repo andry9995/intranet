@@ -1,0 +1,26 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/tenue/css/saisie-facturette.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('bundles/tenue/js/traitement-facturette.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/imageconsultation.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        {{ include('TenueBundle:Saisie:fltre.html.twig') }}
+    </div>
+
+    <div id="facturette-content">
+
+    </div>
+{% endblock %}

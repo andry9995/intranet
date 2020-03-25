@@ -1,0 +1,7 @@
+{% if images is defined %}
+    {% for image in images %}
+        <tr>
+            {{ include('@Banque/Banque/saisie/saisie_image_item.html.twig') }}
+        </tr>
+    {% endfor %}
+{% endif %}

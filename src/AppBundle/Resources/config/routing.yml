@@ -1,0 +1,114 @@
+# src/AppBundle/Resources/config/routing.yml
+
+home_page:
+  path:   /
+  defaults: { _controller: 'AppBundle:Index:index' }
+
+user_app_missing:
+  path: /user-app-missing
+  defaults: { _controller: 'AppBundle:Index:userAppMissing' }
+
+user_app_mismatch:
+  path: /user-app-mismatch
+  defaults: { _controller: 'AppBundle:Index:userAppMismatch' }
+
+application_exe_local:
+  path: /application-exe-local/{code_app}
+  defaults: { _controller: 'AppBundle:ApplicationExe:exeLocal' }
+  methods: [POST]
+  options:
+    expose: true
+
+application_exe_server:
+  path: /application-exe-server/{code_app}
+  defaults: { _controller: 'AppBundle:ApplicationExe:exeServer' }
+  methods: [POST]
+  options:
+    expose: true
+
+#UTILS
+#Get Sites d'un client
+js_site_par_client:
+    path: /site-par-client/{client}
+    defaults: { _controller: 'AppBundle:Commun:siteParClient', client: '' }
+    options:
+      expose: true
+    requirements:
+      client: ^(\s*|\d+)$
+
+#Get Dossiers d'un Site
+js_dossier_par_site:
+    path: /dossier-par-site/{client}/{site}
+    defaults: { _controller: 'AppBundle:Commun:dossierParSite', site: '' }
+    options:
+      expose: true
+    requirements:
+      client: \d+
+      site: ^(\s*|\d+)$
+
+#Get select Sites
+app_sites:
+    path: /app/sites/{conteneur}/{client}/{tous}/{infoperdos}
+    defaults: { _controller: AppBundle:Commun:sites ,conteneur : 0 , tous : 1, infoperdos: 0 }
+    options:
+      expose: true
+    requirements:
+      conteneur: \d*
+      tous: \d*
+
+app_dossiers:
+    path: /app/dossiers/{conteneur}/{site}/{tous}/{client}/{infoperdos}
+    defaults: { _controller: AppBundle:Commun:dossiers, conteneur: 0, tous: 1, infoperdos: 0 }
+    options:
+      expose: true
+    requirements:
+      conteneur: \d*
+      tous: \d*
+
+app_utilisateur_by_operateur:
+    path: /app/utilsateur/by/operateur
+    defaults: { _controller: AppBundle:MenuPicdata:utilisateur }
+    options:
+      expose: true
+
+app_dossiers_client:
+  path: /app/dossiers-client/{client}/{exercice}
+  defaults: { _controller: 'AppBundle:Commun:getDossiersActifByClient' }
+  methods: [GET]
+  options:
+    expose: true
+
+
+app_infoperdos:
+  path: /app/infoperdoss
+  defaults: { _controller: AppBundle:Commun:infoPerdos }
+  methods: [GET]
+  options:
+      expose: true
+
+app_clients_by_responsable:
+  path: /app/client-by-responsable/{responsable}
+  defaults: { _controller: 'BanqueBundle:Banque:listClientsSituationImageByResponsable' }
+  methods: [GET]
+  options:
+      expose: true
+
+app_state_image_gestion_bilan:
+    path: /app/situation-image/gestion-des-taches
+    defaults: { _controller: 'BanqueBundle:Banque:stateImageGestionBilan' }
+    options:
+        expose: true
+
+app_notification_log:
+    path: /app/situation-image/log-banque
+    defaults: { _controller: 'BanqueBundle:Banque:showLogBanqueManquante' }
+    methods: [POST]
+    options:
+        expose: true
+
+app_notification_log_contenu_mail:
+    path: /banque/situation-image/log-banque/contenu
+    defaults: { _controller: 'BanqueBundle:Banque:showLogContenuBanqueManquante' }
+    methods: [POST]
+    options:
+        expose: true

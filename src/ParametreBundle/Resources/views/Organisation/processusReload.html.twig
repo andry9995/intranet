@@ -1,0 +1,110 @@
+<ol class="list">
+    {% set idx = 1 %}
+    {% for key, value in processus %}
+        <li class="dd-item" data-id="{{ idx }}">
+            {% set codeParent = "" %}
+            <div class="dd-handle parent-processus" data-parent="{{ key }}">
+                <i class="fa fa-minus btn-expand" id="btn-expand-{{ key }}" data-parent="{{ key }}" data-expand="1"></i>&nbsp;
+                <strong style="font-size: large; color: #2f2f2f">[
+                    {% if value.parent_rang|length == 1 %}
+                        P{{ 0~value.parent_rang }}
+                        {% set codeParent = 0~value.parent_rang  %}
+                    {% else %}
+                        P{{ value.parent_rang }}
+                        {% set codeParent = value.parent_rang  %}
+                    {% endif %}
+                    ] {{ value.parent_nom }}</strong><span class="label label-default expand-process" data-parent="{{ key }}" data-expand="0"><i class="fa fa-plus"></i>&nbsp;Déplier tout</span>
+
+                <span class="btn btn-danger pull-right btn-xs btn-remove-processus"  title="Supprimer ce Processus"
+                      data-id="{{ key }}">
+                    <i class="fa fa-trash"></i>
+                </span>
+                <span class="pull-right">&nbsp;&nbsp;</span>
+                <span class="btn btn-warning pull-right btn-xs" id="btn-edit-processus" title="Modifier ce Processus"
+                      data-id="{{ key }}"
+                      data-nom="{{ value.parent_nom }}"
+                      data-rang="{{ value.parent_rang }}">
+                    <i class="fa fa-edit"></i>
+                </span>
+                <span class="pull-right">&nbsp;&nbsp;</span>
+                <span data-processus="{{ key }}" class="btn btn-primary pull-right btn-xs" id="btn-add-process" title="Ajouter un process">
+                    <i class="fa fa-plus"></i>
+                </span>
+
+            </div>
+            <ol class="list processus-fils-{{ key }}">
+                {% for keydet, valueDet in value.details %}
+                    {% set idx = idx + 1 %}
+                    <li class="dd-item" data-id="{{ idx }}">
+                        {% set codeFils = valueDet.rang %}
+                        {% if codeFils|length == 1 %}
+
+                            {% set codeFils = 0~codeFils %}
+
+                        {% else %}
+                            {% set codeFils = codeFils %}
+
+                        {% endif %}
+                        <div class="dd-handle row">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <i class="fa fa-plus btn-expand-detail id-parent-{{ key }}" id="btn-expand-detail-{{ valueDet.id }}" data-id={{ valueDet.id }} data-parent="{{ key }}" data-expand="0"></i>&nbsp;
+                                    <strong> [{{ codeParent ~ codeFils }}] {{ valueDet.nom }}</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                                                                    <span class="btn btn-danger pull-right btn-xs" id="btn-remove-process" title="supprimer ce process"
+                                                                                          data-id="{{ valueDet.id }}">
+                                                                                    <i class="fa fa-trash"></i>
+                                                                                    </span>
+                                    <span class="pull-right">&nbsp;&nbsp;</span>
+                                    <span class="btn btn-warning pull-right btn-xs" id="btn-edit-process" title="Modifer ce process"
+                                          data-id="{{ valueDet.id }}"
+                                          data-nom="{{ valueDet.nom }}"
+                                          data-rang="{{ valueDet.rang }}"
+                                          data-processus="{{ key }}">
+                                                                                        <i class="fa fa-edit"></i>
+                                                                                    </span>
+                                </div>
+                            </div>
+                            <div class="row expand-detail detail-de-{{ key }} hidden" id="expand-detail-{{ valueDet.id }}">
+                                <div class="col-sm-4">
+                                    <ul class="list-group-item fist-item">
+                                        <li class="list-group-item">
+                                            <span class="label label-info"><i class="fa fa-thermometer-0"></i></span>&nbsp;Unité d'oeuvre:
+                                            <span class="pull-right" id="unite-oeuvre-{{ valueDet.id }}">{{ valueDet.unite_oeuvre_nom }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="label label-default"><i class="fa fa-clock-o"></i></span>&nbsp;Temps traitement:
+                                            <span class="pull-right" id="temps-trait-{{ valueDet.id }}">{{ valueDet.temps_trait }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="label label-primary"><i class="fa fa-gear"></i></span>&nbsp;
+                                            Process antérieure:
+                                            <span class="pull-right" id="process-ant-{{ valueDet.id }}">{{ valueDet.process_ant_nom }}</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="label label-warning"><i class="fa fa-gear"></i></span>&nbsp;
+                                            Process postérieure:
+                                            <span class="pull-right" id="process-post-{{ valueDet.id }}">{{ valueDet.process_post_nom }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="ibox">
+                                        <div class="ibox-content"  style="height: 150px; margin:10px">
+                                            <h3>Description du process</h3>
+
+                                            <p>{{ valueDet.description }}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </li>
+        {% set idx = idx + 1 %}
+    {% endfor %}
+</ol>

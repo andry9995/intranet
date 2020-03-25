@@ -1,0 +1,21 @@
+{% set tous = recue+categorisee+saisie+aImputer+imputee+revisee+revue  %}
+
+<option value="-1">TOUS [{{ tous }}]</option>
+<option value="recue">Récéption [{{ recue }}]</option>
+<option value="categorisee">Séparation [{{ categorisee }}]</option>
+<option value="saisie">A la Saisie [{{ saisie }}]</option>
+<option value="aimputer">A l'Imputation [{{ aImputer }}]</option>
+{#<optgroup label="Imputée [{{ nonLettree+lettree }}]" >#}
+    {#<option value="lettree">Lettrée [{{ lettree }}]</option>#}
+    {#<option value="nonlettree">Non Lettrée [{{ nonLettree }}]</option>#}
+{#</optgroup>#}
+<optgroup label="Imputée [{{ imputee }}]">
+    <option value="imputee">Imputée [{{ imputee }}]</option>
+    <option value="nonlettreeimputee">Dont non lettrée [{{ nonLettreeImputee }}]</option>
+</optgroup>
+<optgroup label="Revisée [{{ revisee }}]">
+    <option value="revisee">Revisée [{{ revisee }}]</option>
+    <option value="nonlettreerevisee">Dont non lettrée [{{ nonLettreeRevisee }}]</option>
+</optgroup>
+
+<option value="revue">Revue [{{ revue }}]</option>

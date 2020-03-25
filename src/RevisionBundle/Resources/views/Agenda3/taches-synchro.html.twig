@@ -1,0 +1,85 @@
+<h3 class="m-b-xs text-center" style="padding: 5px;"><strong>{{ nomTache }}, échéance le {{ date|date('d') }}</strong></h3>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="contact-box center-version">
+            {# <a href="#">
+                <i class="fa fa-3x fa-calendar-check-o" aria-hidden="true"></i>
+                
+
+                <div class="font-bold"></div>
+                <address class="m-t-md">
+                    <strong>{{ dossier.nom }}</strong><br>
+                    {{ date|date('d/m/Y') }}
+                </address>
+            </a> #}
+            <table class="table" data-page-size="8">
+                <thead>
+                <tr class="th-col">
+                    <th class="text-center col-sm-1">RB</th>
+                    <th class="text-center sitimage_depuis col-sm-1">OB</th>
+                    <th class="text-center col-sm-1">Rappro</th>
+                    <th class="text-center col-sm-2">Pièce à <br> lettrer</th>
+                    <th class="text-center col-sm-2">Pièce <br> manquant</th>
+                    <th class="text-center col-sm-2">Chèque <br> inconnus</th>
+                    <th class="text-center col-sm-2">Dernière <br> demande</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for d in detailsTaches %}
+                        <tr>
+                            <td class="text-center col-sm-1"><i class="fa fa-circle" style="color:{{ d.colorRb }};margin-left: 0px !important; padding-top: 3px;"></i></td>
+                            <td class="text-center col-sm-1"><i class="fa fa-circle" style="color:{{ d.colorOb }};margin-left: 0px !important; padding-top: 3px;"></i></td>
+                            <td class="text-center col-sm-1"><i class="fa fa-circle" style="color:{{ d.colorRappro}};margin-left: 0px !important; padding-top: 3px;"></i></td>
+                            <td class="text-center col-sm-2">{{d.alettrer}}</td>
+                            <td class="text-center col-sm-2">{{d.nb_pc_manquant}}</td>
+                            <td class="text-center col-sm-2">{{d.chq_inconnu}}</td>
+                            <td class="text-center col-sm-2">{{d.date_envoi}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div>
+                <form class="form-horizontal" style="padding-bottom: 15px;">
+                    <label class="col-md-2" style="visibility: visible; margin-left: 5px; padding-left: 0px; padding-right: 0px; margin-top: 8px;">
+                        <span>Tache Faite:</span>
+                    </label>
+                    {% if isDepasser %}
+                        <div class="badge badge-danger" style="float: right;margin-right: 245px; margin-top: 8px;">
+                            Dépasser
+                        </div>
+                    {% endif %}
+                    <div class="input-group row date col-md-3">
+                        <div class="col-ms-6">
+                            {% set dateFait = "now"|date("d/m/Y") %}
+                            {% set status = 0 %}
+                            {% if tachesSynchro and tachesSynchro.status and tachesSynchro.datefait %}
+                                {% set dateFait = tachesSynchro.datefait|date('d/m/Y') %}
+                                {% set status = tachesSynchro.status %}
+                            {% endif %}
+                            {% if tachesSynchro and tachesSynchro.status and not tachesSynchro.datefait %}
+                                {% set dateFait = '' %}
+                                {% set status = tachesSynchro.status %}
+                            {% endif %}
+                            <input type="text" class="input form-control" name="debut" id="js_date_fait" {{ status ? 'disabled' : '' }} value="{{ dateFait }}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br>
+            {% if status == 0 %}
+                <div class="contact-box-footer">
+                    <span class="btn btn-sm btn-white" data-tache="{{ nomTache }}" data-dossier="{{ dossier.id }}" data-google_id="{{ googleId }}" data-taches_synchro="{{ tachesSynchro ? tachesSynchro.id : 0 }}" id="id_marquer_fait"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Fait</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        $('#js_date_fait').datepicker({format:'dd/mm/yyyy', language: 'fr', autoclose:true, todayHighlight: true});
+    });
+</script>

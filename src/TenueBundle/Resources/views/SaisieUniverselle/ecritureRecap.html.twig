@@ -1,0 +1,8 @@
+<div class="col-lg-12">
+    <input type="hidden" name="typeecriture" id="typeecriture" value="{{ typeEcriture }}">
+    {% if typeEcriture <= 0 %}
+        {{ include('@Tenue/SaisieUniverselle/ecritureRecapPicDoc.html.twig') }}
+    {% else %}
+        {{ include('@Tenue/SaisieUniverselle/ecritureRecapCompta.html.twig') }}
+    {% endif %}
+</div>

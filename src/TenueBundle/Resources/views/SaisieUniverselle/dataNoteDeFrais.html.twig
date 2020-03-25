@@ -1,0 +1,158 @@
+<div class="col-lg-12">
+    <div class="col-lg-12" id="form-resize">
+        <div id="data-image" style="overflow-y: scroll;">
+            <div class="ibox">
+                {#<div class="form-group">#}
+                    {#{{ include('@Tenue/SaisieUniverselle/btnInfoPerdosRecategorisation.html.twig') }}#}
+                {#</div>#}
+                <div class="row">
+                    {{ include('@Tenue/SaisieUniverselle/dataCategorie.html.twig') }}
+                </div>
+                <div class="row">
+                    {{ include('@Tenue/SaisieUniverselle/infoperdos.html.twig') }}
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-title" id="title-saisie">
+                   {{ include('@Tenue/SaisieUniverselle/titleSaisie.html.twig') }}
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="form-ndf-caisse">
+
+                                {% set mois = {
+                                    1:'Janvier',
+                                    2:'Fevrier',
+                                    3:'Mars',
+                                    4:'Avril',
+                                    5: 'Mai',
+                                    6:'Juin',
+                                    7:'Juillet',
+                                    8:'Août',
+                                    9: 'Septembre',
+                                    10: 'Octobre',
+                                    11: 'Novembre',
+                                    12: 'Décembre'
+                                }
+                                %}
+
+
+                                {% set beneficiaireId = -1 %}
+                                {% set libelle = '' %}
+                                {% set moisDu = -1 %}
+                                {% set moisAu = -1 %}
+                                {% set annee = -1 %}
+                                {% set remboursable = 0 %}
+                                {% set facturable = 0 %}
+
+                                {% if saisie is not null %}
+                                    {% set beneficiaireId = (saisie.ndfUtilisateur is null) ? -1 : saisie.ndfUtilisateur.id %}
+                                    {% set libelle = (saisie.libelle is null) ? '' : saisie.libelle %}
+                                    {% set moisDu = (saisie.moisDu is null) ? -1 :saisie.moisDu %}
+                                    {% set moisAu = (saisie.moisAu is null) ? -1 :saisie.moisAu %}
+                                    {% set annee = (saisie.annee is null) ? -1 : saisie.annee %}
+                                    {% set facturable = (saisie.facturable is null) ? 0 : saisie.facturable %}
+                                    {% set remboursable = (saisie.remboursable is null) ? 0 : saisie.remboursable %}
+                                {% endif %}
+
+                                <input type="hidden" name="image" id="image" value="{{ image.id }}">
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="note" class="control-label">Nom de la note</label>
+                                        <input type="text" class="form-control" name="note" id="note" value="{{ libelle }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label" for="beneficiaire">Bénéficaire</label>
+                                        <div class="input-group">
+                                            <select class="form-control" id="beneficiaire" name="beneficiaire">
+                                                <option value="-1"></option>
+                                                {% for beneficiaire in beneficiaires %}
+                                                    {{ include('TenueBundle:SaisieUniverselle:optionBeneficiaire.html.twig' , {'beneficiaireId': beneficiaireId }) }}
+                                                {% endfor %}
+                                            </select>
+                                            <span class="input-group-addon"><i class="fa fa-edit pointer" id="ben-edit"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-plus pointer" id="ben-add"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="control-label" for="annee">Année</label>
+                                        <select class="form-control" id="annee" name="annee">
+                                            <option value="-1"></option>
+                                            {% for i in 2017..2020 %}
+                                                <option value="{{ i }}" {{ (annee == i) ? 'selected' : '' }}>{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="control-label" for="mois-du">Mois du</label>
+                                        <select class="form-control" id="mois-du" name="moisdu">
+                                            <option value="-1"></option>
+                                            {% for key , value in mois%}
+                                                <option value="{{ key }}" {{ (moisDu == key) ? 'selected' : '' }}>{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="control-label" for="mois-au">Mois au</label>
+                                        <select class="form-control" id="mois-au" name="moisau">
+                                            <option value="-1"></option>
+                                            {% for key, value in mois %}
+                                                <option value="{{ key }}" {{ (moisAu == key) ? 'selected' : '' }}>{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="control-label"></label>
+                                    <div class="checkbox m-r-xs">
+                                        <input type="checkbox" id="facturable" name="facturable" {{ (facturable == 0) ? '' : 'checked' }}>
+                                        <label for="facturable">
+                                           facturable
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="control-label"></label>
+                                    <div class="checkbox m-r-xs">
+                                        <input type="checkbox" id="remboursable" name="remboursable" {{ (remboursable == 0) ? '' : 'checked' }}>
+                                        <label for="remboursable">
+                                            Remboursable
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label">.</label>
+                                    <button class="btn btn-sm btn-primary btn-block" id="btn-save-ndf">Valider</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="ndf-details"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="col-lg-12" id="pdf-resize">
+        <div id="pdf" class="ndf-caisse">
+
+        </div>
+    </div>
+</div>
+
+

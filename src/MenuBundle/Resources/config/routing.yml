@@ -1,0 +1,9 @@
+menu_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MenuBundle:Default:index }
+    
+menu_utilisateur:
+    path:   /menu/{utilisateur}
+    defaults: { _controller: MenuBundle:Menu:menuUtilisateur ,utilisateur: 0}
+    options:
+        expose: true

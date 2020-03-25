@@ -1,0 +1,244 @@
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span style="float: left;margin: 0 100px 7px"><h5>Situation des imagesaa</h5></span>
+            <div class="ibox-tools">
+            </div>
+        </div>
+            <div class="ibox-content " style="padding: 0px 20px 20px 20px;">
+            <table class="table" data-page-size="8">
+                <thead>
+                    <tr class="">
+                        <th style="valign: middle;text-align: center;">Categorie et <br>sous categorie</th>
+                        <th style="valign: middle;text-align: center;">Arrivée depuis <br> {{ data.arrive }} </th>
+                        <th style="valign: middle;text-align: center;">En stock <br> Aujourd'hui</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr >
+                        <td style="text-align:left;background-color: #fbfaf9;"><strong>Banques</strong></td>
+                        <td class="color-col"><strong>{{ data.nbbanques|number_format(0, ',', '&nbsp;')|raw }}</strong></td>
+                        <td class="color-col"><strong>{{ data.totalstocknow|number_format(0, ',', '&nbsp;')|raw }}</strong></td>
+                    </tr>
+                    {% for key,souscat in data.souscategorie %}
+                       {# {% for souscat in key %} #}
+                            <tr >
+                                <td style="">{{ souscat.souscategorie }}</td>
+                                <td class="tab-col">{{ souscat.nbsouscategorie|number_format(0, ',', '&nbsp;')|raw }}</td>
+                                {% if souscat.nbenstock is defined %}
+                                    <td class="tab-col">{{ souscat.nbenstock|number_format(0, ',', '&nbsp;')|raw }}</td>
+                                {% else %}
+                                    <td class="tab-col"> 0 </td>
+                                {% endif %}
+                            </tr>
+                        {# {% endfor %} #}
+                    {% endfor %}
+                    <tr class="color-col">
+                        <td><strong>Total</strong></td>
+                        <td><strong>{{ data.total|number_format(0, ',', '&nbsp;')|raw }}</strong></td>
+                        <td><strong>{{ data.totalstocknow|number_format(0, ',', '&nbsp;')|raw }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span style="float: left;margin: 0 80px 7px"><h5>Releves Bancaires Manquants</h5></span>
+            <div class="ibox-tools">
+            </div>
+        </div>
+        <div class="ibox-content " id="result_rb_bancaire">
+            <div style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                    <tr class="th-col">
+                        <th>Clients : <span class="label label-warning"> {{ data.nbclient|number_format(0, ',', '&nbsp;')|raw }} </span></th>
+                        <th>Dossiers : <span class="label label-warning"> {{ data.nbdossier|number_format(0, ',', '&nbsp;')|raw }} </span></th>
+                        <th>Comptes : <span class="label label-warning"> {{ data.numcomptbq|number_format(0, ',', '&nbsp;')|raw }} </span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="">
+                        <th></th>
+                        <th class="cent">Total </th>
+                        <th class="cent">Notifiés </th>
+                    </tr>
+                    {% if data.affichM and data.casAffich == "m" %}
+                        <tr>
+                            <td class="pad-m"> m </td>
+                            <td class="cent"> {{ data.m|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.affichM and data.casAffich == "metun" %}
+                        <tr>
+                            <td class="pad-m"> m </td>
+                            <td class="cent"> {{ data.m|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                        <tr >
+                            <td class="pad-m"> m-1 </td>
+                            <td class="cent"> {{ data.m_moin_un|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.affichM and data.casAffich == "mqu" %}
+                        <tr>
+                            <td class="pad-m"> m </td>
+                            <td class="cent"> {{ data.m|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                        <tr >
+                            <td class="pad-m"> m-4 </td>
+                            <td class="cent"> {{ data.m_moin_quatre|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.casAffich == "mun" %}
+                        <tr >
+                            <td class="pad-m"> m-1 </td>
+                            <td class="cent"> {{ data.m_moin_un|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.casAffich == "mdeux" %}
+                        <tr >
+                            <td class="pad-m"> m-2 </td>
+                            <td class="cent"> {{ data.m_moin_deux|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.casAffich == "mtrois" %}
+                        <tr >
+                            <td class="pad-m"> m-3 </td>
+                            <td class="cent"> {{ data.m_moin_trois|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.casAffich == "mquatre" %}
+                        <tr >
+                            <td class="pad-m"> m-4 </td>
+                            <td class="cent"> {{ data.m_moin_quatre|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% elseif data.casAffich == "tous" %}
+                        {% if data.affichM %}
+                            <tr>
+                                <td class="pad-m"> m </td>
+                                <td class="cent"> {{ data.m|number_format(0, ',', '&nbsp;')|raw }} </td>
+                                <td class="cent"> 0 </td>
+                            </tr>
+                        {% endif %}
+                        <tr >
+                            <td class="pad-m"> m-1 </td>
+                            <td class="cent"> {{ data.m_moin_un|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                        <tr >
+                            <td class="pad-m"> m-2 </td>
+                            <td class="cent"> {{ data.m_moin_deux|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                        <tr >
+                            <td class="pad-m"> m-3 </td>
+                            <td class="cent"> {{ data.m_moin_trois|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                        <tr >
+                            <td class="pad-m"> m-4 </td>
+                            <td class="cent"> {{ data.m_moin_quatre|number_format(0, ',', '&nbsp;')|raw }} </td>
+                            <td class="cent"> 0 </td>
+                        </tr>
+                    {% endif %}
+                    <tr >
+                        <td class="pad-m"> Incomplet  </td>
+                        <td class="cent"> {{ data.incomplet|number_format(0, ',', '&nbsp;')|raw }} </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> Absence Total </td>
+                        <td class="cent"> {{ data.abcencetot|number_format(0, ',', '&nbsp;')|raw }} </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span style="float: left;margin: 0 85px 7px"><h5>Autres Pièces Manquantes</h5></span>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content " id="result_rb_bancaire">
+            <div style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                    <tr >
+                        <th colspan="2">Clients : <span class="label label-warning"> {{ data.nbclient|number_format(0, ',', '&nbsp;')|raw }}</span></th>
+                        <th >Dossier : <span class="label label-warning"> {{ data.nbdossier|number_format(0, ',', '&nbsp;')|raw }}</span></th>
+                        <th colspan="2">Comptes : <span class="label label-warning"> {{ data.numcomptbq|number_format(0, ',', '&nbsp;')|raw }}</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="">
+                        <td class=""> </td>
+                        <td class="">Lignes a<br> rapprocher</td>
+                        <td class="cent">Remises,autres<br> manquants </td>
+                        <td class="cent">Pièces<br> manquantes </td>
+                        <td class="cent">Chèques<br> inconnus </td>
+                    </tr>
+                    <tr class="cent">
+                        <td class="cent">m-1</td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    <tr class="cent">
+                        <td class="cent">m-2 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    <tr class="cent">
+                        <td class="cent">m-3 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    <tr class="cent">
+                        <td class="cent"> autres </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    <tr class="color-col cent">
+                        <td class="cent"><strong>Total</strong></td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                        <td class="cent"> 0 </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

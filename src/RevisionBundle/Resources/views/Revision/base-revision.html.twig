@@ -1,0 +1,155 @@
+{# src/BanqueBundle/Resources/view/Revision/base-revision.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+
+{% block title %} {{ parent() }} | REVISION {% endblock %}
+{% block menu_left %}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <div class="menu-scroll">
+                <ul class="nav metismenu side-menu" id="side-menu">
+                    {% if is_granted('ROLE_CGP_REVISION') %}
+                        <li>
+                            <a href="{{ path('revision_dashboard') }}" title="pilotage"><i class="fa fa-dashboard"></i> <span
+                                        class="nav-label">Pilotage</span></a>
+                        </li>
+                        {#<li>
+                            <a href="{{ path('revision_agenda') }}" title="Agenda"><i class="fa fa-calendar-check-o"></i> <span
+                                        class="nav-label">Agenda</span></a>
+                        </li>#}
+                        {#<li>
+                            <a href="{{ path('revision_agenda_2') }}" title="Agenda"><i class="fa fa-calendar-check-o"></i> <span
+                                        class="nav-label">Agenda</span></a>
+                        </li>#}
+
+                        <li>
+                            <a href="{{ path('revision_agenda_3') }}" title="Agenda"><i class="fa fa-calendar-check-o"></i> <span
+                                        class="nav-label">Agenda</span></a>
+                        </li>
+
+                        <li>
+                            <a href="#" title="revision0"><i class="fa fa-pencil-square-o"></i> <span
+                                        class="nav-label">Revision 0</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('revision_un') }}" title="revision1"><i class="fa fa-pencil-square-o"></i> <span
+                                        class="nav-label">Revision 1</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="revision2"><i class="fa fa-pencil-square-o"></i> <span
+                                        class="nav-label">Revision 2</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="tab des images"><i class="fa fa-table"></i> <span
+                                        class="nav-label">Tab des images</span></a>
+                        </li>
+                         <li>
+                            <a href="#" title="tab avencement des tâches"><i class="fa fa-table"></i> <span
+                                        class="nav-label">Tab avancement des tâches</span></a>
+                        </li>
+                        {#<li>
+                            <a href="#" title="infoperdos"><i class="fa fa-cloud"></i> <span
+                                        class="nav-label">Infoperdos</span></a>
+                        <li>
+                            <a href="#" title="contrôle RB"><i class="fa fa-check-square"></i> <span
+                                        class="nav-label">Côntrole RB</span></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Picbank"><i class="fa fa-th"></i> <span
+                                        class="nav-label">Pic bank</span></a>
+                        </li>
+                         <li>
+                            <a href="#" title="Pièces manquantes"><i class="fa fa-file"></i> <span
+                                        class="nav-label">Pièces manquantes</span></a>
+                        </li>
+                         <li>
+                            <a href="#" title="chèques inconnus"><i class="fa fa-file-archive-o"></i> <span
+                                        class="nav-label">chèques inconnus</span></a>
+                        </li>#}
+                        <li>
+                            <a href="#" title="Prep TVA"><i class="fa fa-calculator"></i> <span
+                                        class="nav-label">Preparation TVA</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('rev_import_export') }}" title="import export">
+                                <i class="fa fa-check-square-o"></i>
+                                <span class="nav-label">Import Export</span>
+                            </a>
+                        </li>
+                        {#Menu PICDATA#}
+                        <li>
+                            <a href="#" title="Dossiers"><i class="fa fa-folder-o"></i>
+                                <span class="nav-label">Dossiers</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#" title="Facturette"><span class="nav-label">Parametrages</span> <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level collapse">
+                                        <li class="cl_picdata" data-lien="info_perdos_instr_show_editeur"><a href="#">Modifier Instruction</a></li>
+                                        <li class="cl_picdata" data-lien="info_perdos_client_principale"><a href="#">Création Client</a></li>
+                                        <li class="cl_picdata" data-lien="info_perdos_client_status"><a href="#">Statut Client</a></li>
+                                        <li class="cl_picdata" data-lien="infoperdos_smtp"><a href="#">SMTP</a></li>
+                                    </ul>
+                                </li>
+                                <li class="cl_picdata" data-lien="info_perdos_caracteristique"><a href="#">Cr&eacute;ation</a></li>
+                                <li class="cl_picdata" data-lien="info_perdos_activation_dossier"><a href="#">Statut</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" title="Dossiers"><i class="fa fa-file-pdf-o"></i>
+                                <span class="nav-label">Images</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                                <li class="cl_picdata" data-lien="img_envoi_ftp"><a href="#">Envoi FTP</a></li>
+                                <li class="cl_picdata" data-lien="consultation_piece"><a href="#">Consultation</a></li>
+                                <li class="cl_picdata" data-lien="img_correspondance"><a href="#">Correspondance</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" title="Dossiers"><i class="fa fa-random"></i>
+                                <span class="nav-label">Echanges</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                                <li class="cl_picdata" data-lien="echange_tableau_image_homepage"><a href="#">Tableau des images</a></li>
+                                <li>
+                                    <a href="#" title="Facturette"><span class="nav-label">Banques</span> <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level collapse">
+                                        <li class="cl_picdata" data-lien="banque_pilote"><a href="#">Synth&egrave;se</a></li>
+                                        <li class="cl_picdata" data-lien="banque_gestion_banque"><a href="#">Gestion Banque</a></li>
+                                        <li class="cl_picdata" data-lien="banque_controle_releve"><a href="#">Controle Relevé</a></li>
+                                        <li class="cl_picdata" data-lien="banque_2"><a href="#">Rapprochement de banque</a></li>
+                                        <li class="cl_picdata" data-lien="banque_pm"><a href="#">Pièces Manquantes</a></li>
+                                        <li class="cl_picdata" data-lien="banque_preparation_tva"><a href="#">Préparation TVA</a></li>
+                                        <li class="cl_picdata" data-lien="jnl_bq"><a href="#">Journal de banque</a></li>
+                                        <li class="cl_picdata" data-lien="cle_index"><a href="#">Clefs</a></li>
+                                        {#<li class="cl_picdata" data-lien="info_perdos_instr_show_editeur"><a href="#">Linxo</a></li>#}
+                                    </ul>
+                                </li>
+                                {#<li class="cl_picdata" data-lien="drt_index"><a href="#">DRT, TVA, Etats</a></li>#}
+                            </ul>
+                        </li>
+                        {#FIn Menu PICDATA#}
+                        
+                        
+                    {#
+                        <li>
+                            <a href="{{ path('revision_affectation') }}" title="Tableau de bord"><i class="fa fa-tags"></i> <span
+                                        class="nav-label">Affectation Lot</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('revision_panier') }}" title="Tableau de bord"><i class="fa fa-shopping-cart"></i> <span
+                                        class="nav-label">Panier</span></a>
+                        </li>#}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block menu_top_center %}
+    {{ include('AppBundle:Commun:user-app-office.html.twig') }}
+{% endblock %}

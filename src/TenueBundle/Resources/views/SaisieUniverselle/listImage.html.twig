@@ -1,0 +1,27 @@
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th style="border:none;">
+                {% set nbImages = 0 %}
+                {% if images is defined %}
+                    {% set nbImages = images|length %}
+                {% endif %}
+                <span class="label">Images</span><span class="label label-warning" id="nombre">{{ nbImages }}</span>
+            </th>
+            <th style="border:none;"><a href="#" class="closebtn" id="imageclose">&times;</a></th>
+        </tr>
+        </thead>
+        <tbody id="allimage">
+
+        {% if images is defined %}
+            {% for image in images %}
+                <tr>
+                    {{ include('@Tenue/SaisieUniverselle/imageItem.html.twig') }}
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>

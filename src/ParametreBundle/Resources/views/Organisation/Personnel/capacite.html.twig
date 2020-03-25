@@ -1,0 +1,175 @@
+{# src/ParametreBundle/Resources/views/Parametre/Entite/entite.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@ParametreBundle/Resources/public/css/capacite.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ParametreBundle/Resources/public/js/capacite.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} Capacité par Poste
+{% endblock %}
+
+{% block content %}
+    <div class="row white-bg padding-sm margin-xs">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class=""><a data-toggle="tab" href="#tab-poste"><i class="fa fa-cubes"></i> Capacité par Poste</a>
+                        </li>
+                        <li class="active"><a data-toggle="tab" href="#tab-operateur"><i class="fa fa-user"></i> Affectation</a>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-poste" class="tab-pane">
+                            <div class="panel-body white-bg">
+                                <div class="row">
+                                    <div class="col-md-8 col-md-push-2">
+                                        <table id="poste-list" class="table table-responsive">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:60%;">Postes</th>
+                                                <th class="text-center" style="width:40%;">Capacité (images/j)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for poste in postes %}
+                                                <tr data-poste="{{ poste.id }}">
+                                                    <td>{{ poste.nom|upper }}</td>
+                                                    <td class="text-center">
+                                                        <input type="text" value="{{ poste.capacite }}"
+                                                               style="border:none;text-align:center;">
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td style="width:60%;"></td>
+                                                <td class="text-center" style="width:40%;">
+                                                    <button id="btn-save-capacite-poste"
+                                                            class="btn btn-primary btn-outline">Enregistrer
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-operateur" class="tab-pane active">
+                            <div class="panel-body white-bg">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 class="bg-info padding-6">
+                                            Listes des Opérateurs par Poste
+                                            <i id="loader1" class="loader pull-right fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                                        </h4>
+                                        <div class="panel-group" id="operateur-list" style="overflow-y: auto;">
+                                            {% for poste in postes %}
+                                                {% set current_poste_id = poste.id %}
+                                                {% if poste.id is empty %}
+                                                    {% set current_poste_id = 0 %}
+                                                {% endif %}
+                                                <div data-poste="{{ current_poste_id }}" class="panel panel-default" style="max-height:250px;overflow-y:auto;">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#operateur-list"
+                                                               href="#collapse-{{ loop.index }}" class="collapsed poste-title"
+                                                               aria-expanded="false">{{ poste.nom|upper|trim }}</a>
+                                                            <span class="badge badge-default pull-right operateur-count"></span>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse-{{ loop.index }}" class="panel-collapse collapse"
+                                                         aria-expanded="false" style="height:0;">
+                                                        <div class="panel-body operateurs">
+                                                                {% for poste_id,item in operateurs %}
+                                                                    {% if poste.id is not empty and poste_id == poste.id %}
+                                                                        <ul id="list-group-{{ poste_id }}" class="list-operateur">
+                                                                            {% for operateur in item %}
+                                                                                <li data-operateur="{{ operateur.id }}" class="list-operateur-item">
+                                                                                    <em>{{ '[' ~ operateur.login ~ '] '}}</em>{{  (operateur.prenom ~ ' ' ~ operateur.nom)|upper|truncate(30) }}
+                                                                                    <i class="fa fa-bars pull-right pointer poste-affectation"></i>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    {% elseif poste.id is empty and poste_id == 0 %}
+                                                                        <ul id="list-group-0" class="list-operateur">
+                                                                            {% for operateur in item %}
+                                                                                <li data-operateur="{{ operateur.id }}" class="list-operateur-item">
+                                                                                    <em>{{ '[' ~ operateur.login ~ '] '}}</em>{{  (operateur.prenom ~ ' ' ~ operateur.nom)|upper|truncate(30) }}
+                                                                                    <i class="fa fa-bars pull-right pointer poste-affectation"></i>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 class="bg-info padding-6">
+                                            Capacité
+                                            <i id="loader2" class="loader pull-right fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                                        </h4>
+                                        <div class="panel panel-default hidden" id="operateur-capacite">
+                                            <div class="panel-heading">
+                                                <h4 id="operateur-nom" class="panel-title"></h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <input type="hidden" id="selected-operateur">
+                                                <input type="hidden" id="selected-operateur-poste">
+                                                <div class="alert alert-default">
+                                                    <div style="font-weight:bold;" class="row">
+                                                        <div class="col-sm-6">Poste:</div>
+                                                        <div id="poste-title" class="col-sm-6 text-center">SAISIE</div>
+                                                    </div>
+                                                    <hr>
+                                                    <div style="font-weight:bold;" class="row">
+                                                        <div class="col-sm-6">Capacité:</div>
+                                                        <div id="poste-capacite" class="col-sm-6 text-center">500 images/j</div>
+                                                    </div>
+                                                    <hr>
+                                                    <div style="font-weight:bold;" class="row">
+                                                        <div class="col-sm-6">Coefficient:</div>
+                                                        <div class="col-sm-6 text-center">
+                                                            <input type="text" id="operateur-coeff" value="1" style="border:none;text-align:center">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="row">
+                                                    <div class="col-sm-6"></div>
+                                                    <div class="col-sm-6 text-center">
+                                                        <button id="btn-save-capacite-operateur" class="btn btn-primary btn-outline">Enregistrer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

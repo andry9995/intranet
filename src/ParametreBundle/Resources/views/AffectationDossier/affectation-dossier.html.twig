@@ -1,0 +1,205 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/parametre/css/affectation-dossier.css') }}">
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/parametre/js/affectation-dossier.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} AFFECTATION CLIENT ET DOSSIERS
+{% endblock %}
+
+{% block content %}
+    <div class="row" style="padding-top:15px;" id="affectation-container">
+        <div class="col-sm-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="utilisateur">Utilisateur</label>
+                    <select id="utilisateur" data-placeholder="Séléctionner un utilisateur"
+                            class="form-control chosen-select-utilisateur"
+                            style="min-width: 300px;">
+                        <option value=""></option>
+						<optgroup label="Pas Affecté">
+                        {% for operateur in resps %}
+                              <option value="{{ operateur.id }}">{{ operateur.nom|upper ~ ' ' ~ operateur.prenom }}</option>
+						{% endfor %}
+						</optgroup>
+						<optgroup label="Affecté">
+                        {% for operateur in respas %}
+                              <option value="{{ operateur.id }}">{{ operateur.nom|upper ~ ' ' ~ operateur.prenom }}</option>
+						{% endfor %}
+						</optgroup>    
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="btn-add-operateur">Ajouter</button>
+                </div>
+            </form>
+
+            <div class="bg-info padding-6" style="margin-top: 30px;">
+                <strong>Liste des Responsables</strong>
+                <i id="loader"
+                   class="loader pull-right fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"
+                   style="display: none;"></i>
+                <div class="btn-group pull-right" role="group" aria-label="..."
+                     style="margin-top: -3px;">
+                    <button id="btn-save-responsable" type="button" class="btn btn-xs btn-info">
+                        <i class="fa fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </div>
+			<input type="hidden" id="idresp" value="" />
+            <div class="dd" id="responsable-nestable">
+                <ol class="dd-list" id="responsable-list">
+                    {% for responsable in responsables %}
+                        <li class="dd-item responsable-item"
+                            data-id="{{ responsable.operateur.id }}">
+                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                            {#type="button" data-action="remove" title="Supprimer">x#}
+                            {#</button>#}
+                            <div class="dd-handle">
+                                <span class="responsable-nom">{{ responsable.operateur.nom|upper ~ ' ' ~ responsable.operateur.prenom }}</span>
+                            </div>
+                            {% if (responsable.child | length > 0) %}
+                                <ol class="dd-list">
+                                    {% for child in responsable.child %}
+                                        <li class="dd-item responsable-item"
+                                            data-id="{{ child.operateur.id }}">
+                                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                                            {#type="button" data-action="remove"#}
+                                            {#title="Supprimer">x#}
+                                            {#</button>#}
+                                            <div class="dd-handle">
+                                                <span class="responsable-nom">{{ child.operateur.nom|upper ~ ' ' ~ child.operateur.prenom }}</span>
+                                            </div>
+                                            {% if (child.child | length > 0) %}
+                                                <ol class="dd-list">
+                                                    {% for child2 in child.child %}
+                                                        <li class="dd-item responsable-item"
+                                                            data-id="{{ child2.operateur.id }}">
+                                                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                                                            {#type="button"#}
+                                                            {#data-action="remove"#}
+                                                            {#title="Supprimer">x#}
+                                                            {#</button>#}
+                                                            <div class="dd-handle">
+                                                                <span class="responsable-nom">{{ child2.operateur.nom|upper ~ ' ' ~ child2.operateur.prenom }}</span>
+                                                            </div>
+                                                            {% if (child2.child | length > 0) %}
+                                                                <ol class="dd-list">
+                                                                    {% for child3 in child2.child %}
+                                                                        <li class="dd-item responsable-item"
+                                                                            data-id="{{ child3.operateur.id }}">
+                                                                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                                                                            {#type="button"#}
+                                                                            {#data-action="remove"#}
+                                                                            {#title="Supprimer">#}
+                                                                            {#x#}
+                                                                            {#</button>#}
+                                                                            <div class="dd-handle">
+                                                                                <span class="responsable-nom">{{ child3.operateur.nom|upper ~ ' ' ~ child3.operateur.prenom }}</span>
+                                                                            </div>
+                                                                            {% if (child3.child | length > 0) %}
+                                                                                <ol class="dd-list">
+                                                                                    {% for child4 in child3.child %}
+                                                                                        <li class="dd-item responsable-item"
+                                                                                            data-id="{{ child4.operateur.id }}">
+                                                                                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                                                                                            {#type="button"#}
+                                                                                            {#data-action="remove"#}
+                                                                                            {#title="Supprimer">#}
+                                                                                            {#x#}
+                                                                                            {#</button>#}
+                                                                                            <div class="dd-handle">
+                                                                                                <span class="responsable-nom">{{ child4.operateur.nom|upper ~ ' ' ~ child4.operateur.prenom }}</span>
+                                                                                            </div>
+                                                                                            {% if (child4.child | length > 0) %}
+                                                                                                <ol class="dd-list">
+                                                                                                    {% for child5 in child4.child %}
+                                                                                                        <li class="dd-item responsable-item"
+                                                                                                            data-id="{{ child4.operateur.id }}">
+                                                                                                            {#<button class="dd-action pull-right remove-responsable-item"#}
+                                                                                                            {#type="button"#}
+                                                                                                            {#data-action="remove"#}
+                                                                                                            {#title="Supprimer">#}
+                                                                                                            {#x#}
+                                                                                                            {#</button>#}
+                                                                                                            <div class="dd-handle">
+                                                                                                                <span class="responsable-nom">{{ child4.operateur.nom|upper ~ ' ' ~ child4.operateur.prenom }}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                    {% endfor %}
+                                                                                                </ol>
+                                                                                            {% endif %}
+                                                                                        </li>
+                                                                                    {% endfor %}
+                                                                                </ol>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ol>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="client">Clients</label>
+                    <select id="client" data-placeholder="Séléctionner un client"
+                            class="form-control chosen-select-client"
+                            style="min-width: 300px;">
+                        <option value=""></option>
+						<optgroup label="Pas Affecté">
+                        {% for client in clients %}
+                              <option value="{{ client.id }}">{{ client.nom | upper }}</option>
+						{% endfor %}
+						</optgroup>
+						<optgroup label="Affecté">
+                        {% for client in clientas %}
+                              <option value="{{ client.id }}">{{ client.nom | upper }}</option>
+						{% endfor %}
+						</optgroup>                     
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="btn-add-client">Ajouter</button>
+                </div>
+            </form>
+            <div id="list-client-self" style="min-height: 200px; max-height: 690px; overflow-y: auto">
+                <div class="bg-info padding-6" style="margin-top: 30px;">
+                    <strong>Liste des clients affectés</strong>
+                    <i id="loader2"
+                       class="loader pull-right fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"
+                       style="display: none;"></i>
+                    <div class="btn-group pull-right" role="group" aria-label="..."
+                         style="margin-top: -3px;">
+                        <button id="btn-save-client" type="button" class="btn btn-xs btn-info">
+                            <i class="fa fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </div>
+				<div class="dd" id="client-nestable">
+					<ol class="dd-list" id="client-list"></ol>
+				</div>	
+            </div>
+        </div>
+    </div>
+{% endblock %}

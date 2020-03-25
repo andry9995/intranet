@@ -1,0 +1,475 @@
+<div class="col-lg-5" id="pdf-resize">
+    <div id="pdf"></div>
+</div>
+
+<div class="col-lg-7" id="form-resize" style="margin-right: 0 !important;">
+    <div id="data-image" style="overflow-y: scroll;">
+
+        <div class="ibox">
+            <div class="row">
+                {{ include('@Tenue/SaisieUniverselle/dataCategorie.html.twig') }}
+            </div>
+            <div class="row">
+                {{ include('@Tenue/SaisieUniverselle/infoperdos.html.twig') }}
+            </div>
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-title" id="title-saisie">
+               {{ include('@Tenue/SaisieUniverselle/titleSaisie.html.twig') }}
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" id="form-fournisseur">
+                            {% set paysId = 1 %}
+                            {% set siren = '' %}
+                            {% set rs = '' %}
+                            {% set typePieceId = -1 %}
+                            {% set typeAVId = -1 %}
+                            {% set dateFact = '' %}
+                            {% set numFact = '' %}
+                            {% set dateEcheance = '' %}
+                            {% set dateReglement = '' %}
+                            {% set modeReglementId = -1 %}
+                            {% set numMoyenPaiement = '' %}
+                            {% set montant = 0 %}
+                            {% set montantPaye = 0 %}
+                            {% set dateLivraison = '' %}
+                            {% set periodeDebut = '' %}
+                            {% set periodeFin = '' %}
+                            {% set deviseId = 1 %}
+                            {% set chrono = '' %}
+                            {% set typeEcheance = -1 %}
+
+                            {% set mentionId = -1 %}
+                            {% set beneficiaireId = -1 %}
+                            {% set codePos = '' %}
+                            {% set nbCouvert = '' %}
+                            {% set jfSousnatureId = -1 %}
+                            {% set carteBleuBanqueCompteId = -1 %}
+
+
+                            {% set banque = '' %}
+                            {% set numCpt= '' %}
+
+                            {% set reglement = false %}
+                            {% set reglementCb = false %}
+
+                            {% if saisie is not null %}
+                                {% set paysId = (saisie.pays is null) ? 1 : saisie.pays.id %}
+                                {% set siren = (saisie.siret  is null) ? '' : saisie.siret %}
+                                {% set rs = (saisie.rs is null) ? '' : saisie.rs%}
+                                {% set typePieceId = (saisie.typePiece is null) ? -1 : saisie.typePiece.id %}
+                                {% set typeAVId = (saisie.typeAchatVente is null) ? -1 : saisie.typeAchatVente.id %}
+                                {% set dateFact = (saisie.dateFacture is null) ? '' : saisie.dateFacture|date('d/m/Y') %}
+                                {% set numFact = (saisie.numFacture is null) ? '' : saisie.numFacture %}
+                                {% set dateEcheance = (saisie.dateEcheance is null) ? '' : saisie.dateEcheance|date('d/m/Y') %}
+                                {% set dateReglement = (saisie.dateReglement is null) ? '' : saisie.dateReglement|date('d/m/Y') %}
+                                {% set modeReglementId = (saisie.modeReglement is null) ? '' : saisie.modeReglement.id %}
+                                {% set numMoyenPaiement = (saisie.numPaiement is null) ? '' : saisie.numPaiement %}
+                                {% set montantPaye = (saisie.montantPaye is null) ? '' : saisie.montantPaye %}
+                                {% set deviseId = (saisie.devise is null) ? 1 : saisie.devise.id %}
+                                {% set chrono = (saisie.chrono is null) ? '' : saisie.chrono %}
+                                {% set periodeDebut = (saisie.periodeD1 is null) ? '' : saisie.periodeD1|date('d/m/Y') %}
+                                {% set periodeFin = (saisie.periodeF1 is null) ? '' : saisie.periodeF1|date('d/m/Y') %}
+                                {% set typeEcheance = (regleEcheance is null) ?  2 : (regleEcheance.typeEcheance) is null ? -1 : regleEcheance.typeEcheance %}
+
+                                {% set dateLivraison = (saisie.dateLivraison is null) ? '' : saisie.dateLivraison|date('d/m/Y') %}
+
+                                {% if saisie.carteBleuBanqueCompte is not null %}
+                                    {% set carteBleuBanqueCompteId = saisie.carteBleuBanqueCompte.id  %}
+                                    {% set banque = saisie.carteBleuBanqueCompte.banqueCompte.banque.nom %}
+                                    {% set numCpt = saisie.carteBleuBanqueCompte.banqueCompte.numcompte %}
+                                {% endif %}
+
+                                {% if dateReglement != '' or numMoyenPaiement != '' or modeReglementId != '' %}
+                                    {% set reglement = true %}
+                                {% endif %}
+
+                                {% if modeReglementId == 1 %}
+                                    {% set reglementCb = true %}
+                                {% endif %}
+
+                                {% set jfSousnatureId = (saisie.sousnature is null) ? -1 : saisie.sousnature.id %}
+                                {% set mentionId = (saisie.mentionManuscrite is null) ? -1 : saisie.mentionManuscrite.id %}
+                                {% set beneficiaireId = (saisie.ndfUtilisateur is null) ? -1 : saisie.ndfUtilisateur.id %}
+                                {% set nbCouvert = (saisie.nbreCouvert is null) ? '' : saisie.nbreCouvert %}
+                                {% set codePos = (saisie.codePostal) %}
+
+                            {% endif %}
+
+                            <input type="hidden" name="image" id="image" value="{{ image.id }}">
+                            <input type="hidden" name="regleid" id="regleid" data-entity="{{ regleEcheanceEntity }}" value="{{ (regleEcheance is null) ? -1 : regleEcheance.id }}">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="pays">Pays orig.</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" id="pays" name="pays">
+                                            <option value="-1"></option>
+                                            {% for pays in payss %}
+                                                <option value="{{ pays.id }}" {{ (paysId == pays.id)? 'selected' : '' }}>{{ pays.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% block codePostal %}
+                                    {% endblock %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="siren">Siren/Siret</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="SIREN/SIRET" class="form-control" id="siren" name="siren" value="{{ siren }}">
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="rs">RS</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="RS" class="form-control" id="rs" name="rs" value="{{ rs }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="type-piece">Type Pièce</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" id="type-piece" name="typepiece">
+                                            <option value="-1"></option>
+                                            {% for typePiece in typePieces %}
+                                                <option value="{{ typePiece.id }}" {{ (typePieceId == typePiece.id) ? 'selected': '' }}>{{ typePiece.libelle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="type-av">Type A|V</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" id="type-av" name="typeav">
+                                            <option value="-1"></option>
+                                            {% for typeAchatVente in typeAchatVentes %}
+                                                <option value="{{ typeAchatVente.id }}" {{ (typeAVId == typeAchatVente.id) ? 'selected' : '' }}>{{ typeAchatVente.libelle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="date-fact">Date Fact</label>
+                                    <div class="col-lg-4">
+                                        <div class="input-group date">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                            <input type="text" class="form-control" value="{{ dateFact }}" name="datefact" id="date-fact">
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="num-fact">Num Fact</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="Num Fact" class="form-control" id="num-fact" name="numfact" value="{{ numFact }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="type-echeance">Echéance</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" id="type-echeance" name="typeecheance">
+                                            <option value="-1"></option>
+                                            <option value="0" {{ (typeEcheance == 0) ? 'selected' : '' }}>Règle</option>
+                                            <option value="2" {{ (typeEcheance== 2) ? 'selected' :  '' }}>Sur facture</option>
+                                            <option value="1" {{ (typeEcheance == 1) ? 'selected' : '' }}>Standard</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="date-echeance">Date Echéance</label>
+                                    <div class="col-lg-4">
+                                        <div class="input-group date">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                            <input type="text" class="form-control" value="{{ dateEcheance }}" name="dateecheance" id="date-echeance">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">
+                                        Règlement
+                                        <input type="checkbox" id="chk-reglement" class="i-checks" {{ (reglement == true) ? 'checked' : '' }}>
+                                    </label>
+                                    <div class="col-lg-4">
+                                        <div class="input-group date">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input type="text" class="form-control reglement" value="{{ dateReglement }}" name="datereglement" id="date-reglement" {{ (reglement == false) ? 'disabled' : '' }}>
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="mode-reglement">Mode Rglt.</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control reglement reglement-select" id="mode-reglement" name="modereglement" {{ (reglement == false) ? 'disabled' : '' }}>
+                                            <option value="-1"></option>
+                                            {% for modereglement in modeReglements %}
+                                                <option value="{{ modereglement.id }}" {{ (modeReglementId == modereglement.id) ? 'selected' :  '' }}>{{ modereglement.libelle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="n-moyen-paiement">N° Moyen Paye</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control reglement" value="{{ numMoyenPaiement }}" name="nummoyenpaiement" id="n-moyen-paiement" {{ (reglement == false) ? 'disabled' : '' }}>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="montant-paye">Montant Payé</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control montant reglement" value="{{ montantPaye|number_format(2, '.', ' ') }}" name="montantpaye" id="montant-paye" {{ (reglement == false) ? 'disabled' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="num-cb">Num CB</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control reglement reglement-select" name="numcb" id="num-cb" {{ (reglementCb == false) ? 'disabled' : '' }}>
+                                            <option value="-1"></option>
+                                            {% for carteBleuBanqueCompte in carteBleuBanqueComptes %}
+                                                <option value="{{ carteBleuBanqueCompte.id }}" {{ (carteBleuBanqueCompte.id == carteBleuBanqueCompteId) ? 'selected' : '' }}>
+                                                    {{ carteBleuBanqueCompte.numCb }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="banque">Banque</label>
+                                    <div class="col-lg-4">
+                                        <input class="form-control" type="text" id="banque" disabled value="{{ banque }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="num-cpt">Num CPT</label>
+                                    <div class="col-lg-4">
+                                        <input class="form-control" id="num-cpt" value="{{ numCpt }}" disabled>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="trouve-rel-cb">Trouve Rel CB</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" id="trouve-rel-cb" disabled>
+                                            <option value="-1"></option>
+                                            <option value="0" {{ (trouveRelCb == false) ? 'selected' : '' }}>Non</option>
+                                            <option value="1" {{ (trouveRelCb == true) ? 'selected' : '' }}>Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+
+                                    <label class="col-lg-2 control-label date-livraison-container {{ (typeAVId == 2) ? 'hidden' : ''  }}" for="date-livraison">Date Livraison</label>
+                                    <div class="col-lg-4 date-livraison-container {{ (typeAVId == 2) ? 'hidden' : ''  }}">
+                                        <div class="input-group date">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                            <input type="text" class="form-control" value="{{ dateLivraison }}" name="datelivraison" id="date-livraison">
+                                        </div>
+                                    </div>
+
+                                    <label class="col-lg-2 control-label periode-livraison-container {{ (typeAVId == 1) ? 'hidden' : ''  }}" for="periode-debut">Période Du</label>
+                                    <div class="col-lg-4 periode-livraison-container {{ (typeAVId == 1) ? 'hidden' : ''  }}">
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            <input type="text" class="input-sm form-control" name="periodedebut" id="periode-debut" value="{{ periodeDebut }}">
+                                            <span class="input-group-addon">Au</span>
+                                            <input type="text" class="input-sm form-control" name="periodefin" id="periode-fin" value="{{ periodeFin }}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% block justificatif %}
+                            {% endblock %}
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="devise">Devise</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" name="devise" id="devise">
+                                            <option value="-1"></option>
+                                            {% for devise in devises  %}
+                                                <option value="{{ devise.id }}" {{ (deviseId == devise.id) ? 'selected' : '' }}>{{ devise.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <label class="col-lg-2 control-label" for="chrono">Chrono</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" value="{{ chrono }}" name="chrono" id="chrono">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-2 pull-right">
+                                        <span class="btn btn-primary btn-xs btn-block" id="btn-save"><i class="fa fa-check"></i>&nbsp;&nbsp;Valider</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="col-lg-3">
+                    <h5>Ecritures</h5>
+                </div>
+                <div class="col-lg-8" style="margin-bottom: 10px !important;">
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <select class="form-control" id="type-recherche">
+                                <option value="-1"></option>
+                                <option value="2">Siren</option>
+                                <option value="0">Tiers</option>
+                                <option value="1">Libellé</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row recherche hidden" id="recherche-libelle-container">
+                                <input type="text" class="form-control" id="recherche-libelle">
+                            </div>
+                            <div class="row recherche hidden" id="recherche-tiers-container">
+                                <select class="form-control recherche " id="recherche-tiers">
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-2">
+                            <span class="btn btn-primary" id="recherche-ecriture"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table id="ecriture-dossier"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Détails</h5>
+                <div class="ibox-tools">
+                    <span class="btn btn-primary btn-xs"><i class="fa fa-plus pointer" id="btn-add-ecriture"></i></span>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 ecriture-container">
+                                {% set ecritureid = 1 %}
+                                {% for tva in tvas %}
+                                    {% set typeventeId = (tva.typeVente is null) ? -1 : tva.typeVente.id %}
+                                    {% set sousnatureId = -1 %}
+                                    {% set natureId = -1 %}
+                                    {% if tva.sousnature is not null %}
+                                        {% set sousnatureId = tva.sousnature.id %}
+                                        {% set natureId = tva.sousnature.nature.id %}
+                                    {% endif %}
+
+                                    {% set soussouscategorieId = -1 %}
+                                    {% set souscategorieId = -1 %}
+                                    {% if tva.soussouscategorie is not null %}
+                                        {% set soussouscategorieId = tva.soussouscategorie.id %}
+                                        {% set souscategorieId = tva.soussouscategorie.souscategorie.id %}
+                                    {% endif %}
+
+                                    {% if souscategorieId == -1 %}
+                                        {% if inImputation %}
+                                            {% if tva.souscategorie is not null %}
+                                                {% set souscategorieId = tva.souscategorie.id %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% set libelle = '' %}
+                                    {% if inImputation %}
+                                        {% set libelle = tva.libelle %}
+                                    {% else %}
+                                        {% set libelle = tva.prelibelle %}
+                                    {% endif %}
+
+                                    {% set dateLivraisonTva = (tva.dateLivraison is null) ? '' : tva.dateLivraison|date('d/m/Y') %}
+                                    {% set periodeDebutTva = (tva.periodeDeb is null) ? '' : tva.periodeDeb|date('d/m/Y') %}
+                                    {% set periodeFinTva = (tva.periodeFin is null) ? '' : tva.periodeFin|date('d/m/Y') %}
+
+                                    {% set tiersId = (tva.tiers is null) ? '' : tva.tiers.id %}
+                                    {% set montantTiers = (tva.montantHt is null) ? 0 : tva.montantHt %}
+
+                                    {% set pccBilanId = (tva.pccBilan is null) ? '' : tva.pccBilan.id %}
+
+                                    {% set pccId = (tva.pcc is null) ? '' : tva.pcc.id %}
+                                    {% set montantPcc = (tva.montantTtc is null) ? 0 : tva.montantTtc %}
+
+                                    {% set pccTvaId = (tva.pccTva is null) ? '' : tva.pccTva.id %}
+                                    {% set montantTva = montantPcc - montantTiers %}
+                                    {% set tvaTauxId = (tva.tvaTaux is null) ? -1 : tva.tvaTaux.id %}
+
+                                    {% set montantTvaSaisi = montantTva %}
+
+                                    {{ include('@Tenue/SaisieUniverselle/ecriture.html.twig') }}
+
+                                    {% set ecritureid = ecritureid + 1 %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Récap Ecriture</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 ecriture-recap-container">
+                                <table id="ecriture-recap"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+

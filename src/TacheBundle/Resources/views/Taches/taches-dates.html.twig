@@ -1,0 +1,45 @@
+<table class="table table-hover" width="100%">
+    <tbody>
+    {% for tachesDate in tachesDates %}
+        {% set tachesEntity = (tachesEntitys[tachesDate.id] is defined) ? tachesEntitys[tachesDate.id] : null %}
+        <tr >
+            <td width="6%">
+                {% if dossier is not null and tachesDate.dossier is null %}
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" class="cl_chk_tache_action" {{ (tachesEntity is not null and tachesEntity.status == 1) ? 'checked' : '' }} id="chk_date_{{ tachesDate.id }}" value="option1">
+                        <label for="chk_date_{{ tachesDate.id }}"></label>
+                    </div>
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </td>
+            <td width="22%">{{ tachesDate.clotures }}</td>
+            <td width="22%">{{ (tachesDate.infoperdos == 1) ? 'Infoperdos' : tachesDate.formule }}</td>
+            <td width="10%" class="text-left cl_id_taches_date" data-id="{{ tachesDate.id }}">
+                {% if dossier is null or (dossier is not null and tachesDate.dossier is not null and dossier.id == tachesDate.dossier.id) %}
+                    <span class="qtip_new btn btn-xs btn-outline btn-warning cl_taches_date_edit" data-action="0" title="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <span class="qtip_new btn btn-xs btn-outline btn-danger cl_taches_date_edit" data-action="2" title="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                {% endif %}
+            </td>
+            <td width="20%">
+                {% if dossier is not null and tachesDate.dossier is null %}
+                    <input type="text" class="text-right cl_jour_additif form-control input-sm" value="{{ tachesEntity is not null and tachesEntity.status == 1 ? tachesEntity.jourAdditif : 0 }}" style="max-width: 50px;background: transparent">
+                {% endif %}
+            </td>
+            <td width="20%">
+                {% if dossier is not null and tachesDate.dossier is null %}
+                    {% set responsable = tachesEntity is not null and tachesEntity.status == 1 ? tachesEntity.responsable : -1 %}
+                    {% set resp = (valFiscalInfoPerdos is not null) ? valFiscalInfoPerdos : -1 %}
+                    <div class="row" data-champs={{champsFiscalInfoPerdos}}>
+                        <div class="btn-group btn-group-sm cl_tache_resp_container">
+                            <span class="btn {{ (resp == 1) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="1">Scriptura</span>
+                            <span class="btn {{ (resp == 0) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="0">EC</span>
+                            <span class="btn {{ (responsable == 2) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="2">Client</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

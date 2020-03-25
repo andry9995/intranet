@@ -1,0 +1,11 @@
+{% set disabled = 'disabled' %}
+{% set libelle = 'Détails IK' %}
+{% if trajet is not null %}
+    {% set libelle = trajet ~ 'Km' %}
+{% endif %}
+{% if sousnature is not null %}
+    {% if sousnature.id == 389 %}
+        {% set disabled = '' %}
+    {% endif %}
+{% endif %}
+<span class="btn btn-primary btn-block btn-xs btn-ik {{ disabled }}" style="font-size: 10px !important;">{{ libelle }}</span>

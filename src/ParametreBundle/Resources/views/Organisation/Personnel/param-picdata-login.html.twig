@@ -1,0 +1,98 @@
+{# src/ParametreBundle/Resources/views/Parametre/index.html.twig #}
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/parametre/js/picdatalogin.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} PERSONNELS
+{% endblock %}
+
+{% block content %}
+    <div class="ibox ">
+        <div class="ibox-content" id="id_container"></div>
+    </div>
+{% endblock %}
+
+{#{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+    '@ParametreBundle/Resources/public/js/picdatalogin.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+    '@ParametreBundle/Resources/public/css/picdatalogin.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} PERSONNELS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-chain"></i> Rataché un Opérateur à un Utilisateur</h5>
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="user-container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4 class="bg-info opera-6"><i class="fa fa-list-alt"></i> Liste des Opérateurs</h4>
+                            <div id="user-list" class="ovflow">
+                                <input type="hidden" id="value_operateur" value="">
+                                <ul class="list-group op-text" id="ul-operateur-pic-data" >
+                                    {% for operateur in operateurs %}
+                                        <li class="list-group-item list-op" value="{{ operateur.id }}" >
+                                            <i class="fa fa-user"></i>  {{ operateur.nom }} {{ operateur.prenom }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="bg-info opera-6"><i class="fa fa-users"></i> Liste des Utilisateurs</h4>
+                            <div id="user-form" class="list-util">
+                                <div class="alert alert-danger hidden" id="add-personnel-erreur">
+
+                                </div>
+                                <div class="col-sm-4" id="utilis-list" >
+                                    <input type="hidden" id="value_utilisateur" value="">
+                                    <select id="ul-utilisateur-pic-data" class="form-control" style="width: 350px;">
+                                        <option value="">Pas d'utilisateur</option>
+                                        {% for utilis in utilisateurs %}
+                                            <option value="{{ utilis.id }}">{{ utilis.nom }} {{ utilis.prenom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div id="param_opera_utilis">
+                                    <div class="pull-right">
+                                        <button id="btn-save-role-user" class="btn btn-primary"><i class="fa fa-check"></i>  Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}#}
+

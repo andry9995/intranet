@@ -1,0 +1,74 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/parametre/js/indemnite-km.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Indemnité Kilometriques</h3>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="exercice" class="col-md-4 control-label">Exercice</label>
+                                    <div class="col-md-8">
+                                        <select id="exercice"  class="form-control">
+                                            <option value="-1"></option>
+                                            {% for exercice in exercices %}
+                                                <option value="{{ exercice }}">{{ exercice }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="typevehicule" class="col-md-4 control-label">Type Véhicule</label>
+                                    <div class="col-md-8">
+                                        <select id="typevehicule" class="form-control">
+                                            <option value="-1"></option>
+                                            {% for typeVehicule in typeVehicules %}
+                                                <option value="{{ typeVehicule.id }}">{{ typeVehicule.libelle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <button id="btn-show-pcc" class="btn btn-sm btn-primary btn-block">Go</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="footable table table-striped toggle-arrow-tiny table-hover table-frais-km" >
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

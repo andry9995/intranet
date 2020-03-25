@@ -1,0 +1,21 @@
+<div class="col-lg-11">
+    <span class="label label-default">{{ dossier.nom }}</span>
+    {% if dossier.activiteComCat3 is not null %}
+        <span class="label label-default">{{ dossier.activiteComCat3.libelle }}</span>
+    {% endif %}
+    {% set messageCategorie = false %}
+    {% if separation is not null %}
+        {% if separation.soussouscategorie is null or separation.souscategorie is null%}
+            {% set messageCategorie = true %}
+        {% endif %}
+    {% endif %}
+
+    {% if messageCategorie == true %}
+        <span class="label label-warning"><i class="fa fa-exclamation-triangle"></i>&nbsp; Veuillez completer la categorisation</span>
+    {% endif %}
+</div>
+<div class="ibox-tools">
+    <a class="collapse-link">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+</div>

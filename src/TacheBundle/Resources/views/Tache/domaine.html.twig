@@ -1,0 +1,6 @@
+<select>
+    <option value=""></option>
+    {% for domaine in domaines %}
+        <option value="{{ domaine.id }}">{{ domaine.domaine }}</option>
+    {% endfor %}
+</select>

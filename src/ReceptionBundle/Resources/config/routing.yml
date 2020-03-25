@@ -1,0 +1,333 @@
+#acceuil
+reception_default:
+  path:     /{json}
+  defaults: { _controller: 'ReceptionBundle:Reception:index', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#tableau de bord reception
+reception_dashboard:
+  path:     /tableau-de-bord/{json}
+  defaults: { _controller: 'ReceptionBundle:Reception:dashBord', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+reception_controle_flux_image:
+  path:     /ctrl-flux
+  defaults: { _controller: 'ReceptionBundle:Reception:flux' }
+reception_controle_image_traite:
+  path:     /ctrl-traite
+  defaults: { _controller: 'ReceptionBundle:Reception:traite' }
+reception_controle_separation:
+  path:     /ctrl-separation
+  defaults: { _controller: 'ReceptionBundle:Reception:separation' }
+reception_histogramme:
+  path:     /histogramme
+  defaults: { _controller: 'ReceptionBundle:Reception:histogramme' }
+reception_priorisation:
+  path:     /priorisation
+  defaults: { _controller: 'ReceptionBundle:Reception:priorisation' }
+reception_doublon:
+  path:     /doublon
+  defaults: { _controller: 'ReceptionBundle:Doublon:index' }
+reception_doublon_dossier:
+    path: /doublon/filtre
+    defaults: { _controller: 'ReceptionBundle:Doublon:dossier' }
+    methods: [POST]
+    options:
+        expose: true
+reception_doublon_liste:
+    path: /doublon/liste
+    defaults: { _controller: 'ReceptionBundle:Doublon:liste' }
+    methods: [POST]
+    options:
+        expose: true
+reception_trou_liste:
+    path: /doublon/trou
+    defaults: { _controller: 'ReceptionBundle:Doublon:trou' }
+    methods: [POST]
+    options:
+        expose: true
+reception_set_doublon:
+    path: /doublon/set
+    defaults: { _controller: 'ReceptionBundle:Doublon:set' }
+    methods: [POST]
+    options:
+        expose: true        
+
+reception_update_file_extension:
+    path: /tirage/update-file-extension
+    defaults: { _controller: 'ReceptionBundle:Reception:updateFileExtension'}
+    methods: [GET]
+    options:
+      expose: true
+reception_save_file_extension:
+    path: /tirage/save-file-extension
+    defaults: { _controller: 'ReceptionBundle:Reception:saveFileExtension'}
+    methods: [GET]
+    options:
+      expose: true
+#Fermeture download
+reception_fermer_download:
+  path: /tirage/fermer-download
+  defaults: { _controller: 'ReceptionBundle:Reception:fermerDownload'}
+  methods: [GET]
+  options:
+    expose: true
+
+#lancer download
+reception_lancer_download:
+  path: /tirage/lancer-download
+  defaults: { _controller: 'ReceptionBundle:Reception:lancerDownload'}
+  methods: [GET]
+  options:
+    expose: true
+#Affichage ecran gestion tirage
+reception_tirage:
+  path:     /tirage/{json}
+  defaults: { _controller: 'ReceptionBundle:Reception:tirage', json:0 }
+  requirements:
+      json: 0|1
+  options:
+    expose: true
+
+
+reception_lot_telecharger:
+  path: /tirage/télécharger
+  defaults: { _controller: 'ReceptionBundle:Reception:telecharger'}
+  options:
+    expose: true
+
+#Recherche cabinet, dossier
+reception_recherche_cabinet_dossier:
+  path: /tirage/recherche
+  defaults: { _controller: 'ReceptionBundle:Reception:tirageRechercheCabDos'}
+  options:
+    expose: true
+
+#Afficharger ecran en cours download
+reception_download_en_cours:
+  path: /tirage/download_en_cours
+  defaults: { _controller: 'ReceptionBundle:Reception:getDownloadEnCour'}
+  options:
+    expose: true
+
+#Vider table lot_a_telecharger
+reception_download_en_cours_vider:
+  path: /tirage/download_vider
+  defaults: { _controller: 'ReceptionBundle:Reception:removeDownloadEnCours'}
+  options:
+    expose: true
+
+#Enregsitrer lot prêt a télécharger
+reception_download_save:
+  path: /tirage/save_download
+  defaults: { _controller: 'ReceptionBundle:Reception:saveLotATelecharger'}
+  methods: [POST]
+  options:
+    expose: true
+
+#Rafraichir liste client dossier
+reception_tirage_listeClientDossier:
+  path: /tirage/liste_client_dossier
+  defaults: { _controller: 'ReceptionBundle:Reception:tirageGetListeClientDossier'}
+  methods: [GET]
+  options:
+    expose: true
+
+#Affichage ecran affectation lots
+reception_affectation:
+  path:     /affectation/{json}
+  defaults: { _controller: 'ReceptionBundle:Reception:affectation', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#Affichage du contenu d'un panier d'un utilisateur
+reception_panier:
+  path:     /panier/{json}
+  defaults: { _controller: 'ReceptionBundle:Reception:panier', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#Ajouter un lot dans un panier
+reception_add_to_panier:
+  path:     /add-to-panier/{operateur}/{lot}/{status}
+  defaults: { _controller: 'ReceptionBundle:Reception:addToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    status: 1|3
+
+#Déplacer un lot d'un panier vers un autre panier
+reception_move_to_panier:
+  path:     /move-to-panier/{operateur}/{lot}/{status}/{panier}
+  defaults: { _controller: 'ReceptionBundle:Reception:moveToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    status: 1|3
+    panier: \d+
+
+#Retourner un lot d'un panier vers la liste à partager
+reception_return_from_panier:
+  path:     /return-from-panier/{lot}/{status}/{panier}
+  defaults: { _controller: 'ReceptionBundle:Reception:returnFromPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    lot:  \d+
+    status: 0|2
+    panier: \d+
+
+reception_a_retelecharger:
+  path: /a_retelecharger
+  defaults: { _controller: 'ReceptionBundle:Reception:retelecharger'}
+  methods: [POST]
+  options:
+    expose: true
+
+reception_affectation_dossier:
+    path: /affectation-dossier-reception
+    defaults: { _controller: 'ReceptionBundle:Reception:affectationDossier' }
+    methods: [GET]
+
+
+
+parametre_affectation_dossier:
+    path: /affectation-dossier
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:index' }
+    methods: [GET]
+
+parametre_affectation_dossier_responsable_edit:
+    path: /affectation-dossier/responsable
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:editResponsable' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_affectation_dossier_client_edit:
+    path: /affectation-dossier/client
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:editClient' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_affectation_dossier_client_sup:
+    path: /affectation-dossier/client-sup
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:supClient' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_client_par_utilisateur:
+    path: /affectation-dossier/client-utilisateur/{operateur}
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:clientParUtilisateur' }
+    methods: [GET]
+    options:
+        expose: true
+
+parametre_client_responsable:
+    path: /affectation-dossier/client-responsable/
+    defaults: { _controller: 'ParametreBundle:AffectationDossier:clientParResponsable' }
+    methods: [POST]
+    options:
+        expose: true
+
+reception_correction_separation:
+  path: /correction-separation
+  defaults: { _controller: 'ReceptionBundle:Reception:correctionSeparation'}
+  methods: [GET]
+  options:
+    expose: true
+
+
+reception_verif_separation:
+  path: /controle-separation
+  defaults: { _controller: 'ReceptionBundle:Reception:controleSeparation'}
+  methods: [GET]
+  options:
+    expose: true
+
+reception_verif_decoupage:
+  path: /controle-decoupage
+  defaults: { _controller: 'ReceptionBundle:Reception:controleDecoupage'}
+  methods: [GET]
+  options:
+    expose: true
+
+reception_image_suppr:
+  path: /image-suppr
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:index' }
+  methods: [GET]
+
+reception_image_suppr_list:
+  path: /image-suppr-list
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:listImage' }
+  methods: [POST]
+  options:
+      expose: true
+
+
+reception_image_suppr_dossier:
+  path: /image-suppr-dossier
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:dossier' }
+  methods: [GET]
+  options:
+      expose: true
+
+reception_image_suppr_exercice:
+  path: /image-suppr-exercice
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:exercice' }
+  methods: [GET]
+  options:
+      expose: true
+
+reception_image_suppr_date_scan:
+  path: /image-suppr-date-scan
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:dateScan' }
+  methods: [GET]
+  options:
+      expose: true
+
+reception_image_suppr_lot:
+  path: /image-suppr-lot
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:lot' }
+  methods: [GET]
+  options:
+      expose: true
+
+reception_image_suppr_del:
+  path: /image-suppr-delete
+  defaults: { _controller: 'ReceptionBundle:ImageSuppr:delete' }
+  methods: [DELETE]
+  options:
+      expose: true
+
+reception_parametrage_separation:
+  path: /controle-separation/parametrage
+  defaults: { _controller: 'ReceptionBundle:Reception:parametrageSeparation'}
+  methods: [GET]
+  options:
+    expose: true
+
+reception_save_parametrage_separation:
+  path: /controle-separation/parametrage/save
+  defaults: { _controller: 'ReceptionBundle:Reception:saveParametrageSeparation'}
+  methods: [POST]
+  options:
+    expose: true

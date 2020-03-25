@@ -1,0 +1,7 @@
+.pdfobject-container { 
+    height: 1500px;
+    width: 900px;
+    margin-top: 6%;
+}
+.pdfobject { border: 1px solid #666; }
+#infoimage { margin-top: 3%; }

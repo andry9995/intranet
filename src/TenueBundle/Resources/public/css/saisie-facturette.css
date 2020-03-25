@@ -1,0 +1,19 @@
+.page-heading{
+    padding-top: 10px;
+}
+
+.form-group{
+    margin-bottom: 5px;
+}
+
+.ibox{
+    margin-bottom: 10px;
+}
+
+.js-fg-image, .js-rg-image {
+    cursor: pointer;
+}
+
+#modal-ui{
+    z-index: 1000000 !important;
+}

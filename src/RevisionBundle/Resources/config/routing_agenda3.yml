@@ -1,0 +1,70 @@
+revision_agenda_3:
+    path: /
+    defaults: { _controller: RevisionBundle:Agenda3:index }
+
+revision_agenda_3_tache_calendar:
+    path:   calendar/taches/{periode}
+    defaults: { _controller: RevisionBundle:Agenda3:tachesCalendar }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      periode: \d{4}-\d{2}-\d{2}
+
+revision_agenda_3_moov_tache:
+    path:   calendar/taches/moov
+    defaults: { _controller: RevisionBundle:Agenda3:tacheMoov }
+    methods: [POST]
+    options:
+        expose: true
+
+revision_agenda_3_event_by_date:
+    path:   calendar/taches/details
+    defaults: { _controller: RevisionBundle:Agenda3:eventByDate }
+    methods: [POST]
+    options:
+      expose: true
+
+revision_agenda_3_events_day:
+    path:   calendar/events/day
+    defaults: { _controller: RevisionBundle:Agenda3:eventsDay }
+    methods:  [POST]
+    options:
+      expose: true
+
+revision_agenda_3_dossier:
+    path: calendar/dossiers
+    defaults: { _controller: RevisionBundle:Agenda3:dossiers }
+    methods:  [POST]
+    options:
+      expose: true
+
+revision_agenda_3_marquer_fait:
+    path: calendar/marquer/fait
+    defaults: { _controller: RevisionBundle:Agenda3:marquerFait }
+    methods:  [POST]
+    options:
+      expose: true
+
+revision_agenda_3_change_client_color:
+    path: calendar/client/color
+    defaults: { _controller: RevisionBundle:Agenda3:clientColor }
+    methods:  [POST]
+    options:
+      expose: true
+
+revision_agenda_3_events_tache_libre:
+    path: calendar/events/config-tache-libre
+    defaults: { _controller: RevisionBundle:Agenda3:configTacheLibre }
+    methods:  [POST]
+    options:
+      expose: true 
+
+revision_agenda_3_maj:
+    path: calendar/maj/{periode}
+    defaults: { _controller: RevisionBundle:Agenda3:tacheMaj }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      periode: \d{4}-\d{2}-\d{2}

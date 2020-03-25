@@ -1,0 +1,10 @@
+rev_import_export:
+    path: /
+    defaults: { _controller: RevisionBundle:ImportExport:index }
+
+rev_import_export_result:
+    path: /results
+    defaults: { _controller: RevisionBundle:ImportExport:results }
+    methods:  [POST]
+    options:
+        expose: true

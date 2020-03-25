@@ -1,0 +1,32 @@
+{# 0=ponctuel,1=annuel,2=semestriel,3=quadrimestriel,4=trimestriel,6=bimensuel,12=mensuel,5=quotidien #}
+
+{% if tachesLibreDate.periode == 0 %}
+    {% set periode = 'Ponctuel' %}
+{% elseif tachesLibreDate.periode == 1 %}
+    {% set periode = 'Annuel' %}
+{% elseif tachesLibreDate.periode == 2 %}
+    {% set periode = 'Semestriel' %}
+{% elseif tachesLibreDate.periode == 3 %}
+    {% set periode = 'Quadrimestriel' %}
+{% elseif tachesLibreDate.periode == 4 %}
+    {% set periode = 'Trimestriel' %}
+{% elseif tachesLibreDate.periode == 6 %}
+    {% set periode = 'Bimensuel' %}
+{% elseif tachesLibreDate.periode == 12 %}
+    {% set periode = 'Mensuel' %}
+{% elseif tachesLibreDate.periode == 5 %}
+    {% set periode = 'Quotidien' %}
+{% else %}
+    {% set periode = '' %}
+{% endif %}
+
+<tr data-id="{{ tachesLibreDate.id }}">
+    <td>{{ periode }}</td>
+    <td>{{ (tachesLibreDate.demarrage is not null) ? tachesLibreDate.demarrage|date('d/m/Y') : '' }}</td>
+    <td>{{ tachesLibreDate.jour != 0 ? tachesLibreDate.jour : '' }}</td>
+    <td>{{ (tachesLibreDate.dateCalcul is not null) ? tachesLibreDate.dateCalcul|date('d/m/Y') : '' }}</td>
+    <td>
+        <i class="pointer fa fa-pencil-square-o cl_edit_tache_libre_date" data-action="0" aria-hidden="true"></i>
+        <i class="pointer fa fa-trash-o cl_edit_tache_libre_date" data-action="2" aria-hidden="true"></i>
+    </td>
+</tr>

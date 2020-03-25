@@ -1,0 +1,6 @@
+<select>
+    <option value="0">Pas de poste</option>
+    {% for poste in postes %}
+        <option value="{{ poste.id }}">{{ poste.nom }}</option>
+    {% endfor %}
+</select>

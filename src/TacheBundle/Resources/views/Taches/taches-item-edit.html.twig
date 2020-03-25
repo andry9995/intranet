@@ -1,0 +1,29 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        {% if type == 0 %}
+            <label class="col-lg-2 control-label" for="id_regime_imposition">R.&nbsp;d'imposit&deg;</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="id_regime_imposition" data-type="{{ type }}">
+                    <option value="0" {{ tachesItem is null or (tachesItem is not null and tachesItem.regimeImposition is null) ? 'selected' : '' }}>Tous</option>
+                    {% for regimeImposition in regimeImpositions %}
+                        <option value="{{ regimeImposition.id }}" {{ tachesItem is not null and tachesItem.regimeImposition is not null and tachesItem.regimeImposition.id == regimeImposition.id ? 'selected' : '' }}>{{ regimeImposition.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% else %}
+            <label class="col-lg-2 control-label" for="id_regime_imposition">R.&nbsp;Tva</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="id_regime_imposition" data-type="{{ type }}">
+                    <option value="0" {{ tachesItem is null or (tachesItem is not null and tachesItem.regimeTva is null) ? 'selected' : '' }}>Tous</option>
+                    {% for regimeTva in regimeTvas %}
+                        <option value="{{ regimeTva.id }}" {{ tachesItem is not null and tachesItem.regimeTva is not null and tachesItem.regimeTva.id == regimeTva.id ? 'selected' : '' }}>{{ regimeTva.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-group text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_taches_item_edit" data-action="1" data-taches_item="{{ (tachesItem is null) ? 0 : tachesItem.id }}" data-taches="{{ taches.id }}"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

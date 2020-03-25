@@ -1,0 +1,260 @@
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Situation des images</h5></span>
+            <div class="ibox-tools collapse-up-sitimage-banque">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content sitimage-banque-content" style="padding: 0px 20px 20px 20px; min-height: 400px !important;">
+            <div id="first_affich" style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                    <tr class="th-col">
+                        <th>Categorie et <br> sous categorie</th>
+                        <th>Arrivée depuis </th>
+                        <th>En stock <br> Aujourd'hui</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;background-color: #fbfaf9;"><strong>Banques</strong></td>
+                        <td class="color-col" style="text-align: right !important;">{{banque|number_format(0, ',',' ')}}</td>
+                        <td class="color-col" style="text-align: right !important;">{{banque_stock|number_format(0, ',',' ')}}</td>
+                    </tr>
+
+                    {% set total_image = 0 %}
+                    {% set total_stock = 0 %}
+                    {% for situation_image in situations_images %}
+                        {% set total_image = total_image + situation_image.nb_image %}
+                        {% set total_stock = total_stock + situation_image.nb_stock %}
+                        <tr>
+                            <td><strong>{{situation_image.libelle_new}}</strong></td>
+                            <td class="text-right">{{situation_image.nb_image|number_format(0, ',',' ')}}</td>
+                            <td class="text-right">{{situation_image.nb_stock|number_format(0, ',',' ')}}</td>
+                        </tr>
+                    {% endfor %}
+
+                    {% set inconnu = banque - total_image %}
+                    {% set inconnu_stock = banque_stock - total_stock %}
+
+                    <tr>
+                        <td><strong>Inconnu</strong></td>
+                        <td class="text-right">{{inconnu|number_format(0, ',',' ')}}</td>
+                        <td class="text-right">{{inconnu_stock|number_format(0, ',',' ')}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Releves Bancaires Manquants</h5></span>
+            <div class="ibox-tools collapse-up-sitimage-releveb">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content " id="result_rb_bancaire" style="min-height: 400px !important;">
+            <div style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                    <tr class="th-col">
+                        <th>Clients : <span class="label label-warning text-right"> {{ releves_manquants[0]['nb_client']|number_format(0, ',',' ') }} </span></th>
+                        <th>Dossiers : <span class="label label-warning text-right"> {{ releves_manquants[0]['nb_dossier']|number_format(0, ',',' ') }} </span></th>
+                        <th>Comptes : <span class="label label-warning text-right"> {{ releves_manquants[0]['nb_compte']|number_format(0, ',',' ') }} </span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="">
+                        <th></th>
+                        <th class="cent">Total </th>
+                        <th class="cent">Notifiés </th>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> m-1 </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_moins_un']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> m-2 </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_moins_deux']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> m-3 </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_moins_trois']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> m-4 </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_moins_quatres']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> Incomplet  </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_incomplet']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    <tr >
+                        <td class="pad-m"> Absence Total </td>
+                        <td class="text-right"> {{ releves_manquants[0]['m_abs_total']|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Autres Pièces Manquantes</h5></span>
+            <div class="ibox-tools collapse-up-sitimage-piece">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content " id="result_piece_manquant" style="min-height: 400px !important;">
+            <div style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                    <tr>
+                        <th>Clients: <span class="label label-warning text-right"> {{ pieces_manquants[0]['nb_client']|number_format(0, ',',' ') }} </span></th>
+                        <th>Dossiers: <span class="label label-warning text-right"> {{ pieces_manquants[0]['nb_dossier']|number_format(0, ',',' ') }} </span></th>
+                        <th class="cent" colspan="3">Comptes: <span class="label label-warning text-right"> {{ pieces_manquants[0]['nb_compte']|number_format(0, ',',' ') }} </span></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class=""> </td>
+                        <td class="">Lignes a<br> rapprocher</td>
+                        <td class="cent">Remises,autres<br> manquants</td>
+                        <td class="cent">Pièces<br> manquantes </td>
+                        <td class="cent">Chèques<br> inconnus </td>
+                    </tr>
+                    <tr>
+                        <td class="pad-m">m</td>
+                        <td class="text-right"> {{ a_rapprocher[0]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[0]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    <tr>
+                        <td class="pad-m">m-1</td>
+                        <td class="text-right"> {{ a_rapprocher[1]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[1]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    <tr>
+                        <td class="pad-m">m-2 </td>
+                        <td class="text-right"> {{ a_rapprocher[2]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[2]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    <tr>
+                        <td class="pad-m">m-3 </td>
+                        <td class="text-right"> {{ a_rapprocher[3]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[3]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    <tr>
+                        <td class="pad-m">Autres </td>
+                        <td class="text-right"> {{ a_rapprocher[4]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[4]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    <tr class="color-col" style="text-align: left !important;">
+                        <td class="pad-m">Total </td>
+                        <td class="text-right"> {{ a_rapprocher[5]|number_format(0, ',',' ') }} </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> 0 </td>
+                        <td class="text-right"> {{ cheque_inconnu[5]|number_format(0, ',',' ') }} </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Imputées</h5></span>
+            <div class="ibox-tools collapse-up-sitimage-imputee">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content " id="result_piece_manquant">
+            <div style="display: block">
+                <table class="table" data-page-size="8">
+                    <thead>
+                        <tr>
+                            <th>Clients</th>
+                            <th>Dossier</th>
+                            <th>Banque</th>
+                            <th>Compte</th>
+                            <th>Ecart</th>
+                            <th>RB</th>
+                            <th>OB</th>
+                            <th>Tot lignes</th>
+                            <th>Lettrée</th>
+                            <th>Clef</th>
+                            <th>A lettrée</th>
+                            <th>Pièce manq</th>
+                            <th>Cheq inconnus</th>
+                            <th>%Rapproché</th>
+                            <th>Priorité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for imputee in imputees %}
+                            <tr>
+                                <td>{{ imputee.clients }}</td>
+                                <td>{{ imputee.dossier }}</td>
+                                <td>{{ imputee.banque }}</td>
+                                <td>{{ imputee.comptes }}</td>
+                                <td>OK/PB</td>
+                                <td>{{ imputee.m }}</td>
+                                <td>OK/PB</td>
+                                <td class="text-right">{{ imputee.nb_r|number_format(0, ',',' ') }}</td>
+                                <td class="text-right">{{ imputee.nb_lettre|number_format(0, ',',' ') }}</td>
+                                <td class="text-right">{{ imputee.nb_clef|number_format(0, ',',' ') }}</td>
+                                <td></td>
+                                <td class="text-right">{{ imputee.nb_pc_manquant|number_format(0, ',',' ') }}</td>
+                                <td class="text-right">{{ imputee.chq_inconnu|number_format(0, ',',' ') }}</td>
+                                {% if(imputee.nbr_rapproche == 0) %}
+                                    <td class="text-right"> {{ imputee.nbr_rapproche }}</td>
+                                {% else %}
+                                    <td class="text-right">{{ imputee.nbr_rapproche|number_format(0, ',',' ') }}%</td>
+                                {% endif %}
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

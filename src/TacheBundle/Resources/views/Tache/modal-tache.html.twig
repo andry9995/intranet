@@ -1,0 +1,156 @@
+{# Modal pour ajouter ou modifier une Tache Par Client / Par Dossier #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 id="modal-tache-title" class="modal-title">Ajouter une tâche</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" id="add-tache-id">
+
+                    <div id="add-tache-error" class="alert alert-danger padding-sm"></div>
+
+                    <div class="form-group libre-group">
+                        <label for="tache-generale" class="col-sm-3 control-label">Tâche</label>
+
+                        <div class="col-sm-5">
+                            {{ render(controller('TacheBundle:TacheLibre:listeSimple', { 'json': 0})) }}
+                        </div>
+
+                        <label id="tache-domaine" class="col-sm-4 control-label text-left">Domaine: </label>
+                    </div>
+
+                    {#Tache Légale#}
+                    <div class="form-group legale-group">
+                        <label for="tache-legale-nom" class="col-sm-3 control-label">Tâche</label>
+                        <div class="col-sm-5">
+                            <input type="text" id="tache-legale-nom" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-tache-demarrage" class="col-sm-3 control-label">Démarrage</label>
+
+                        <div class="col-sm-4">
+                            <input id="add-tache-demarrage" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-tache-periode" class="col-sm-3 control-label">Période</label>
+
+                        <div class="col-sm-4">
+                            <select id="add-tache-periode" class="form-control">
+                                <option value=""></option>
+                                <option value="12">Mensuel</option>
+                                <option value="6">Bimensuel</option>
+                                <option value="4">Trimestriel</option>
+                                <option value="3">Quadrimestriel</option>
+                                <option value="2">Semestriel</option>
+                                <option value="1">Annuel</option>
+                                <option value="0">Ponctuel</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 libre-group">
+                            <button class="btn btn-primary" id="add-tache-select-date"
+                                    data-date-format="yyyy-mm-dd">
+                                <span class="fa fa-calendar fa-lg"></span>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 libre-group">
+                            <div id="multi-date-container">
+                                {#<span class="multi-date-item" data-date="13-11">13-11<span class="pull-right close">&times;</span></span>#}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group libre-group">
+                        <label for="add-tache-mois-plus" class="col-sm-3 control-label">Mois(+)</label>
+
+                        <div class="col-sm-2">
+                            <input id="add-tache-mois-plus" class="form-control" onkeypress="return isNumberKey(event)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-au-plus-tard" class="col-sm-3 control-label">Au plus tard
+                            avant</label>
+
+                        <div class="col-sm-2">
+                            <input id="add-tache-au-plus-tard" class="form-control" onkeypress="return isNumberKey(event)">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">jour(s)</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-realisation" class="col-sm-3 control-label">Réalisé avant</label>
+
+                        <div class="col-sm-2">
+                            <input id="add-tache-realisation" class="form-control" onkeypress="return isNumberKey(event)">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">jour(s)</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-entite" class="col-sm-3 control-label">Entité Responsable</label>
+
+                        <div class="col-sm-6">
+                            <select id="add-tache-entite" class="form-control">
+                                <option value=""></option>
+                                <option value="1">Scriptura</option>
+                                <option value="2">Client</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="responsable-client-group" class="form-group hidden">
+                        <label for="add-tache-responsable-client" class="col-sm-3 control-label">Responsable</label>
+
+                        <div class="col-sm-6">
+                            <select id="add-tache-responsable-client" class="form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div id="responsable-scriptura-group" class="form-group hidden">
+                        <label for="add-tache-responsable-scriptura"
+                               class="col-sm-3 control-label">Responsable</label>
+
+                        <div class="col-sm-6">
+                            <select id="add-tache-responsable-scriptura" class="form-control">
+                                <option value=""></option>
+                                {% for operateur in operateurs %}
+                                    <option value="{{ operateur.id }}">{{ operateur.prenom|upper }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group libre-group">
+                        <label for="add-tache-jalon" class="col-sm-3 control-label">Tâche Jalon</label>
+
+                        <div class="col-sm-6" style="padding-top: 5px;">
+                            <input id="add-tache-jalon" type="checkbox" class="i-checks">
+                        </div>
+                    </div>
+                    <div class="form-group legale-group">
+                        <label for="add-tache-legale" class="col-sm-3 control-label">Tâche Légale</label>
+
+                        <div class="col-sm-6" style="padding-top: 5px;">
+                            <input id="add-tache-legale" type="checkbox" class="i-checks" disabled>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn-add-tache-save">Enregistrer
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

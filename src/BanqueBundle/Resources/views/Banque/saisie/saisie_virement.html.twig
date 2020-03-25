@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="col-md-1 control-label">Date</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control verif-date" id="datevi" value="">
+            </div>
+            <label class="col-md-2 control-label">Montant Total</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control verif-total" id="totalvi" value="0">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 pull-right">
+        <span id="js_form_virementbanque_submit" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Valider</span>
+    </div>
+    {{ include('BanqueBundle:Banque/saisie:banque_saisie_a_saisir.html.twig') }}
+</div>
+
+
+
+<div class="row row-grid">
+    <div class="col-lg-12" style="margin-top: 10px;">
+        <table id="virement-list"></table>
+    </div>
+</div>
+
+{#<div class="row">#}
+    {#<div id="tvirement">#}
+        {#<table class="table table-bordered bordered" id="demo-table">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Num</th>#}
+                {#<th>Bénéficiaire</th>#}
+                {#<th>Montant</th>#}
+                {#<th>Type Tiers</th>#}
+                {#<th>Compte</th>#}
+                {#<th>Action</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody id="lignevi">#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
+{#<div class="row">#}
+    {#<div class="col-lg-12" id="fvirement">#}
+        {#<div class="form-group">#}
+            {#<div class="col-md-1 no-padding">#}
+                {#<input type="text" class="form-control" id="vinum" value="" placeholder="Num">#}
+            {#</div>#}
+            {#<div class="col-md-3 no-padding">#}
+                {#<input type="text" class="form-control" id="vibenef" value="" placeholder="Bénéficiaire">#}
+            {#</div>#}
+            {#<div class="col-md-2 no-padding">#}
+                {#<input type="text" class="form-control" id="vimontant" value="" placeholder="Montant">#}
+            {#</div>#}
+            {#<div class="col-md-3 no-padding">#}
+                {#<select class="form-control" id="vitype">#}
+                    {#<option value=""></option>#}
+                    {#<option value="11">Associe Salarie</option>#}
+                    {#<option value="1">Banque</option>#}
+                    {#<option value="3">Client</option>#}
+                    {#<option value="11">Associe Salarie</option>#}
+                    {#<option value="9">Emprunt</option>#}
+                    {#<option value="13">Etat</option>#}
+                    {#<option value="5">Fournisseur</option>#}
+                    {#<option value="7">Organisme social</option>#}
+                {#</select>#}
+            {#</div>#}
+            {#<div class="col-md-2">#}
+                {#<form class="form-horizontal">#}
+                    {#<button id="lignevirement_submit" class="btn btn-sm btn-primary btn-block" >Valider</button>#}
+                {#</form>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

@@ -1,0 +1,115 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="client" class="col-md-3 control-label">Client</label>
+                    <div class="col-md-12">
+                        <select id="client" data-placeholder="Séléctionner un client" class="form-control chosen-select-client">
+                            <option value=""></option>
+                            <option value="0">Tous</option>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="hidden">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site" class="col-md-2 control-label">Site</label>
+                    <div class="col-md-10">
+                        <select id="site" data-placeholder="Séléctionner un site" class="form-control chosen-select-site">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="dossier" class="col-md-2 control-label">Dossier</label>
+                    <div class="col-md-12">
+                        <select id="dossier" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier">
+                            <option value=""></option>
+                            {# Liste dossier #}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1"  style="width:15%">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Catégorie</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="categorie">
+                                <option value="10">FOURNISSEURS</option>
+                                <option value="9">CLIENTS</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Exercice</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="exercice">
+                                <option value="Tous">Tous</option>
+								 {% for exercice in exercices %}
+									<option value="{{ exercice }}">{{ exercice }}</option>
+								{% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2" style="display: block;" id="criteria">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="raison" checked>
+                <label class="form-check-label" for="raison">Raison Sociale</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="date" checked>
+                <label class="custom-control-label" for="date">Date Facture</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="num" checked>
+                <label class="custom-control-label" for="num">Num Facture</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="montant" checked>
+                <label class="custom-control-label" for="montant">Montant TTC</label>
+            </div>
+        </div>
+        <div class="col-md-2" style="display: block;">
+            <form class="form-horizontal">
+                <label class="col-md-3 control-label" style="visibility: hidden;">
+                    <span>Test</span>
+                </label>
+                <button id="btn_doublon" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-search"></i> Recherche Doublon</button>
+                 <button id="btn_trou" style="display: none;" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-search"></i> Recherche Trou</button>
+				 <button id="btn_trou_doubl"  style="display: none;" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-search"></i> Recherche Doublon Facture</button>
+            </form>
+        </div>     
+        <div class="col-md-1" style="display: block;">
+            <form class="form-horizontal">
+                <label class="col-md-3 control-label" style="visibility: hidden;">
+                    <span>Test</span>
+                </label>
+                <div id="loader" class="col-md-1" style="padding-top: 30px;">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

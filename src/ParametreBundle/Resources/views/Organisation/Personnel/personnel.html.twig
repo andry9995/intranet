@@ -1,0 +1,172 @@
+{# src/ParametreBundle/Resources/views/Parametre/Personnel/personnel.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ParametreBundle/Resources/public/js/personnel.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} PERSONNELS
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>Gestion des personnels</h5>
+
+        <div class="ibox-tools">
+            <button id="btn-add-personnel" class="btn btn-sm btn-primary" style="margin-right: 50px;">
+                <i class="fa fa-plus-circle"></i> Ajouter un personnel
+            </button>
+            <a class="fullscreen-link">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        {#Liste des Entités chargé avec AJAX#}
+        <table id="js_personnel_liste"></table>
+        <div id="pager_liste_personnel"></div>
+    </div>
+</div>
+{# Modal pour ajouter ou modifier une Entité #}
+<div class="modal fade" tabindex="-1" role="dialog" id="personnel-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 id="modal-personnel-title" class="modal-title">Ajouter un personnel</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hidden" id="add-personnel-erreur">
+
+                </div>
+                <form class="form-horizontal">
+                    <input type="hidden" id="add-personnel-id">
+
+                    <div class="form-group">
+                        <label for="add-personnel-matricule" class="col-sm-3 control-label">Matricule</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="add-personnel-matricule"
+                                   placeholder="matricule" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-nom" class="col-sm-3 control-label">Nom</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="add-personnel-nom" placeholder="nom"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-prenom" class="col-sm-3 control-label">Prénom</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="add-personnel-prenom" placeholder="prénom"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-sexe" class="col-sm-3 control-label">Sexe</label>
+
+                        <div class="col-sm-4">
+                            <select id="add-personnel-sexe" class="form-control">
+                                <option value="">sexe</option>
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-adresse" class="col-sm-3 control-label">Adresse</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="add-personnel-adresse"
+                                   placeholder="adresse">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-telephone" class="col-sm-3 control-label">Téléphone</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="add-personnel-telephone"
+                                   placeholder="téléphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-poste" class="col-sm-3 control-label">Poste</label>
+
+                        <div class="col-sm-4">
+                            <select id="add-personnel-poste" class="form-control">
+                                <option value="0">Pas de poste</option>
+                                {% for poste in postes %}
+                                    <option value="{{ poste.id }}">{{ poste.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-role" class="col-sm-3 control-label">Rôle</label>
+
+                        <div class="col-sm-4">
+                            <select id="add-personnel-role" class="form-control">
+                                <option value="0">Pas de rôle</option>
+                                {% for role in roles %}
+                                    <option value="{{ role.id }}">{{ role.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-rattachement" class="col-sm-3 control-label">Rattachement</label>
+
+                        <div class="col-sm-4">
+                            <select id="add-personnel-rattachement" class="form-control">
+                                <option value="0">Pas de rattachement</option>
+                                {% for rattachement in rattachements %}
+                                    <option value="{{ rattachement.id }}">{{ rattachement.prenom ~ " " ~ rattachement.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-login" class="col-sm-3 control-label">Login</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="add-personnel-login"
+                                   placeholder="login">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-personnel-password" class="col-sm-3 control-label">Mot de passe</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="add-personnel-password"
+                                   placeholder="mot de passe">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn-add-personnel-save">Enregistrer
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+{% endblock %}

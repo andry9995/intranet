@@ -1,0 +1,30 @@
+#Gamme Index
+gamme_homepage:
+    path:     /
+    defaults: { _controller: GammeBundle:Gamme:index }
+    methods: [GET]
+
+gamme_liste:
+    path: /liste
+    defaults: { _controller: GammeBundle:Gamme:liste }
+    methods: [GET]
+    options:
+      expose: true
+
+gamme_edit:
+    path: /edit/{id}
+    defaults: { _controller: GammeBundle:Gamme:edit }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      id: \d*
+
+gamme_remove:
+    path: /remove/{gamme}
+    defaults: { _controller: GammeBundle:Gamme:delete }
+    methods: [DELETE]
+    options:
+      expose: true
+    requirements:
+      id: \d+

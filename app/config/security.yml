@@ -1,0 +1,56 @@
+security:
+    encoders:
+        AppBundle\Entity\Operateur:
+            algorithm: plaintext
+
+    providers:
+        main:
+            entity: { class: AppBundle\Entity\Operateur, property: login }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login_check
+                default_target_path: home_page
+                success_handler: security.authentication.success_handler
+            anonymous: true
+
+            logout:
+                path: /logout
+                target: /login
+            remember_me:
+                name: "%session.remember_me.name%"
+                secret: "%secret%"
+                lifetime: 2232000
+            logout_on_user_change: true
+        secured_area:
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
+            logout_on_user_change: true
+
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_auto, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user-app-missing, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user-app-mismatch, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/banque, roles: ROLE_BANQUE }
+        #- { path: ^/reception, roles: ROLE_RECEPTION }
+        #- { path: ^/tenue, roles: [ROLE_SAISIE, ROLE_IMPUTATION] }
+        #- { path: ^/revision, roles: [ROLE_REVISION, ROLE_PICDATA] }
+        #- { path: ^/pilotage, roles: [ROLE_RESP_RECEPTION, ROLE_RESP_SAISIE, ROLE_CGP_RECEPTION, ROLE_CGP_SAISIE, ROLE_CGP_IMPUTATION, ROLE_CGP_REVISION, ROLE_CGP_BANQUE] }
+        #- { path: ^/param, roles: ROLE_ADMIN }
+        - { path: ^/, roles: [ROLE_RECEPTION, ROLE_SAISIE, ROLE_IMPUTATION, ROLE_REVISION, ROLE_BANQUE, ROLE_RH, ROLE_USER, ROLE_PICDATA] }
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN: [ROLE_RESP_RECEPTION, ROLE_RESP_SAISIE, ROLE_CGP_RECEPTION, ROLE_CGP_SAISIE, ROLE_CGP_IMPUTATION, ROLE_CGP_REVISION, ROLE_CGP_BANQUE, ROLE_RH]
+        ROLE_RESP_RECEPTION: ROLE_CGP_RECEPTION
+        ROLE_CGP_RECEPTION: ROLE_RECEPTION
+        ROLE_RESP_SAISIE: ROLE_CGP_SAISIE, ROLE_CGP_IMPUTATION
+        ROLE_CGP_SAISIE: ROLE_SAISIE
+        ROLE_CGP_IMPUTATION: ROLE_IMPUTATION
+        ROLE_CGP_REVISION: ROLE_REVISION
+        ROLE_CGP_BANQUE: ROLE_BANQUE

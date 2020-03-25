@@ -1,0 +1,125 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+    '@PrioriteBundle/Resources/public/css/priorite.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+    '@PrioriteBundle/Resources/public/js/priorite.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block title %}
+    {{ parent() }} | PARAMETRES Priorité des lots
+{% endblock %}
+{% block content %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4>Jours travaillés par semaine</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover" id="table-jour-travail">
+                            <thead>
+                            <tr>
+                                <th width="20%">#</th>
+                                <th width="40%">Jours</th>
+                                <th width="40%">Nb heures travaillé</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="weekday-row" data-weekday="1">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Lundi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr class="weekday-row" data-weekday="2">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Mardi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr class="weekday-row" data-weekday="3">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Mercredi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr class="weekday-row" data-weekday="4">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Jeudi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr class="weekday-row" data-weekday="5">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Vendredi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr class="weekday-row" data-weekday="6">
+                                <td>
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td>Samedi</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer" style="text-align: right;">
+                        <button class="btn btn-primary btn-sm btn-outline" id="btn-save-jour-travail">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4>Paramètres des couleurs</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th width="200px">Couleur par défaut</th>
+                                <td style="text-align:left"><input id="default-color" type="color" value="#a9a9a9"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <table class="table table-hover" id="table-couleur">
+                            <thead>
+                            <tr>
+                                <th width="20%">Couleurs</th>
+                                <th width="60%">Durée Echéance en heures</th>
+                                <th width="20%">#</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {#Liste couleur#}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer" style="text-align: right;">
+                        <button class="btn btn-primary btn-sm btn-outline pull-left" id="btn-add-color-row"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-primary btn-sm btn-outline" id="btn-save-color">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

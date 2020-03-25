@@ -1,0 +1,210 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-1">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                        <span>Groupe</span>
+                    </label>
+                    <div class="col-md-12">
+                        <select data-placeholder="Séléctionner un groupe" class="form-control" name="filtre_groupe" id="filtre_groupe">
+                            <option value="0">Tous</option>
+                            {% for responsable in responsables %}
+                                <option value="{{ responsable.operateur_id }}">{{ responsable.prenom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="client_gestion_tache" class="col-md-3 control-label">Client</label>
+                    <div class="col-md-12">
+                        <select id="client_gestion_tache" data-placeholder="Séléctionner un client" class="form-control chosen-select-client">
+                            <option value=""></option>
+                            <option value="0">Tous</option>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site_gestion_tache" class="col-md-3 control-label">Site</label>
+                    <div class="col-md-12">
+                        <select id="site_gestion_tache" data-placeholder="Séléctionner un site" class="form-control chosen-select-site">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="dossier_gestion_tache" class="col-md-2 control-label">Dossier</label>
+                    <div class="col-md-12">
+                        <select id="dossier_gestion_tache" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier">
+                            {# Liste dossier #}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        <span>Exercice</span>
+                    </label>
+                    <div class="col-md-11">
+                        <select class="form-control" id="exercice">
+                            <option value="2020" selected="">2020</option>
+							<option value="2019">2019</option>
+							<option value="2018">2018</option>
+							<option value="2017">2017</option>
+							<option value="2016">2016</option>
+							<option value="2015">2015</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if isGestion == false %}
+            <div class="col-md-2">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            <span>Periode</span>
+                        </label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="filtre_fourchette" id="js_filtre_periode">
+                                <option value=""></option>
+                                <option value="1">Aujourd'hui</option>
+                                <option value="2">Depuis une semaine</option>
+                                <option value="3">Depuis un mois</option>
+                                <option value="4" selected="">Tout l'exercice</option>
+                                <option value="5">Fourchette</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <div class="col-md-1">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            <span>Tâches</span>
+                        </label>
+                        <div class="col-md-13">
+                            <select class="form-control" name="filtre_respons_tache" id="js_filtre_respons_tache">
+                                <option value="" selected = "selected">Tous</option>
+                                <option value="0">Scriptura</option>
+                                <option value="1">Cabinet</option>
+                                <option value="2">Client</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
+        <div class="col-md-1">
+            <div class="row">
+                 <label class="col-md-3 control-label" style="visibility: hidden;">
+                    <span>Test</span>
+                </label>
+                {% if isGestion %}
+                    <div class="col-md-offset-1 col-md-10">
+                        <div class="btn-group" style="width: 150px;">
+                            <button id="btn_situation_image_gestion_bilan" class="btn btn-primary btn-block" style="width: 50%;"><i class="fa fa-check"></i> Go</button>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="btn-group" style="width: 150px;">
+                            <button id="btn_situation_image_tableau_bord" class="btn btn-sm btn-primary btn-block" style="width: 70%;"><i class="fa fa-check"></i> Go</button>
+                            <div class="btn-group ibox-tools" style="width:30%">
+                                <button class="btn btn-sm btn-default situation-image-chevron-down" aria-expanded="false"><i class="fa fa-chevron-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if isGestion == true %}
+            <div class="col-md-2 pull-right">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="radio radio-inline">
+                            <input type="radio" name="show-filter-item" id="show-filter-item-tous"
+                                   value="Tous">
+                            <label for="show-filter-item-tous">
+                                Tous
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="radio radio-warning radio-inline">
+                            <input type="radio" name="show-filter-item" id="show-filter-item-suspendu"
+                                   value="Suspendu">
+                            <label for="show-filter-item-suspendu" class="text-suspendu-image">
+                                Suspendu
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="radio radio-success radio-inline">
+                            <input type="radio" name="show-filter-item" id="show-filter-item-actif"
+                                   value="Actif" checked>
+                            <label for="show-filter-item-actif" class="text-actif">
+                                Actif
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="show-filter-item"
+                                   id="show-filter-item-radie" value="Radié">
+                            <label for="show-filter-item-radie" class="text-radie">
+                                Radié
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="show-aucun-image-container" class="checkbox checkbox-inline">
+                            <input type="checkbox" id="show-aucun-image" class="styled" checked>
+                            <label for="show-aucun-image">
+                                Masquer aucun image
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="show-tri-container" class="checkbox checkbox-inline">
+                            <input type="checkbox" id="show-tri" class="styled">
+                            <label for="show-tri">
+                                Trier
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

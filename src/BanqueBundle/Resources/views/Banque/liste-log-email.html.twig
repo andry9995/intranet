@@ -1,0 +1,31 @@
+<div class="row modal_log_email_{{ index }}">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="text-align: center;">Date envoi</th>
+					<th style="text-align: center;">Sujet</th>
+					<th style="text-align: center;">Contenu</th>
+					<th style="text-align: center;">Statut</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for l in emails %}
+					{% set textStatut = '<span class="label label-danger" style="display:inline-block;width: 100%">Non envoyé</span>' %}
+					{% if l.status == 1 %}
+						{% set textStatut = '<span class="label label-info" style="display:inline-block;width: 100%">Envoyé</span>' %}
+					{% endif %}
+					{% if l.status == 9 %}
+						{% set textStatut = '<span class="label label-warning" style="display:inline-block;width: 100%">En attente</span>' %}
+					{% endif %}
+					<tr data-id = "{{ l.id }}">
+						<th style="text-align: left;">{{ l.dateEnvoi|date("d/m/Y") }}</th>
+						<th style="text-align: left;">{{ l.sujet }}</th>
+						<th style="text-align: center; width: 40px;"><i class="fa fa-eye pointer show_contenu_mail"></i></th>
+						<th style="text-align: center;">{{ textStatut|html }}</th>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>

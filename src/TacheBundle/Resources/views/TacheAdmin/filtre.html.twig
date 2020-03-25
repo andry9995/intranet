@@ -1,0 +1,19 @@
+<div class="row white-bg padding-sm margin-xs">
+    <div class="col-sm-4">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="client">Client</label>
+                <div class="col-lg-10">
+                    <select id="client" data-placeholder="Séléctionner un client" class="form-control col-lg-10 chosen-select-client" style="min-width: 300px;">
+                        <option value=""></option>
+                        {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 hidden" id="js_conteneur_site"></div>
+    <div class="col-sm-4" id="js_conteneur_dossier"></div>
+</div>

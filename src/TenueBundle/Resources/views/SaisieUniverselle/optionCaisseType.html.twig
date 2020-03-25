@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for caisseType in caisseTypes %}
+        <option value="{{ caisseType.id }}">{{ caisseType.libelle }}</option>
+    {% endfor %}
+</select>

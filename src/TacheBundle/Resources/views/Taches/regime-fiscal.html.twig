@@ -1,0 +1,32 @@
+<span class="qtip_new btn btn-sm btn-white js_add cl_edit_taches_group" data-action="0" title="Ajouter un groupe de Tache"><i class="fa fa-plus" aria-hidden="true"></i></span>
+<div class="panel-group" id="id_rf_accordion">
+    {% for key_regime, regime_fiscal in regimesFiscals %}
+        <div class="panel panel-default js_regime" data-type="0" data-id="{{ regime_fiscal.id }}">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#id_rf_accordion" href="#id_regime_{{ regime_fiscal.id }}" class="collapsed" aria-expanded="false">{{ regime_fiscal.libelle }}</a>
+                    <span title="Ajouter une tache dans {{ regime_fiscal.libelle }}" class="btn btn-xs btn-outline btn-default qtip_new pull-right hidden js_add cl_taches_edit" data-action="0" style="margin:0!important"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                </h3>
+            </div>
+            <div id="id_regime_{{ regime_fiscal.id }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body cl_taches_container" style="overflow: auto"></div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for tacheGroup in tachesGroups %}
+        <div class="panel panel-white js_regime" data-type="1" data-id="{{ tacheGroup.id }}">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#id_rf_accordion" href="#id_tache_group_{{ tacheGroup.id }}" class="collapsed" aria-expanded="false">{{ tacheGroup.nom }}</a>
+                    <span title="Supprimer le groupe {{ tacheGroup.nom }}" class="btn btn-xs btn-outline btn-danger qtip_new pull-right hidden cl_edit_taches_group" data-action="2" style="margin:0;margin-left:6px!important;"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    <span title="Modifier le groupe {{ tacheGroup.nom }}" class="btn btn-xs btn-outline btn-warning qtip_new pull-right hidden cl_edit_taches_group" data-action="0" style="margin:0;margin-left:6px!important;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <span title="Ajouter une tache dans {{ tacheGroup.nom }}" class="btn btn-xs btn-outline btn-default qtip_new pull-right hidden js_add cl_taches_edit" data-action="0" style="margin:0;margin-left:6px!important;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                </h3>
+            </div>
+            <div id="id_tache_group_{{ tacheGroup.id }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body cl_taches_container" style="overflow: auto"></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,80 @@
+{# src/ParametreBundle/Resources/views/Tache/Tache/par-client.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@TacheBundle/Resources/public/js/google-calendrier.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@TacheBundle/Resources/public/css/google-calendrier.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+{% block title %}
+    {{ parent() }} GOOGLE  CALENDRIER
+{% endblock %}
+
+{% block content %}
+    <div class="white-bg padding-sm">
+        <h4>Paramètres Google Calendrier par Client</h4>
+    </div>
+    <div class="row white-bg padding-sm margin-xs">
+        <div class="col-md-5">
+            <h4 class="bg-info padding-6">
+                Clients
+                <i id="loader" class="loader pull-right fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+            </h4>
+            <ul id="client-list" class="list-group" style="overflow-y: scroll">
+                {% for client in clients %}
+                    <li class="list-group-item" data-id="{{ client.id }}">{{ client.nom }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-7">
+            <h4 class="bg-info padding-6">
+                Paramètres
+                <div class="btn-group pull-right" role="group" aria-label="..."
+                     style="margin-top: -4px;">
+                    <button id="btn-save-param" type="button" class="btn btn-xs btn-info">
+                        <i class="fa fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </h4>
+
+            <form class="form-horizontal" id="form-calendrier-param">
+                <div class="form-group">
+                    <label for="calendrier-id" class="control-label col-md-4">Identifiant du calendrier</label>
+                    <div class="col-md-8">
+                        <input id="calendrier-id" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="calendrier-bg-color" class="control-label col-md-4">Couleur des tâches</label>
+                    <div class="col-md-2">
+                        <input type="color" id="calendrier-bg-color" class="form-control" value="#3cb08c">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="calendrier-text-color" class="control-label col-md-4">Couleur des textes</label>
+                    <div class="col-md-2">
+                        <input type="color" id="calendrier-text-color" class="form-control" value="#ffffff">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">
+                        Envoyer Tâches Scriptura dans Google
+                    </label>
+                    <div class="col-md-2" style="padding-top: 10px;">
+                        <input id="send-to-google" type="checkbox" class="js-switch" checked>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

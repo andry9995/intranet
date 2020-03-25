@@ -1,0 +1,4 @@
+<option value="-1"></option>
+{% for pcc in pccs %}
+    <option value="{{ pcc.id }}" {{ (pccId is not defined) ? '' : (pccId == pcc.id) ? 'selected' : '' }} data-table="pcc">{{ pcc.compte }} - {{ pcc.intitule }} </option>
+{% endfor %}

@@ -1,0 +1,8 @@
+.img-bg {
+    /*background-image: url("../images/login_bg2.jpg");*/
+    background-size: cover;
+}
+
+.space {
+    margin-top: 30px;
+}

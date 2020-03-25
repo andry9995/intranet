@@ -1,0 +1,4 @@
+<option value="-1"></option>
+{% for vehicule in vehicules %}
+    {{ include('@Tenue/SaisieUniverselle/optionVehicule.html.twig', {vehicule:vehicule}) }}
+{% endfor %}

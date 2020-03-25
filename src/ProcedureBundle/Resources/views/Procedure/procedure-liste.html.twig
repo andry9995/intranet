@@ -1,0 +1,6 @@
+<select>
+    <option value=""></option>
+    {% for procedure in procedures %}
+        <option value="{{ procedure.id }}">{{ procedure.numero }} {{ procedure.nom }}</option>
+    {% endfor %}
+</select>

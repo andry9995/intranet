@@ -1,0 +1,421 @@
+.ui-state-default {
+    background: #dcdcdc !important;
+    font-weight: normal !important;
+    color: #333 !important;
+}
+
+.ui-widget-header {
+    background: rgba(0, 150, 136, 0.6) !important;
+    color: #333 !important;
+    font-weight: bold !important;
+}
+
+.formi input {
+	width:100%;
+}
+.pdfobject-container {
+    max-width: 100%;
+    overflow: auto;
+    /*height: 100vh;*/
+	border: 2px solid #23c6c8;
+	margin: 0;
+}
+.pdfobject { 
+    border: 1px solid #666; 
+}
+.filtre {
+    padding: 20px 24px 10px;
+    background-color: #f3f3f4;
+}
+
+.overflo {
+    overflow: auto; height: 500px;
+}
+
+.tab-col {
+    padding-left: 20px;
+    text-align: center;
+}
+
+.color-col {
+    background-color: #fbfaf9;
+    text-align: center;
+}
+
+.cent-col {
+    text-align: center;
+    background-color: #fbfaf9;
+}
+
+.fil_div {
+    height: 80px;
+    border-color: #fff;
+    border-style: solid;
+    background-color: #fff;
+}
+
+.td_th {
+    text-overflow: ellipsis;
+}
+
+.cent {
+    text-align: center;
+}
+
+.pad-m {
+    padding-left:20px;
+}
+
+/*---saisie style ---*/
+.bar_h {
+    border-top: 6px solid #e6e5e4;
+    top: 100%;
+    width: 100%;
+}
+
+.vl {
+    border-left: 6px solid #e6e5e4;
+    height: 500px;
+    position: absolute;
+    left: 17%;
+    margin-left: -3px;
+    top: 0;
+}
+
+.v2 {
+    border-left: 6px solid #e6e5e4;
+    height: 500px;
+    position: absolute;
+    left: 58%;
+    margin-left: -3px;
+    top: 0;
+}
+
+.td-cl {
+    text-align:center;
+    valign:middle;
+}
+
+.in-ba {
+    background-color: #f8f7f7;
+    width: 65px;
+}
+
+.mar-top {
+    margin-top:20px;
+}
+
+.ovflow {
+    overflow-y: auto;
+}
+
+.list-group-item.op-active, .list-group-item.op-active:hover, .list-group-item.op-active:focus {
+    /*z-index: 2;*/
+    /*color: #6e6565;*/
+    /*background-color: #cfd2d4;*/
+    /*border-color: #cfd2d4;*/
+}
+ .forme .col-md-1,.forme .col-md-2,.forme  .col-md-3,.forme  .col-md-4,.forme  .col-md-5,.forme  .col-md-6,.forme  .col-md-7,.forme  .col-md-8,.forme  .col-md-9 {
+	padding-right: 5px;
+	padding-left: 5px;
+ }
+ #myModal .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#myModal .modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+#myModal .modal-header {
+    padding: 15px 15px 0 15px;
+}
+
+#param-cb-modal .modal-dialog{
+    width: 80%;
+}
+
+#param-ob-modal .modal-dialog{
+    width: 80%;
+}
+
+#sobank-modal .modal-dialog{
+    width: 80%;
+}
+
+#controle-doublon-modal .modal-dialog{
+    width: 80%;
+}
+
+#recategorisation-modal .modal-dialog{
+    width: 80%;
+}
+/* The side navigation menu */
+.sidenav {
+    /*height: 800px; !* 100% Full-height *!*/
+    /*width: 0; !* 0 width - change this with JavaScript *!*/
+    /*position: fixed; !* Stay in place *!*/
+    /*z-index: 1; !* Stay on top *!*/
+    /*left: 5px;*/
+    /*overflow-x: hidden; !* Disable horizontal scroll *!*/
+    /*transition: 0.5s; !* 0.5 second transition effect to slide in the sidenav *!*/
+}
+#mySidenav{
+    /*height: 100vh;*/
+    overflow: auto;
+}
+
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: relative;
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav a {font-size: 18px;}
+}
+#treleve {
+	font-size: 11px;
+}
+#treleve  th {
+    font-size: 10px;
+}
+.ui-icon {
+    width: 0px;
+    height: 0px;
+}
+.popover {
+  min-width: 800px!important;
+  width: auto;
+}
+#pcc {
+  min-height: 300px!important;
+  max-height: 300px!important;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+element.style {
+}
+.panel-info {
+    border-color: #23c6c8;
+}
+.form-control, .form-control:focus, .has-error .form-control:focus, .has-success .form-control:focus, .has-warning .form-control:focus, .navbar-collapse, .navbar-form, .navbar-form-custom .form-control:focus, .navbar-form-custom .form-control:hover, .open .btn.dropdown-toggle, .panel, .popover, .progress, .progress-bar {
+    box-shadow: none;
+}
+.panel-info {
+    border-color: #bce8f1;
+}
+#myModal .panel {
+	margin-bottom:5px;
+	font-weight:bold;
+}	
+#myModal .ibox {
+	margin-bottom:5px;
+}	
+.prix {
+	float:right;
+	color: #333;
+}
+.modal-header .row {
+    margin-right: 0px; 
+    margin-left: 0px; 
+}
+#espace-redim { display:table; width:100%; }
+#espace-redim > div { display:table-cell; padding:15px; }
+#mainside {width:42%;}
+.btn-rose {
+    background-color: #f0cdf5;
+    border-color: #c1c1c1;
+    color: #FFFFFF;
+}
+
+.swal2-container{
+    z-index: 3000 !important;
+}
+
+/*tr > td.t-valider, th#js_impute_liste_t-t-valider{
+    border-left: none !important;
+}
+
+tr > td.t-rb, th#js_impute_liste_t-rb{
+    border-right: none !important;
+}*/
+
+.ibox-content-date-scan.js-opened {
+    display: block
+}
+
+.ibox-content-date-scan {
+    display: none
+}
+
+.white-bg-date-scan{
+    background-color: #ffffff !important;
+}
+
+.nextCircle {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    left:85%;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    opacity:0.5;
+    background-color:black;
+    z-index:19;
+}
+
+.btn-next-detail-image {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    z-index:20;
+}
+
+.nextCircle:hover{
+    opacity:0.7;
+    cursor: pointer;
+}
+
+.fa.fa-arrow-right, .fa.fa-arrow-left {
+    font-size:30px;
+}
+
+.prevCircle {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    right:85%;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    opacity:0.5;
+    background-color:black;
+    z-index:19;
+}
+
+.btn-prev-detail-image {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    z-index:20;
+}
+
+.prevCircle:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#js_impute_liste .ui-priority-secondary, #js_impute_liste .ui-widget-content .ui-priority-secondary {
+    opacity: 1 !important;
+}
+
+.select2-container{
+    z-index: 3000 !important;
+}
+
+.select2-close-mask{
+    z-index: 2099;
+}
+.select2-dropdown{
+    z-index: 3051;
+}
+
+.select2-results__option{
+    font-size: 11px !important;
+}
+
+td.aucun-mq-ob {
+    border: 1px solid #ff9800 !important;
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ce7c05;
+    text-align: center;
+}
+
+.td-tab-count-image {
+    cursor: pointer !important;
+}
+
+.color-icon-tab{
+    color: transparent;
+    cursor: default !important;
+}
+
+.text-suspendu-image {
+    color: #f8ac59;
+}
+
+.text-actif {
+    color: #27c74d;
+}
+
+.text-radie {
+    color: #d9534f;
+}
+
+.filtre-gestion-tache {
+    padding: 20px 24px 10px;
+    background-color: #FFF;
+}
+
+.my-custom-scrollbar-gestion-tache {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+}
+.table-wrapper-gestion-tache-scroll-y {
+  display: block;
+} 
+
+#tab-impute .ui-jqgrid .ui-jqgrid-htable th div
+{
+    height: auto;
+    overflow: hidden;
+    padding-right: 4px;
+    padding-top: 2px;
+    position: relative;
+    vertical-align: text-top;
+    white-space: normal !important;
+}
+
+.ui-icon {
+    width: 16px !important;
+}
+
+/*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #CCCCCC;
+    background: #dcdcdc;
+    font-weight: normal;
+    color: #000000;
+}*/
+
+.blink {
+    animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.qtip-instruction .qtip-content {
+    width: 600px !important;
+}
+
+.qtip-instruction {
+    max-width: 600px !important;
+}

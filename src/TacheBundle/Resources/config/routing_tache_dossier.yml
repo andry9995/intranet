@@ -1,0 +1,39 @@
+#TACHE PAR DOSSIER
+#Index parametrage tache par dossier
+tache_par_dossier:
+    path: /
+    defaults: { _controller: TacheBundle:TacheDossier:tacheParDossier }
+
+#Liste tache par dossier
+tache_liste_tache_par_dossier:
+    path: /{dossier}
+    defaults: { _controller: TacheBundle:TacheDossier:listeTacheDossier, dossier: '' }
+    options:
+      expose: true
+    requirements:
+      dossier: ^(\s*|\d+)$
+
+#Enregistrer tache par dossier
+tache_save_tache_par_dossier:
+    path: /save
+    defaults: { _controller: TacheBundle:TacheDossier:saveTacheDossier }
+    methods: [POST]
+    options:
+      expose: true
+
+tache_delete_tache_par_dossier:
+    path: /delete
+    defaults: { _controller: TacheBundle:TacheDossier:deleteTacheDossier }
+    methods: [DELETE]
+    options:
+      expose: true
+
+#Importer tache client dans dossier
+tache_importer_tache_client_to_dossier:
+    path: /import-tache-client/{dossier}
+    defaults: { _controller: TacheBundle:TacheDossier:importTacheClientToDossier }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      dossier: \d+

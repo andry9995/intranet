@@ -1,0 +1,15 @@
+{#<option value="-1"></option>#}
+{#{% for vehicule in vehicules %}#}
+    <option value="{{ vehicule.id }}"
+            data-marque="{{ (vehicule.vehiculeMarque == null) ? -1 : vehicule.vehiculeMarque.id  }}"
+            data-modele="{{ vehicule.modele }}"
+            data-immatricule="{{ vehicule.immatricule }}"
+            data-typevehicule="{{ (vehicule.typeVehicule == null) ? -1 : vehicule.typeVehicule.id }}"
+            data-ndftypevehicule="{{ (vehicule.ndfTypeVehicule == null) ? -1 : vehicule.ndfTypeVehicule.id}}"
+            data-carburant="{{ (vehicule.carburant == null) ? -1 : vehicule.carburant.id }}"
+            data-puissance="{{ (vehicule.nbCv) }}"
+            style="font-size: 10px !important;"
+    >
+        [{{ vehicule.vehiculeMarque.libelle }}] [{{ vehicule.modele }}] [{{ vehicule.immatricule }}]
+    </option>
+{#{% endfor %}#}

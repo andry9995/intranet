@@ -1,0 +1,100 @@
+<div class="row cl_container_tache_param" id="id_tache_libre_edited" data-id="{{ tache.id }}" data-id_old="0">
+    <div class="col-lg-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_periode">P&eacute;riode</label>
+                <div class="col-lg-8">
+                    {% set periode = tachesLibreDate ? tachesLibreDate.periode : -1 %}
+                    {#0=ponctuel,1=annuel,2=semestriel,3=quadrimestriel,4=trimestriel,6=bimensuel,12=mensuel#}
+                    <select id="id_tache_libre_periode" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0" {{ (periode == 0) ? 'selected' : '' }}>Ponctuel</option>
+                        <option value="5" {{ (periode == 5) ? 'selected' : '' }}>Quotidien</option>
+                        <option value="1" {{ (periode == 1) ? 'selected' : '' }}>Annuel</option>
+                        <option value="2" {{ (periode == 2) ? 'selected' : '' }}>Semestriel</option>
+                        <option value="3" {{ (periode == 3) ? 'selected' : '' }}>Quadrimestriel</option>
+                        <option value="4" {{ (periode == 4) ? 'selected' : '' }}>Trimestriel</option>
+                        <option value="6" {{ (periode == 6) ? 'selected' : '' }}>Bimensuel</option>
+                        <option value="12" {{ (periode == 12) ? 'selected' : '' }}>Mensuel</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 container">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-5 control-label" for="id_tache_libre_mois_add">Mois (+/-)</label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control" id="id_tache_libre_mois_add" value="{{ tachesLibreDate ? tachesLibreDate.moisAdditif : 0 }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 text-center">
+        <div class="checkbox checkbox-default">
+            <input id="id_tache_libre_jalon" type="checkbox" {{ (tachesLibreDate is not null and tachesLibreDate.jalon == 1) ? 'checked' : '' }}>
+            <label for="id_tache_libre_jalon">Jalon</label>
+        </div>
+    </div>
+</div>
+<div class="row cl_container_tache_param">
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_demarrage">D&eacute;marrage</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_demarrage" value="{{ tachesLibreDate and tachesLibreDate.demarrage ? tachesLibreDate.demarrage|date('d/m/Y') : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_a_partir_de">A&nbsp;partir</label>
+                <div class="col-lg-8">
+                    {% set aPartirDe = tachesLibreDate ? tachesLibreDate.calculerAPartir : -1 %}
+                    {#0:debut exercice; 1:demarrage;2:1er janvier;3:date_calcul#}
+                    <select id="id_tache_libre_a_partir_de" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0" {{ (aPartirDe == 0) ? 'selected' : '' }}>D&eacute;but&nbsp;d'exercice</option>
+                        <option value="1" {{ (aPartirDe == 1) ? 'selected' : '' }}>Date&nbsp;d&eacute;marrage</option>
+                        <option value="2" {{ (aPartirDe == 2) ? 'selected' : '' }}>01 Janvier</option>
+                        <option value="3" {{ (aPartirDe == 3) ? 'selected' : '' }}>Date</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_date_calcul">Date</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_date_calcul" value="{{ tachesLibreDate and tachesLibreDate.dateCalcul ? tachesLibreDate.dateCalcul|date('d/m/Y') : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_a_jour">Jour</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_a_jour" value="{{ tachesLibreDate ? tachesLibreDate.jour : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        {#{% if tacheEntity is not null and tacheEntity.desactiver == 0 %}
+            <span class="btn btn-sm btn-danger" id="id_delete_tlb"><i class="fa fa-bell-slash-o" aria-hidden="true"></i>&nbsp;D&eacute;sactiver</span>
+        {% endif %}#}
+        <span class="btn btn-sm btn-primary cl_edit_tache_libre_date" data-id="{{ tachesLibreDate is not null ? tachesLibreDate.id : 0 }}" data-action="1"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

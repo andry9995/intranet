@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Image</td>
+            <td>Date Relevé</td>
+            <td>Libelle</td>
+            <td>Débit</td>
+            <td>Crédit</td>
+        </tr>
+
+        </thead>
+
+        {% for releve in releves %}
+        <tr>
+            <td>{{ releve.image.nom }}</td>
+            <td>{{ releve.dateReleve|date('d/m/Y') }}</td>
+            <td>{{ releve.libelle }}</td>
+            <td>{{ releve.debit }}</td>
+            <td>{{ releve.credit }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

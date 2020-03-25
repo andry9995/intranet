@@ -1,0 +1,231 @@
+<span class="hidden" id="banque_compte_id" data-banque-compte-id="{{ banqueCompteId }}"></span>
+<div id="js_filtre_fourchette">
+    <div class="col-sm-7">
+        <form class="form-horizontal" style="padding-bottom: 15px;">
+            <label class="col-md-1 control-label" style="visibility: visible; margin-left: -15px; padding-left: 0px;">
+                <span>Date</span>
+            </label>
+            <div class="input-group row date col-md-12">
+                <div class="col-sm-20">
+                    <input type="text" class="input form-control" name="debut" id="js_debut_date">
+                </div>
+                <span class="input-group-addon">Au</span>
+                <input type="text" class="input form-control" name="fin" id="js_fin_date">
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-1">
+        <div class="row">
+            <label class="col-lg-3 control-label" style="visibility: hidden;">
+                <span>Test</span>
+            </label>
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 50px;">
+                    <button id="btn_search_image_date_scan" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Go</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ibox float-e-margins">
+    <div class="ibox-title ibox-date-scan">
+        <h5>Date scan disponible</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link date-scan-chevron-down">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content ibox-content-date-scan no-padding">
+        <ul class="list-group">
+            <li class="list-group-item">
+                {% for dateScan in listeDateScan %}
+                    <span class="simple_tag date_scan_select pointer">{{ dateScan.date_scan }}</span>
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="ibox float-e-margins">
+    <div class="ibox-content tab-image-content" style="padding: 0px 20px 20px 20px;">
+        <div id="first_affich" style="display: block">
+            <table class="table" data-page-size="8">
+                <thead>
+                <tr class="th-col">
+                    <th class="col-sm-4 text-center">Catégorie</th>
+                    <th class="col-sm-2 text-center">N</th>
+                    <th class="col-sm-2 text-center">Dont non lettrée</th>
+                    <th class="col-sm-2 text-center">Période</th>
+                    <th class="col-sm-2 text-center">Dont non lettrée</th>
+                </tr>
+                </thead>
+                <tbody id="col_data_tabimage">
+                    {% set total = nbImagesEncours %}
+                    {% set totalNonLettre = nbImagesEncours %}
+                    {% set totalScan = 0 %}
+                    {% set totalNonValide = 0 %}
+                    {% set totalNonValideScan = 0 %}
+                    {% set totalScanNonLettre = 0 %}
+                    {% for liste in listes %}
+                        <tr class="tr-tab-image" data-cat-id="{{ liste.cat_id }}-*">
+                            {% set  total = total + liste.nb_image %}
+                            {% if liste.libelle_new == 'BANQUES' %}
+                                {% set banque_icon = 'fa-sort-desc chevron-down-tab-bank' %}
+                                {% set class = ' ' %}
+                            {% else %}
+                                {% set banque_icon = 'fa-sort-desc color-icon-tab' %}
+                                {% set class = 'td-tab-count-image' %}
+                            {% endif %}
+                            <td class="col-sm-4"><i class="fa {{ banque_icon }}" style="cursor: pointer;"></i>&nbsp;&nbsp;<strong>{{ liste.libelle_new }}</strong></td>
+                            <td class="{{ class }} col-sm-2 text-center" data-detail="tous">{{ liste.nb_image|number_format(0, '', ' ') }}</td>
+                            {% set listeNonLettreExist = 0 %}
+                            {% set newArrayLettre = [] %}
+                            {% for listeNonLettre in listesNonLetrre if listeNonLettre.libelle_new not in newArrayLettre %}
+                                {% set newArrayLettre = newArrayLettre|merge([listeNonLettre.libelle_new]) %}
+                                {% if liste.libelle_new == listeNonLettre.libelle_new %}
+                                    {% set  totalNonLettre = totalNonLettre + listeNonLettre.nb_non_lettre %}
+                                    <td class="{{ class }} col-sm-2 text-center" data-detail="tous-non-lettre">{{ listeNonLettre.nb_non_lettre|number_format(0, '', ' ') }}</td>
+                                    {% set listeNonLettreExist = 1 %}
+                                {% else %}
+                                    {% if liste.libelle_new == 'BANQUES' and listeNonLettre.type_piece_id == -1 %}
+                                        {% set totalNonValide = totalNonValide + listeNonLettre.nb_non_lettre %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if liste.libelle_new == 'BANQUES' %}
+                                <td class="{{ class }} col-sm-2 text-center" data-detail="scan-non-lettre">{{ totalNonValide|number_format(0, '', ' ') }}</td>
+                                {% set listeNonLettreExist = 1 %}
+                            {% endif %}
+                            {% if listeNonLettreExist == 0 %}
+                                <td class="{{ class }} col-sm-2 text-center">0</td>
+                            {% endif %}
+                            {% if dateScan  %}
+                                {% set dateScanExist = 0 %}
+                                {% set totalScan = nbImagesByDateScanEncours %}
+                                {% set totalScanNonLettre = nbImagesByDateScanEncours %}
+                                {% for imgDateScan in imageDateScan %}
+                                    {% set  totalScan = totalScan + imgDateScan.nb_image %}
+                                    {% if liste.libelle_new == imgDateScan.libelle_new %}
+                                        <td class="{{ class }} col-sm-2 text-center" data-detail="scan">{{ imgDateScan.nb_image|number_format(0, '', ' ') }}</td>
+                                        {% set listeDateNonLettreExist = 0 %}
+                                        {% set newArrayLettreScan = [] %}
+                                        {% for listeDateNonLettre in listesParDateScanNonLettre if listeDateNonLettre.libelle_new not in newArrayLettreScan %}
+                                            {% set newArrayLettreScan = newArrayLettreScan|merge([listeDateNonLettre.libelle_new]) %}
+                                            {% set  totalScanNonLettre = totalScanNonLettre + listeDateNonLettre.nb_non_lettre %}
+                                            {% if liste.libelle_new == listeDateNonLettre.libelle_new %}
+                                                <td class="{{ class }} col-sm-2 text-center" data-detail="scan-non-lettre">{{ listeDateNonLettre.nb_non_lettre|number_format(0, '', ' ') }}</td>
+                                                {% set listeDateNonLettreExist = 1 %}
+                                            {% else %}
+                                                {% if liste.libelle_new == 'BANQUES' and listeDateNonLettre.type_piece_id == -1 %}
+                                                    {% set listeDateNonLettreExist = 1 %}
+                                                    {% set totalNonValideScan = totalNonValideScan + listeDateNonLettre.nb_non_lettre %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if liste.libelle_new == 'BANQUES' %}
+                                            <td class="{{ class }} col-sm-2 text-center" data-detail="scan-non-lettre">{{ totalNonValideScan|number_format(0, '', ' ') }}</td>
+                                            {% set listeDateNonLettreExist = 1 %}
+                                        {% endif %}
+                                        {% if listeDateNonLettreExist == 0 %}
+                                            <td class="{{ class }} col-sm-2 text-center" data-detail="scan-non-lettre">0</td>
+                                        {% endif %}
+                                        {% set dateScanExist = 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if dateScanExist == 0 %}
+                                    <td class="col-sm-2 text-center td-tab-count-image">0</td>
+                                    <td class="col-sm-2 text-center td-tab-count-image">0</td>
+                                {% endif %}
+                            {% else %}
+                                <td class="col-sm-2"></td>
+                                <td class="col-sm-2"></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% for listeBanqSousCat in listesBanqueSousCat %}
+                        <tr class="tr-tab-image result-bank-scat" data-cat-id="16-{{ listeBanqSousCat.libelle_new }}">
+                            <td class="col-sm-4" style="padding-left: 40px;"><strong>{{ listeBanqSousCat.libelle_new }}</strong></td>
+                            <td class="td-tab-count-image col-sm-2 text-center" data-detail="tous">{{ listeBanqSousCat.nb_image|number_format(0, '', ' ') }}</td>
+                            {% set listeNonLettreBankExist = 0 %}
+                            {% set newArrayLettreBank = [] %}
+                            {% for listeNonLettreBank in listesNonLettreBanque if listeNonLettreBank.libelle_new not in newArrayLettreBank %}
+                                {% if listeBanqSousCat.libelle_new == listeNonLettreBank.libelle_new %}
+                                    {% set  totalNonLettre = totalNonLettre + listeNonLettreBank.nb_non_lettre %}
+                                    {% set newArrayLettreBank = newArrayLettreBank|merge([listeNonLettreBank.libelle_new]) %}
+                                    <td class="td-tab-count-image col-sm-2 text-center" data-detail="tous-non-lettre">{{ listeNonLettreBank.nb_non_lettre|number_format(0, '', ' ') }}</td>
+                                    {% set listeNonLettreBankExist = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if listeNonLettreBankExist == 0 %}
+                                <td class="td-tab-count-image col-sm-2 text-center">0</td>
+                            {% endif %}
+                            {% if dateScan  %}
+                                {% set dateScanBankExist = 0 %}
+                                {% for listeBanqueSousCatParDate in listesBanqueSousCatParDate %}
+                                    {% if listeBanqSousCat.libelle_new == listeBanqueSousCatParDate.libelle_new %}
+                                        <td class="td-tab-count-image col-sm-2 text-center" data-detail="scan">{{ listeBanqueSousCatParDate.nb_image|number_format(0, '', ' ') }}</td>
+                                        {% set listeDateNonLettreBankExist = 0 %}
+                                        {% set newArrayLettreScanBank = [] %}
+                                        {% for listeDateNonLettreBank in listesParDateScanNonLettreBanque if listeDateNonLettreBank.libelle_new not in newArrayLettreScanBank %}
+                                            {% set newArrayLettreScanBank = newArrayLettreScanBank|merge([listeDateNonLettreBank.libelle_new]) %}
+                                            {% if listeBanqSousCat.libelle_new == listeDateNonLettreBank.libelle_new %}
+                                                <td class="td-tab-count-image col-sm-2 text-center" data-detail="scan-non-lettre">{{ listeDateNonLettreBank.nb_non_lettre|number_format(0, '', ' ') }}</td>
+                                                {% set listeDateNonLettreBankExist = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if listeDateNonLettreBankExist == 0 %}
+                                            <td class="td-tab-count-image col-sm-2 text-center" data-detail="scan-non-lettre">0</td>
+                                        {% endif %}
+                                        {% set dateScanBankExist = 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if dateScanBankExist == 0 %}
+                                    <td class="col-sm-2 text-center td-tab-count-image">0</td>
+                                    <td class="col-sm-2 text-center td-tab-count-image">0</td>
+                                {% endif %}
+                            {% else %}
+                                <td class="col-sm-2"></td>
+                                <td class="col-sm-2"></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                    <tr class="tr-tab-image" data-cat-id="">
+                        <td class="col-sm-4"><i class="fa fa-sort-desc color-icon-tab"></i>&nbsp;&nbsp;<strong>En cours</strong></td>
+                        <td class="td-tab-count-image col-sm-2 text-center" data-detail="tous">{{ nbImagesEncours|number_format(0, '', ' ') }}</td>
+                        <td class="td-tab-count-image col-sm-2 text-center" data-detail="tous">{{ nbImagesEncours|number_format(0, '', ' ') }}</td>
+                        {% if dateScan  %}
+                            <td class="td-tab-count-image col-sm-2 text-center" data-detail="scan">{{ nbImagesByDateScanEncours|number_format(0, '', ' ') }}</td>
+                            <td class="td-tab-count-image col-sm-2 text-center" data-detail="scan">{{ nbImagesByDateScanEncours|number_format(0, '', ' ') }}</td>
+                        {% else %}
+                            <td class="col-sm-2"></td>
+                            <td class="col-sm-2"></td>
+                        {% endif %}
+                    </tr>
+                    <tr class="tr-tab-image" data-cat-id="">
+                        <td class="col-sm-4"><i class="fa fa-sort-desc color-icon-tab"></i>&nbsp;&nbsp;<strong>Total</strong></td>
+                        <td class="col-sm-2 text-center"><strong>{{ total|number_format(0, '', ' ') }}</strong></td>
+                        <td class="col-sm-2 text-center"><strong>{{ totalNonLettre|number_format(0, '', ' ') }}</strong></td>
+                        {% if dateScan  %}
+                            <td class="col-sm-2 text-center" data-detail="scan"><strong>{{ totalScan|number_format(0, '', ' ') }}</strong></td>
+                            <td class="col-sm-2 text-center" data-detail="scan"><strong>{{ totalScanNonLettre|number_format(0, '', ' ') }}</strong></td>
+                        {% else %}
+                            <td class="col-sm-2 text-center"></td>
+                            <td class="col-sm-2 text-center"></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#js_filtre_fourchette #js_debut_date').datepicker({format:'dd-mm-yyyy', language: 'fr', autoclose:true, todayHighlight: true});
+        $('#js_filtre_fourchette #js_fin_date').datepicker({format:'dd-mm-yyyy', language: 'fr', autoclose:true, todayHighlight: true});
+    });
+</script>

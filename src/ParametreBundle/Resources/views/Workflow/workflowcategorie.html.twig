@@ -1,0 +1,9 @@
+
+{% for item in categories %}
+    <li class="list-group-item liste-categorie" data-id="{{ item.id }}" data-code="{{ item.code }}">{{ item.libelle_new }}
+        {% if item.nb is not null %}
+            <span class="badge"> {{ item.nb }} </span>
+        {% endif %}
+    </li>
+{% endfor %}
+

@@ -1,0 +1,352 @@
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/imageconsultation.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banque.js') }}?v=1.2.5"></script>
+    <script src="{{ asset('bundles/banque/js/banque_imputee.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banque_controle.js') }}?v=1.2.7"></script>
+    <script src="{{ asset('bundles/banque/js/commun_saisie.js') }}?v=1.2.5"></script>
+    <script src="{{ asset('js/plugins/pdf/pdfobject.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/typeahead/bootstrap3-typeahead.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/viewer/viewer.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/viewer/viewer.css')}}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/banque.css')}}?v=1.2.4">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css')}}">
+{% endblock %}
+{% block title %}{{ parent() }} - Saisie{% endblock %}
+
+{% block content %}
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <div class="col-md-2 no-padding">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <a href="#" id="mentete" role="button" class="btn btn-primary btn-block" >Entête</a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <a href="#" id="minfos" role="button" class="btn btn-default btn-block"><i class="fa fa-info-circle"></i></a>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="col-lg-12" >
+                                        <a href="#" id="tout" role="button" class="btn btn-primary btn-block">Tout</a>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="js_titre">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <small>S.Total Init</small>
+                                                <span class="prix" id="sdebutg">0.00</span>
+                                                <span id="ssdebut" style="display:none;">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-info freleve">
+                                            <div class="panel-heading">
+                                                <small>S.Image Init</small>
+                                                <span class="prix" id="sdebut">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <small>S.Total Fin</small>
+                                                <span class="prix" id="sfing">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-info freleve">
+                                            <div class="panel-heading">
+                                                <small>S.Image Fin</small>
+                                                <span class="prix" id="sfin">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-danger" id="procg">
+                                            <div class="panel-heading">
+                                                <small>S.Total Prog</small>
+                                                <span class="prix" id="sprog">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-danger freleve" id="proc">
+                                            <div class="panel-heading">
+                                                <small>S.Image Prog</small>
+                                                <span class="prix" id="spro">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-danger" id="ecartg">
+                                            <div class="panel-heading">
+                                                <small>Ecart Total</small>
+                                                <span class="prix" id="secartg">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="ibox float-e-margins">
+                                        <div class="panel panel-danger freleve" id="ecart">
+                                            <div class="panel-heading">
+                                                <small>Ecart Image</small>
+                                                <span class="prix" id="secart">0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="input-group m-b">
+                                        <div class="input-group-btn">
+                                            <span tabindex="-1" class="btn btn-white" type="button">OB Manquant</span>
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                {#<li><a href="#">Mots Clefs</a></li>#}
+                                                {#<li class="divider"></li>#}
+                                                <li><a href="#" id="param-num-cb">Num et Relevés CB</a></li>
+                                                {#<li><a href="#" class="param-ob" data-id="1">Relevés CB</a></li>#}
+                                                <li><a href="#" class="param-ob" data-id="8">Frais bancaire</a></li>
+                                                <li><a href="#" class="param-ob" data-id="5">Relevés LCR</a></li>
+                                                <li><a href="#" class="param-ob" data-id="6">Virement/Chèque émis</a></li>
+                                                <li><a href="#" class="param-ob" data-id="7">Remise en banque</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="btn-group">
+                                        <button class="btn btn-white" id="qtip-ecart">Ecarts</button>
+                                        <button class="btn btn-warning" id="btn-doublon" >Doublons</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <form class="form-horizontal" enctype="multipart/form-data" id="myform">
+                                        <input type="hidden" id="imid" value="0">
+                                        <div class="form-group">
+                                            <div class="col-md-8">
+                                                <input type="file" class="form-control" name="upload" id="excel" multiple>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="#"  role="button" class="btn btn-primary btn-xs btn-block btn_terminer">Valider</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins" style="margin-bottom:0px!important;display:none;margin-top:10px" id="itete">
+                                <div class="row ibox-content">
+                                    <form class="form-horizontal">
+                                        <div class="col-md-1 col-xs-6 mar-top">
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {{ include('@Banque/Banque/saisie/saisie_commun.html.twig') }}
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 control-label">IBAN</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" id="js_iban_bq" value="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div id="ereleve">
+                                                    {{ include('@Banque/Banque/saisie/saisie_releve.html.twig') }}
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dossiero" value="">
+                                            {#<input type="hidden" id="lid" value="">#}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins" style="margin-bottom:0px!important;display:none;margin-top:10px">
+                                <div class="row ibox-content" >
+                                    <div class="tabs-container">
+                                        <div class="col-lg-12" id="iperdos">
+
+                                        </div>
+                                        <div class="col-lg-12" id="infoimage" style="margin-top: 5px;">
+                                            <form class="form-horizontal">
+                                                {{ include('@Banque/Banque/saisie/saisie_recategorisation.html.twig') }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-body p-4" id="result" style="min-height:550px;overflow-y: auto;">
+
+                    <input type="hidden" id="toutdetails">
+                    <input type="hidden" id="currentimage">
+
+                    <div class="row">
+                        <div id="mySidenav" class="col-lg-1" style="overflow: auto;">
+
+                        </div>
+
+                        <div class="col-lg-5 no-padding" id="pdf-resize">
+                            <div id="pdf"></div>
+                            <input type="hidden" id="pdfc" value=""/>
+                        </div>
+
+                        <div class="col-lg-6" id="form-resize" style="margin-right: 0 !important;">
+                            <div class="row">
+                                <div id="txcut">
+                                    <table id="cutoff-list">
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <div id="treleve">
+                                    <table id="releve-list">
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ibox-content">
+        {{ include('@Banque/Banque/saisie/saisie_filtre_banque_compte.html.twig') }}
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Lots disponibles Saisie</h5>
+        </div>
+        <div class="ibox-content" id="panier-list">
+
+        </div>
+    </div>
+
+    <div class="modal" id="param-cb-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-offset-11 col-md-1">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    {{ include('@Banque/Banque/Parametre/numcb.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="controle-doublon-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-offset-11 col-md-1">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table id="controle-doublon-list"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-2"><label  class="control-label">Dossier</label>
+        <select data-placeholder="Séléctionner un dossier" class="form-control filtre-dossier">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="col-md-2"><label  for="status" class="control-label">Statut</label>
+        <select class="form-control filtre-statut">
+        </select>
+    </div>
+    <div class="col-md-2"><label for="categorie" class="control-label">Catégorie</label>
+        <select class="form-control filtre-categorie">
+            <option value="-1">TOUTES</option>
+            {% for categorie in categories %}
+                <option value="{{ categorie.id }}">{{ categorie.libelleNew }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2"><label for="souscategorie" class="control-label">Sous catégorie</label>
+        <select class="form-control filtre-souscategorie"></select>
+    </div>
+    <div class="col-md-2"><label for="soussouscategorie" class="control-label">SS catégorie</label>
+        <select class="form-control filtre-soussouscategorie"></select>
+    </div>
+
+    <div class="col-md-1">
+        <label class="control-label"></label>
+        <button class="btn btn-sm btn-primary btn-block btn-go" ><i class="fa fa-check"></i> Go</button>
+    </div>
+    <div class="col-md-1">
+        <label class="control-label"></label>
+        <span class="btn btn-sm btn-info btn-block" id="btn-import">
+                            <i class="fa fa-upload"></i>&nbsp;&nbsp;Importer
+                        </span>
+    </div>
+</div>

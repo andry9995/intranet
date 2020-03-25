@@ -1,0 +1,40 @@
+{% if image is not null %}
+{% set color = '' %}
+{% set checked = '' %}
+
+{% if image.ctrl_saisie < 2 %}
+    {#image separée#}
+    {% set color = '#fdffe5' %}
+{% else %}
+    {#jerena raha efa validé#}
+    {% if image.valider == 100 %}
+        {% set color = '#a9d08e' %}
+    {% else %}
+        {#image saisie#}
+        {% if image.ecriture is defined %}
+            {% if image.ecriture == 'E' %}
+                {% set color = '#a9d08e' %}
+            {% else %}
+                {% set color = '#ffd966' %}
+            {% endif %}
+        {% else %}
+            {% set color = '#ffd966' %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% if image.ctrl_saisie >= 2 %}
+    {% set checked = 'checked' %}
+{% endif %}
+
+{% set checkBoxId = 'c'~image.id %}
+
+<td align="right" bgcolor="{{ color }}" style="border:none;">
+                    <span data-id="{{ image.id }}" class="image pointer" data-valide="{{ image.valider }}" style="background-color: {{ color }}">
+                        {{ image.nom }}
+                    </span>
+</td>
+<td align="left" bgcolor="{{ color }}" style="border:none;">
+    <input type="checkbox" id="{{ checkBoxId }}" {{ checked }} />
+</td>
+{% endif %}

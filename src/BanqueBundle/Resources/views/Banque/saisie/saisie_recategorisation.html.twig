@@ -1,0 +1,31 @@
+<label class="col-md-1 control-label">Catégorie</label>
+<div class="col-md-2">
+    <select class="form-control" id="icategorie">
+        <option value="16" selected>Banque</option>
+        <option value="41">A RECATEGORISER</option>
+    </select>
+</div>
+<label class="col-md-1 control-label">S. Cat</label>
+<div class="col-md-2">
+    <select class="form-control" id="isouscategorie">
+        <option value="0">Aucun</option>
+        {% for iscat in isouscategorie %}
+            <option value="{{ iscat.id }}" {{ (iscat.id == 10) ? 'selected' : '' }}>
+                {{ iscat.libelleNew }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+<label class="col-md-1 control-label" style="padding-right: 0">S. S. Cat</label>
+<div class="col-md-3">
+    <select class="form-control" id="isoussouscategorie">
+        <option value="0">Aucun</option>
+        {% for isscat in isoussouscategorie %}
+            <option value="{{ isscat.id }}">{{ isscat.libelleNew }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="col-md-2">
+    <button id="btn_recategoriser" class="btn btn-sm btn-primary btn-block" >Valider</button>
+</div>

@@ -1,0 +1,26 @@
+<div class="row" style="padding-left: 10px">
+    {% set iCpt = 1 %}
+
+    {% set iNbImage = 0 %}
+
+    {% for lot in lot_N1 %}
+        <div style="background-color:{{ lot.color }} " data-lot="{{ lot.id }}"
+             data-image="{{ lot.nbimage }}"
+             data-client="{{ lot.client }}"
+             data-site="{{ lot.site }}"
+             data-dossier="{{ lot.dossier }}"
+             data-datescan="{{ lot.date_scan }}"
+             data-priorite="{{ lot.priorite }}"
+             data-order="{{ lot.order }}"
+             data-tache="{{ lot.tache }}"
+             data-exercice="{{ lot.exercice }}"
+             data-lot2="{{ lot.lot }}" class="lot ligne-lot-telecharger;">
+
+            {{ lot.nbimage }}&nbsp;
+            <i class="infos-recherche-fini-tirage hidden fa fa-star fa-spin" style="position:absolute;  top:0px;color: yellow "></i>
+        </div>
+        {% set iCpt = iCpt + 1 %}
+    {% endfor %}
+    <input type="hidden" id="idNbLot" value="{{ lot_N1|length }}">
+    <input type="hidden" id="idNbImage" value="{{ iNbImage }}">
+</div>

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="col-md-1 control-label">Date</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control verif-date" id="rdate" value="">
+            </div>
+            <label class="col-md-2 control-label">Nombres cheques</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control" id="rnombrecheque" value="0">
+            </div>
+            <label class="col-md-1 control-label">Total</label>
+            <div class="col-md-2">
+                <input type="text" class="input form-control verif-total" id="rtotal" value="0">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 pull-right">
+        <span id="js_form_remisebanque_submit" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Valider</span>
+    </div>
+    {{ include('BanqueBundle:Banque/saisie:banque_saisie_a_saisir.html.twig') }}
+</div>
+
+<div class="row row-grid">
+    <div class="col-lg-12" style="margin-top: 10px;">
+        <table id="remise-list"></table>
+    </div>
+</div>

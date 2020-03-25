@@ -1,0 +1,19 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+    '@PilotageBundle/Resources/public/css/pilotage.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+{% block content %}
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-6 col-sm-12 text-center">
+            {{ render_hinclude(controller('PilotageBundle:Reception:receptionExercice')) }}
+        </div>
+        <div class="col-md-6 col-sm-12 text-center">
+            {{ render_hinclude(controller('PilotageBundle:Reception:receptionJournalier')) }}
+        </div>
+    </div>
+{% endblock %}

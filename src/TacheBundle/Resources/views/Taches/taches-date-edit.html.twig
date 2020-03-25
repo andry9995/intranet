@@ -1,0 +1,38 @@
+<div role="form">
+    <div class="form-group">
+        <label>Cloture</label><br>
+        <div class="btn-group btn-group-sm" id="id_clotures">
+            {% for key, moi in mois %}
+                {% set k = key + 1 %}
+
+                {% set class = '' %}
+                {% if k in cloturesUseds %}
+                    {% set class = 'active btn-white' %}
+                {% elseif k in clotures %}
+                    {% set class = 'btn-primary' %}
+                {% else %}
+                    {% set class = 'btn-white' %}
+                {% endif %}
+
+                <span class="{{ class }} btn cl_cloture" data-value="{{ k }}">{{ moi }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="radio radio-inline">
+            <input type="radio" id="radio-formule" value="0" name="radio-type" {{ tachesDate is null or (tachesDate is not null and tachesDate.infoperdos == 0) ? 'checked' : '' }}>
+            <label for="radio-formule">Formule</label>
+        </div>
+        <div class="radio radio-info radio-inline">
+            <input type="radio" id="radio-infoperdos" value="1" name="radio-type" {{ tachesDate is not null and tachesDate.infoperdos == 1 ? 'checked' : '' }}>
+            <label for="radio-infoperdos">Infoperdos</label>
+        </div>
+        &nbsp;&nbsp;&nbsp;<i class="fa fa-question-circle pull cl_aide_date" aria-hidden="true"></i>
+        <input type="text" placeholder="Formule" id="id_formule" value="{{ tachesDate is not null ? tachesDate.formule : '' }}" class="form-control {{ tachesDate is not null and tachesDate.infoperdos == 1 ? 'hidden' : '' }}">
+    </div>
+
+    <div class="form-group text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_taches_date_edit" data-action="1" data-dossier="{{ dossier is null ? 0 : dossier.id }}" data-taches_action="{{ tachesAction.id }}" data-taches_date="{{ tachesDate is null ? 0 : tachesDate.id }}"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

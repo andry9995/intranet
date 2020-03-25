@@ -1,0 +1,77 @@
+tache_legale_liste:
+    path: /
+    defaults: { _controller: TacheBundle:TacheLegale:liste }
+    options:
+        expose: true
+    methods: [GET]
+
+tache_legale_one:
+    path: /{tache}
+    defaults: { _controller: TacheBundle:TacheLegale:one }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        tache: \d+
+
+tache_legale_add:
+    path: /
+    defaults: { _controller: TacheBundle:TacheLegale:add }
+    options:
+        expose: true
+    methods: [POST]
+
+tache_legale_edit:
+    path: /edit/{tache}
+    defaults: { _controller: TacheBundle:TacheLegale:edit }
+    options:
+        expose: true
+    methods: [POST]
+    requirements:
+        tache: \d+
+
+tache_legale_remove:
+    path: /{tache}
+    defaults: { _controller: TacheBundle:TacheLegale:remove }
+    options:
+        expose: true
+    methods: [DELETE]
+    requirements:
+        tache: \d+
+
+#ACTIONS POUR TACHES LEGALES
+tache_legale_action_liste:
+    path: /action/{tache}
+    defaults: { _controller: TacheBundle:TacheLegaleAction:liste }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        tache: \d+
+
+tache_legale_action_edit:
+    path: /action/{tache}
+    defaults: { _controller: TacheBundle:TacheLegaleAction:edit }
+    options:
+        expose: true
+    methods: [POST]
+    requirements:
+        tache: \d+
+
+tache_legale_action_process:
+    path: /action-process
+    defaults: { _controller: TacheBundle:TacheLegaleAction:test }
+
+tache_legale_action_remove:
+    path: /action/{tache_id}
+    defaults: { _controller: TacheBundle:TacheLegaleAction:remove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+tache_legale_liste_actions:
+    path: /liste-actions
+    defaults: { _controller: TacheBundle:TacheLegale:listeActions }
+    options:
+        expose: true
+    methods: [GET]

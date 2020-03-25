@@ -1,0 +1,4 @@
+<option value="0">Tous</option>
+{% for datescan in dateScans %}
+    <option value="{{ datescan|date('Y-m-d') }}">{{ datescan |date('d/m/Y') }}</option>
+{% endfor %}

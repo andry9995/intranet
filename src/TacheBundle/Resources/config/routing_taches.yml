@@ -1,0 +1,84 @@
+taches_groups:
+    path:   /taches-groups
+    defaults: { _controller: TacheBundle:Taches:tachesGroups }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_group_edit:
+    path:   /taches-group/edit
+    defaults: { _controller: TacheBundle:Taches:tachesGroupEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+taches:
+    path:   /liste
+    defaults: { _controller: TacheBundle:Taches:taches }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_edit:
+    path:   /edit
+    defaults: { _controller: TacheBundle:Taches:editTaches }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_items:
+    path:   /taches_item/liste
+    defaults: { _controller: TacheBundle:Taches:tachesItems }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_item_edit:
+    path:   /taches_item/edit
+    defaults: { _controller: TacheBundle:Taches:editTachesItem }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_action_edit:
+    path:   /taches_action/edit
+    defaults: { _controller: TacheBundle:Taches:editTachesAct }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_action_code:
+    path:   /taches_action/code
+    defaults: { _controller: TacheBundle:Taches:tachesActCode }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_dates:
+    path:   /taches_date/liste
+    defaults: { _controller: TacheBundle:Taches:tachesDates }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_date_edit:
+    path:   /taches_date/edit
+    defaults: { _controller: TacheBundle:Taches:editTachesDate }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_action_libelle:
+    path:   /taches_action/libelle
+    defaults: { _controller: TacheBundle:Taches:tachesActLibelle }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_action_description:
+    path:   /taches_action/description
+    defaults: { _controller: TacheBundle:Taches:tachesActDescription }
+    methods: [POST]
+    options:
+        expose: true
+

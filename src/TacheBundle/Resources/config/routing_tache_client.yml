@@ -1,0 +1,39 @@
+#TACHE PAR CLIENT
+#Index parametrage tache par client
+tache_par_client:
+    path: /
+    defaults: { _controller: TacheBundle:TacheClient:tacheParClient }
+
+#Liste des utilisateur (responsable) par client
+tache_utilisateur_par_client:
+    path: /utilisateur-par-client/{client}
+    defaults: { _controller: TacheBundle:TacheDossier:utilisateurParClient }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      type: \d+
+
+#Enregistrer tache par client
+tache_save_tache_par_client:
+    path: /save
+    defaults: { _controller: TacheBundle:TacheClient:saveTacheClient }
+    methods: [POST]
+    options:
+      expose: true
+
+tache_delete_tache_par_client:
+    path: /delete
+    defaults: { _controller: TacheBundle:TacheClient:deleteTacheClient }
+    methods: [DELETE]
+    options:
+      expose: true
+
+#Liste des taches par client
+tache_liste_tache_par_client:
+    path: /{client}
+    defaults: { _controller: TacheBundle:TacheClient:listeTacheClient, client: '' }
+    options:
+      expose: true
+    requirements:
+      client: ^(\s*|\d+)$

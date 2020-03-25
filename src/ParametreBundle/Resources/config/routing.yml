@@ -1,0 +1,763 @@
+#INDEX PARAMETRE
+parametre_homepage:
+  path:     /
+  defaults: { _controller: 'ParametreBundle:Parametre:index' }  
+
+#ORGANISATION
+
+parametre_organisation_processus:
+    path:     /organisation/processus
+    defaults: { _controller: 'ParametreBundle:Processus:index' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+parametre_organisation_menus_choisis:
+    path: /organisation/menu-choisi
+    defaults: { _controller: 'AppBundle:MenuIntranet:regroupeMenuChoisi' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_organisation_postes_choisis:
+    path: /organisation/poste-choisi
+    defaults: { _controller: 'ParametreBundle:Poste:listePosteChoisi' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_organisation_process:
+    path:     /organisation/process
+    defaults: { _controller: 'ParametreBundle:Processus:rangProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+parametre_organisation_saveprocessus:
+    path:     /organisation/save-processus
+    defaults: { _controller: 'ParametreBundle:Processus:save' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_reloadallprocess:
+    path:     /organisation/reload-processus
+    defaults: { _controller: 'ParametreBundle:Processus:reloadAllProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_editprocessus:
+    path:     /organisation/edit-processus
+    defaults: { _controller: 'ParametreBundle:Processus:edit' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_editprocess:
+    path:     /organisation/edit-process
+    defaults: { _controller: 'ParametreBundle:Processus:editProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_deleteprocess:
+    path:     /organisation/remove-process
+    defaults: { _controller: 'ParametreBundle:Processus:deleteProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_deleteprocessus:
+    path:     /organisation/remove-processus
+    defaults: { _controller: 'ParametreBundle:Processus:deleteProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_saveeditprocessus:
+    path:     /organisation/saveedit-processus
+    defaults: { _controller: 'ParametreBundle:Processus:editProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+parametre_organisation_saveeditprocess:
+    path:     /organisation/saveedit-process
+    defaults: { _controller: 'ParametreBundle:Processus:saveEditProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_saveprocess:
+    path:     /organisation/save-process
+    defaults: { _controller: 'ParametreBundle:Processus:saveProcess' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_reloadprocessus:
+    path:     /organisation/reload-processus
+    defaults: { _controller: 'ParametreBundle:Processus:reloadProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_liste_poste:
+    path:     /organisation/parametrage/liste-poste
+    defaults: { _controller: 'ParametreBundle:Poste:listePoste' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+
+parametre_organisation:
+  path:     /organisation
+  defaults: { _controller: 'ParametreBundle:Organisation:index' }
+
+parametre_organisation_liste:
+  path: /organisation/liste
+  defaults: { _controller: 'ParametreBundle:Organisation:organisation' }
+  methods: [GET]
+  options:
+    expose: true
+
+parametre_organisation_create:
+  path: /organisation/create
+  defaults: { _controller: 'ParametreBundle:Organisation:create' }
+  methods: [POST]
+  options:
+    expose: true
+
+parametre_organisation_remove:
+  path: /organisation/remove/{org}
+  defaults: { _controller: 'ParametreBundle:Organisation:remove' }
+  methods: [DELETE]
+  options:
+    expose: true
+  requirements:
+    org: \d+
+
+parametre_organisation_update:
+  path: /organisation/update/{org}
+  defaults: { _controller: 'ParametreBundle:Organisation:update' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    org: \d+
+
+parametre_organisation_parametrage:
+  path: /organisation/parametrage
+  defaults: { _controller: 'ParametreBundle:OrganisationParametre:index' }
+  methods: [GET]
+  options:
+    expose: true
+
+
+parametre_organisation_titre_order:
+  path: /organisation/parametrage/titre
+  defaults: { _controller: 'ParametreBundle:OrganisationParametre:reorderTitre' }
+  methods: [POST]
+  options:
+    expose: true
+
+
+parametre_organisation_processus_poste_menus:
+    path:     /organisation/parametrage/pro-poste-menus
+    defaults: { _controller: 'ParametreBundle:Processus:reloadProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_processus_poste_menus_refresh:
+    path:     /organisation/parametrage/pro-poste-menus-reload
+    defaults: { _controller: 'ParametreBundle:Processus:reloadRelationProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_processus_liste_menus:
+    path:     /organisation/parametrage/liste-menus
+    defaults: { _controller: 'AppBundle:MenuIntranet:getMenuList' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_processus_poste_menus_liste:
+    path:     /organisation/parametrage/pro-poste-menus-liste
+    defaults: { _controller: 'ParametreBundle:Processus:listeRelationProcessus' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_organisation_save_process_relation:
+    path:     /organisation/parametrage/save-propostemenu
+    defaults: { _controller: 'ParametreBundle:ProcessusParOrganisation:saveRelation' }
+    methods: [POST]
+    options:
+      expose: true
+
+
+parametre_organisation_poste:
+  path: /organisation/poste-par-etape/{etape}
+  defaults: { _controller: 'ParametreBundle:OrganisationParametre:posteParEtape' }
+  methods: [GET]
+  options:
+    expose: true
+  requirements:
+    etape: \d+
+
+parametre_organisation_poste_update:
+  path: /organisation/poste-par-etape/{etape}
+  defaults: { _controller: 'ParametreBundle:OrganisationParametre:posteParEtapeUpdate' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    etape: \d+
+
+
+#GESTION DES ENTITES
+#index entité
+parametre_entite:
+  path:     /entite
+  defaults: { _controller: 'ParametreBundle:Entite:index' }
+  options:
+    expose: true
+
+#liste des entité pour jqGrid
+parametre_entite_liste:
+  path:   /entite/liste
+  defaults: { _controller: 'ParametreBundle:Entite:liste' }
+  options:
+    expose: true
+
+#liste des entité HTML select ou JSON
+paremetre_entite_liste_simple:
+    path:   /entite/liste-simple/{json}
+    defaults:   { _controller: 'ParametreBundle:Entite:listeSimple', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+#modification d'une entité
+parametre_entite_edit:
+  path:   /entite/edit
+  defaults: { _controller: 'ParametreBundle:Entite:edit' }
+  options:
+    expose: true
+  methods: [POST]
+
+#GESTION DES DEPARTEMENTS
+#index departement
+parametre_departement:
+    path:     /departement
+    defaults: { _controller: 'ParametreBundle:Departement:index' }
+    options:
+      expose: true
+
+#liste departement pour jqGrid
+parametre_departement_liste:
+  path:   /departement/liste
+  defaults: { _controller: 'ParametreBundle:Departement:liste' }
+  options:
+    expose: true
+
+#Modification d'un département
+parametre_departement_edit:
+  path:   /departement/edit
+  defaults: { _controller: 'ParametreBundle:Departement:edit' }
+  options:
+    expose: true
+  methods: [POST]
+
+#liste des départements d'une entité
+parametre_liste_departement_entite:
+  path:   /departement/entite/{id}
+  defaults: { _controller: 'ParametreBundle:Departement:listeDepEntite' }
+  options:
+    expose: true
+  requirements:
+    id: \d+
+
+#GESTION DES SERVICES
+#index service
+parametre_service:
+    path:     /service
+    defaults: { _controller: 'ParametreBundle:Service:index' }
+    options:
+      expose: true
+
+#liste services pour jqGrid
+parametre_service_liste:
+  path:     /service/liste
+  defaults: { _controller: 'ParametreBundle:Service:liste' }
+  options:
+    expose: true
+
+#liste des services d'un département
+parametre_liste_service_departement:
+  path:   /service/departement/{id}
+  defaults: { _controller: 'ParametreBundle:Service:listeServiceDepartement' }
+  options:
+    expose: true
+  requirements:
+    id: \d+
+
+#GESTION DES CELLULES
+#index cellule
+parametre_cellule:
+    path:     /cellule
+    defaults: { _controller: 'ParametreBundle:Cellule:index' }
+    options:
+      expose: true
+
+#liste cellules pour jqGrid
+parametre_cellule_liste:
+    path:     /cellule/liste
+    defaults: { _controller: 'ParametreBundle:Cellule:liste' }
+    options:
+      expose: true
+
+#liste des cellule d'un service
+parametre_liste_cellule_service:
+  path:   /cellule/service/{id}
+  defaults: { _controller: 'ParametreBundle:Cellule:listeCelluleService' }
+  options:
+    expose: true
+  requirements:
+    id: \d+
+
+#GESTION DES POSTES
+#index poste
+parametre_poste:
+    path:     /poste
+    defaults: { _controller: 'ParametreBundle:Poste:index' }
+    options:
+      expose: true
+
+#liste des postes pour jqGrid
+parametre_poste_liste:
+    path:     /poste/liste
+    defaults: { _controller: 'ParametreBundle:Poste:liste' }
+    options:
+      expose: true
+
+#liste des postes groupés par cellule
+parametre_poste_liste_with_cellule:
+    path:   /poste/liste-with-cellule/{json}
+    defaults: { _controller: 'ParametreBundle:Poste:listeForSelect', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+#GESTION DES PERSONNELS
+#index personnel
+parametre_personnel:
+    path:     /personnel
+    defaults: { _controller: 'ParametreBundle:Personnel:index' }
+    options:
+      expose: true
+
+#liste des personnels pour jqGrid
+parametre_personnel_liste:
+    path:     /personnel/liste
+    defaults: { _controller: 'ParametreBundle:Personnel:liste' }
+    options:
+      expose: true
+
+
+
+
+#modification d'un personnel
+parametre_personnel_edit:
+    path: /personnel/edit
+    defaults: { _controller: 'ParametreBundle:Personnel:edit' }
+    options:
+      expose: true
+
+
+#CAPACITE PAR POSTE
+parametre_capacite_poste:
+    path: /capacite-poste
+    defaults: { _controller: 'ParametreBundle:Capacite:index' }
+    methods: [GET]
+
+parametre_capacite_update:
+    path: /capacite-poste
+    defaults: { _controller: 'ParametreBundle:Capacite:updateCapacite' }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_capacite_menu_poste:
+    path: /capacite-menu-poste
+    defaults: { _controller: 'ParametreBundle:Capacite:menuListePoste' }
+    methods: [GET]
+    options:
+        expose: true
+
+parametre_capacite_poste_update:
+    path: /capacite-poste-update/{operateur}
+    defaults: { _controller: 'ParametreBundle:Capacite:updatePoste' }
+    methods: [POST]
+    requirements:
+        operateur: \d+
+    options:
+        expose: true
+
+parametre_capacite_par_operateur:
+    path: /capacite-par-operateur/{operateur}
+    defaults: { _controller: 'ParametreBundle:Capacite:capaciteParOperateur' }
+    methods: [GET]
+    requirements:
+        operateur: \d+
+    options:
+        expose: true
+
+parametre_capacite_par_operateur_update:
+    path: /capacite-par-operateur/{operateur}
+    defaults: { _controller: 'ParametreBundle:Capacite:capaciteParOperateurUpdate' }
+    methods: [POST]
+    requirements:
+        operateur: \d+
+    options:
+        expose: true
+
+#GAMME
+parametre_gamme:
+    path:     /gamme
+    defaults: { _controller: 'ParametreBundle:Parametre:gamme' }
+
+#BAREMES FISCAUX
+parametre_baremes_fiscaux:
+    path:     /baremes-fiscaux
+    defaults: { _controller: 'ParametreBundle:BaremesFiscaux:index' }
+    methods: [GET]
+
+#parametre personnel pic data login
+parametre_personnel_picdata_login:
+    path:     /personnel/pic-data-login/
+    defaults: { _controller: 'ParametreBundle:Personnel:picDataLogin' }
+
+parametre_personnel_picdata_charger:
+    path:     /personnel/pic-data-login/charger
+    defaults: { _controller: 'ParametreBundle:Personnel:operateursUtilisateur' }
+    options:
+      expose: true
+
+parametre_personnel_picdata_edit:
+    path:     /personnel/pic-data-login/edit
+    defaults: { _controller: 'ParametreBundle:Personnel:operateurUtilisateurEdit' }
+    methods: [POST]
+    options:
+      expose: true
+
+parametre_personnel_picdata_save:
+    path:     /personnel/pic-data-login/save
+    defaults: { _controller: 'ParametreBundle:Personnel:operateurUtilisateurSave' }
+    methods: [POST]
+    options:
+      expose: true
+
+#selection d'un operateur
+param_operat_picdata:
+  path:   /select/operateur
+  defaults: { _controller: 'ParametreBundle:Personnel:selectOperateur' }
+  options:
+    expose: true
+  methods: [POST]
+
+#verification d'un operateur utilisateur
+verif_opera_utilis:
+  path:   /verif/operateur-utilisateur
+  defaults: { _controller: 'ParametreBundle:Personnel:verifOperaUtilis' }
+  options:
+    expose: true
+  methods: [POST]
+
+#Reinitialisation mot de pass operateur
+erase_pwd_personnel:
+  path:   /reinitialiser/motdepass
+  defaults: { _controller: 'ParametreBundle:Personnel:reinitialisePwd' }
+  options:
+    expose: true
+  methods: [POST]
+
+
+parametre_caisse:
+  path:     /caisse
+  defaults: { _controller: 'ParametreBundle:Caisse:index' }
+
+
+parametre_caisse_tdpcc:
+    path: /caisse/tdpcc/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdPcc', dossierid: -1}
+    options:
+        expose: true
+
+parametre_caisse_tdpcc_edit:
+    path: /caisse/tdpcc-edit
+    defaults: { _controller: 'ParametreBundle:Caisse:tdPccEdit' }
+    options:
+        expose: true
+
+
+parametre_caisse_tdtva_edit:
+    path: /caisse/tdtva-edit
+    defaults: { _controller: 'ParametreBundle:Caisse:tdTvaPccEdit'}
+    options:
+        expose: true
+
+
+parametre_caisse_tdtype:
+    path: /caisse/tdtype/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdType', dossierid: -1}
+    options:
+        expose: true
+
+parametre_caisse_tdtype_edit:
+    path: /caisse/tdtype-edit/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdTypeEdit', dossierid: -1}
+    options:
+        expose: true
+
+
+parametre_caisse_tdresultat:
+    path: /caisse/tdresultat/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdResutat', dossierid: -1}
+    options:
+        expose: true
+
+parametre_caisse_tdresultat_edit:
+    path: /caisse/tdresultat-edit/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdResultatEdit', dossierid: -1}
+    options:
+        expose: true
+
+
+parametre_caisse_tdtvacaisse:
+    path: /caisse/tdtvacaisse/{typecaisse}/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdtvaCaisse', typecaisse: 0,dossierid: -1}
+    options:
+        expose: true
+
+parametre_caisse_tdtvacaisse_edit:
+    path: /caisse/tdresultat-edit/{typecaisse}/{dossierid}
+    defaults: { _controller: 'ParametreBundle:Caisse:tdtvaCaisseEdit', typecaisse: 0, dossierid: -1}
+    options:
+        expose: true
+
+
+parametre_caisse_nature:
+  path:   /caisse/nature
+  defaults: { _controller: 'ParametreBundle:Caisse:caisseNature' }
+  options:
+      expose: true
+
+parametre_caisse_type:
+  path:   /caisse/type
+  defaults: { _controller: 'ParametreBundle:Caisse:caisseType' }
+  options:
+      expose: true
+
+
+parametre_caisse_pcc_resultat:
+  path:   /caisse/pcc-resultat
+  defaults: { _controller: 'ParametreBundle:Caisse:pccBilanResultat' }
+  options:
+      expose: true
+
+
+parametre_caisse_pcc_tva:
+  path:   /caisse/pcc-tva/{typecaisse}
+  defaults: { _controller: 'ParametreBundle:Caisse:pccTva', typecaisse: 0 }
+  options:
+      expose: true
+
+parametre_caisse_contre_partie:
+  path:  /caisse/contrepartie/{typecaisse}/{dossierid}
+  defaults: { _controller: 'ParametreBundle:Caisse:tdContrePartie', typecaisse: 0, dossierid: -1}
+  options:
+      expose: true
+
+parametre_caisse_contre_partie_edit:
+  path:  /caisse/contrepartie-edit/{typecaisse}
+  defaults: { _controller: 'ParametreBundle:Caisse:tdContrePartieEdit', typecaisse: 0 }
+  options:
+      expose: true
+  methods: [POST]
+
+
+
+parametre_caisse_test:
+  path:  /caisse/test/{dossierid}
+  defaults: { _controller: 'ParametreBundle:Caisse:tdContrePartie', dossierid:  -1}
+  options:
+      expose: true
+
+#AFFECTATION DOSSIER
+#parametre_affectation_dossier:
+#    path: /affectation-dossier
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:index' }
+#    methods: [GET]
+#
+#parametre_affectation_dossier_responsable_edit:
+#    path: /affectation-dossier/responsable
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:editResponsable' }
+#    methods: [POST]
+#    options:
+#        expose: true
+#
+#parametre_affectation_dossier_client_edit:
+#    path: /affectation-dossier/client
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:editClient' }
+#    methods: [POST]
+#    options:
+#        expose: true
+#
+#parametre_affectation_dossier_client_sup:
+#    path: /affectation-dossier/client-sup
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:supClient' }
+#    methods: [POST]
+#    options:
+#        expose: true
+#
+#parametre_client_par_utilisateur:
+#    path: /affectation-dossier/client-utilisateur/{operateur}
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:clientParUtilisateur' }
+#    methods: [GET]
+#    options:
+#        expose: true
+#
+#parametre_client_responsable:
+#    path: /affectation-dossier/client-responsable/
+#    defaults: { _controller: 'ParametreBundle:AffectationDossier:clientParResponsable' }
+#    methods: [POST]
+#    options:
+#        expose: true
+
+#WORKFLOW
+parametre_workflow:
+    path: /workflow
+    defaults: { _controller: 'ParametreBundle:Workflow:index'}
+
+parametre_workflow_categorie:
+    path: /workflow/categorie
+    defaults: { _controller: 'ParametreBundle:Workflow:categorie'}
+    methods: [POST]
+    options:
+          expose: true
+
+parametre_workflow_etape_choisie:
+    path: /workflow/etape_choisie
+    defaults: { _controller: 'ParametreBundle:Workflow:etapeChoisie'}
+    methods: [POST]
+    options:
+          expose: true
+parametre_workflow_etape_dispo:
+    path: /workflow/etape_dispo
+    defaults: { _controller: 'ParametreBundle:Workflow:etapeDisponible'}
+    methods: [POST]
+    options:
+          expose: true
+parametre_workflow_save:
+    path: /workflow/save
+    defaults: { _controller: 'ParametreBundle:Workflow:saveWorkflow'}
+    methods: [POST]
+    options:
+          expose: true
+parametre_workflow_editurl:
+    path: /workflow/editurl
+    defaults: { _controller: 'ParametreBundle:Workflow:editUrlWorkflow'}
+    methods: [POST]
+    options:
+          expose: true
+
+parametre_gestion_categorie_nature:
+    path: /gestion/gestion_categorie_nature
+    defaults: { _controller: 'ParametreBundle:Parametre:lancerGestionCatNature'}
+    methods: [POST]
+    options:
+          expose: true
+
+parametre_acces_menu:
+    path: /acces-menu
+    defaults: { _controller: 'ParametreBundle:Personnel:accesMenu' }
+    methods: [GET]
+    options:
+          expose: true
+
+parametre_acces_menu_par_poste_edit:
+    path: /acces/menu-par-acces-edit/{poste}
+    defaults: { _controller: ParametreBundle:Personnel:roleAccesMenuEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        role: \d+
+
+
+
+parametre_menu_par_poste:
+    path: /acces/menu-par-acces/{poste}
+    defaults: { _controller: ParametreBundle:Personnel:accesOperateurMenu }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        role: \d+
+
+parametre_menu_par_operateur:
+    path: /acces/menu-par-operateur/{operateur}
+    defaults: { _controller: ParametreBundle:Personnel:operateurMenu }
+    methods: [GET]
+    options:
+        expose: true
+
+parametre_menu_par_operateur_edit:
+    path: /acces/menu-par-operateur-edit/{operateur}
+    defaults: { _controller: ParametreBundle:Personnel:operateurMenuEdit}
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_categorie_nature:
+    path: /categorie-nature
+    defaults: { _controller: ParametreBundle:Workflow:categorieNature }
+    methods: [GET]
+    options:
+        expose: true
+
+parametre_ik:
+    path: /ik
+    defaults: { _controller: ParametreBundle:IndemniteKm:index }
+    methods: [GET]
+
+parametre_ik_tableau:
+    path: /ik/tableau
+    defaults: { _controller: ParametreBundle:IndemniteKm:tableau }
+    methods: [POST]
+    options:
+        expose: true
+
+parametre_menu_par_poste_user:
+    path: /acces/menu-par-acces/{poste}/{user}
+    defaults: { _controller: ParametreBundle:Personnel:accesOperateurParUserMenu }
+    methods: [GET]
+    options:
+        expose: true
+
+parametre_menu_default:
+    path: /acces/menu-defaut/{operateur}
+    defaults: { _controller: ParametreBundle:Personnel:accesOperateurParUserDefautMenu }
+    methods: [GET]
+    options:
+        expose: true

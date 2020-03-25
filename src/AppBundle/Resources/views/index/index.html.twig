@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SCRIPTURA INTRANET</title>
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/homepage.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/commun.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+<div id="wrapper">
+    <div class="row border-bottom">
+        <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <ul class="nav navbar-top-links navbar-left">
+                <li class="navbar-btn">
+                    <a href="{{ path('home_page') }}">INTRANET SCRIPTURA</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                {{ include('AppBundle:Commun:userinfo.html.twig') }}
+            </ul>
+        </nav>
+    </div>
+    <div id="body-content" class="container-fluid">
+        <div class="row">
+            {% set newArrayChild = [] %}
+            {% for menu_parent in menus_parents if menu_parent.lien|route_exists %}
+                {% set newArrayParent = [] %}
+                {% set count_sous_menu = 0 %}
+                {% set is_active = 'disable-pointer' %}
+                {% set parent_id = 0 %}
+                {% for sous_menu in menus_childs if sous_menu.id in menus_id and sous_menu.lien|route_exists %}
+                    {% for child in sous_menu.child if child.id in menus_id and child.lien|route_exists %}
+                        {% if child.menuIntranet.menuIntranet|length == 0 %}
+                            {% if child.menuIntranet is not null and child.menuIntranet.id > 0 and child.menuIntranet.id == menu_parent.id %}
+                                {% set is_active = '' %}
+                            {% endif %}
+                        {% else %}
+                            {% if child.menuIntranet is not null and child.menuIntranet.id > 0 and child.menuIntranet.menuIntranet.id == menu_parent.id %}
+                                {% set is_active = '' %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                <div class="col-sm-4 {{ is_active }}">
+                    <div class="homepage-menu" style="background-image: linear-gradient({{ menu_parent.backgroundColor }})">
+                        <div class="homepage-menu-child">
+                            <a href="{{ path(menu_parent.lien) }}">
+                                <div class="menu-title">
+                                        <p>{{ menu_parent.libelle }}</p>
+                                </div>
+                                <div class="menu-details">
+                                    <p><i class="fa {{ menu_parent.icon }} fa-4x"></i></p>
+                                    <ul>
+                                        {% for sous_menu in menus_childs if sous_menu.id in menus_id and sous_menu.id not in newArrayParent and sous_menu.lien|route_exists %}
+                                            {% set newArrayParent = newArrayParent|merge([sous_menu.id]) %}
+                                            {% set parent_id = 0 %}
+                                            {% set count_sous_menu = 0 %}
+                                            {% for child in sous_menu.child if child.id in menus_id and child.lien|route_exists %}
+                                                {% if child.menuIntranet.menuIntranet|length == 0 %}
+                                                    {% if child.menuIntranet is not null and child.menuIntranet.id > 0 and child.menuIntranet.id == menu_parent.id and count_sous_menu <= 6 and child.libelle not in newArrayChild %}
+                                                        <li>{{ child.libelle }}</li>
+                                                        {% set count_sous_menu = count_sous_menu + 1 %}
+                                                        {% set newArrayChild = newArrayChild|merge([child.libelle]) %}
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if child.menuIntranet is not null and child.menuIntranet.id > 0 and child.menuIntranet.menuIntranet.id == menu_parent.id %}
+                                                        {% set parent_id = menu_parent.id %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if parent_id != 0 %}
+                                                <li>{{ sous_menu.libelle }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{#Mainly scripts#}
+<script src="{{ asset('js/jquery-2.1.1.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+{# jqGrid #}
+<script src="{{ asset('js/plugins/jqGrid/i18n/grid.locale-fr.js') }}"></script>
+<script src="{{ asset('js/plugins/jqGrid/jquery.jqGrid.min.js') }}"></script>
+
+{#Data Tables#}
+<script src="{{ asset('js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+
+{#jQuery qTip#}
+<script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+
+{#Flot#}
+<script src="{{ asset('js/plugins/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.spline.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.resize.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.pie.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.symbol.js') }}"></script>
+<script src="{{ asset('js/plugins/flot/jquery.flot.time.js') }}"></script>
+
+{#Peity#}
+<script src="{{ asset('js/plugins/peity/jquery.peity.min.js') }}"></script>
+<script src="{{ asset('js/demo/peity-demo.js') }}"></script>
+
+{#Custom and plugin javascript#}
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+{#jQuery UI#}
+<script src="{{ asset('js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+{#Jvectormap#}
+<script src="{{ asset('js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+<script src="{{ asset('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+{#EayPIE#}
+<script src="{{ asset('js/plugins/easypiechart/jquery.easypiechart.js') }}"></script>
+
+{#Sparkline#}
+<script src="{{ asset('js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+
+{# fosjsrouting #}
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+{# Cookies #}
+<script src="{{ asset('js/plugins/cookies/cookies.js') }}"></script>
+
+{#i-Checks#}
+<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+
+
+{#Custom scripts#}
+<script src="{{ asset('js/fonctions.js') }}"></script>
+<script src="{{ asset('js/commun.js') }}"></script>
+</body>
+</html>

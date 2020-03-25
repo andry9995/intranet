@@ -1,0 +1,934 @@
+banque_dashboard:
+  path:     /
+  defaults: { _controller: 'BanqueBundle:Banque:index' }
+banque_lot:
+  path:   /lot
+  defaults: { _controller : 'BanqueBundle:Banque:lot' }
+banque_statistique:
+  path:   /stat
+  defaults: { _controller: 'BanqueBundle:Banque:statistique' }
+banque_productivite:
+  path:   /prod
+  defaults: { _controller: 'BanqueBundle:Banque:productivite' }
+banque_tableau_controle:
+  path:   /controle
+  defaults: { _controller: 'BanqueBundle:Banque:controle' }
+banque_panier:
+  path:   /panier
+  defaults: { _controller: 'BanqueBundle:Banque:panier' }
+
+banque_imputee_liste:
+    path: /situation/image-imputees
+    defaults: { _controller: 'BanqueBundle:Banque:liste' }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_state_image:
+  path: /situation/image
+  defaults: { _controller: 'BanqueBundle:Banque:stateImageGestionBilan' }
+  options:
+      expose: true
+
+affich_situation_image:
+  path:  /affich/situation-image
+  defaults: { _controller: 'BanqueBundle:Banque:showSituaImage' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_saisie:
+  path:   /saisie/{etape}/{releve}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:saisie', etape: 1,releve: 1 }
+  requirements:
+    releve: 1|0
+
+banque_saisie_assemble_restore:
+  path: /assemble-restore
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:assembleRestore' }
+  options:
+      expose: true
+  methods: [GET]
+
+banque_saisie_assemble_image_restore:
+  path: /assemble-image-restore
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:assembleRestorePiece' }
+  options:
+      expose: true
+  methods: [POST]
+
+banque_image:
+  path: /image
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:image'}
+  options:
+      expose: true
+  methods: [GET]
+
+banque_saisie_assemble:
+  path:   /assemble-image
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:assemble'}
+  options:
+      expose: true
+  methods: [POST]
+
+
+banque_controle_rb:
+  path:   /controle/rb
+  defaults: { _controller: 'BanqueBundle:Banque:controleRb'}
+banque_controle_ob:
+  path:   /controle/ob
+  defaults: { _controller: 'BanqueBundle:Banque:controleOb'}
+#banque_saisie_controle:
+#  path:   /saisie/controle
+#  defaults: { _controller: 'BanqueBundle:Banque:sc' }
+
+#--ajax pour afficher un image banque a saisir--
+data_banque_saisie:
+  path: /image/saisie
+  defaults: { _controller: 'BanqueBundle:Banque:showImgSaisie' }
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_get_panier_image:
+  path: /get/panier
+  defaults: { _controller: 'BanqueBundle:Banque:getPanierImage' }
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_get_panier:
+  path: /get/panier
+  defaults: { _controller: 'BanqueBundle:Banque:getPanier' }
+  options:
+    expose: true
+  methods: [GET]
+
+banque_get_panier_lot:
+  path: /get/panier/{lot}
+  defaults: { _controller: 'BanqueBundle:Banque:getPanierLot' }
+  options:
+    expose: true
+  methods: [GET]
+
+show_image_data_banque:
+  path: /afficher/image
+  defaults: { _controller: 'BanqueBundle:Banque:showImg' }
+  options:
+    expose: true
+  methods: [POST]
+
+show_list_data_banque:
+  path: /afficher/banques
+  defaults: { _controller: 'BanqueBundle:Banque:showBanque' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_date_scan:
+  path: /date-scan
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:dateScan' }
+  options:
+    expose: true
+  methods: [GET]
+
+banque_liste_banque:
+  path: /banque-list
+  defaults: { _controller: 'BanqueBundle:Banque:listeBanque' }
+  options:
+    expose: true
+  methods: [GET]
+
+banque_liste_banque_compte:
+  path: /banquecompte-list/{saisie}/{iban}
+  defaults: { _controller: 'BanqueBundle:Banque:listeBanqueCompte', saisie: 0, iban: 0 }
+  options:
+    expose: true
+  methods: [GET]
+
+
+banque_liste_num_cb:
+  path: /num-list
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:listeNumCb' }
+  options:
+    expose: true
+  methods: [GET]
+
+banque_save_num_cb:
+  path: /num-cb-save
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:saveNumCb' }
+  options:
+      expose: true
+  methods: [POST]
+
+
+banque_save_banque_compte:
+  path: /banquecompte-save/{isIban}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:saveBanqueCompte', isIban: 0 }
+  options:
+      expose: true
+  methods: [POST,GET]
+
+banque_exercice:
+  path: /exercice
+  defaults: { _controller: 'BanqueBundle:Banque:exercice' }
+  options:
+      expose: true
+  methods: [GET]
+
+banque_releve_import:
+  path: /releve/import
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:releveImport' }
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_liste_image:
+  path: /liste/image/{banquecompteid}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:listeImage', banquecompteid: -1 }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_liste_image_panier:
+  path: /liste/image-panier
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:listeImagePanier'}
+  options:
+      expose: true
+  methods: [POST]
+
+banque_valider_image:
+  path: /valider-image
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:validerImage'}
+  options:
+      expose: true
+  methods: [POST]
+
+banque_releve_controle:
+  path: /releve/controle
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:controle' }
+  options:
+      expose: true
+  methods: [GET]
+
+banque_releve_set_doublon:
+  path: /releve/set-doublon
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:setDoublon' }
+  options:
+      expose: true
+  methods: [POST]
+
+banque_releve_check_doublon:
+  path: /releve/check-doublon
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:checkDoublon'}
+  options:
+      expose: true
+  methods: [GET]
+
+banque_releve_restore_doublon:
+  path: /releve/restore-doublon
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:restoreDoublon'}
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_traitement_fini:
+  path: /saisie-traitement-fini
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:traitementFini'}
+  methods: [POST]
+  options:
+      expose: true
+
+show_nom_banque:
+  path: /afficher/nombanque
+  defaults: { _controller: 'BanqueBundle:Banque:nomBanque' }
+  options:
+    expose: true
+  methods: [POST]
+
+show_det_banque:
+  path: /afficher/detbanque
+  defaults: { _controller: 'BanqueBundle:Banque:detBanque' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_affectation:
+  path:     /affectation/{json}
+  defaults: { _controller: 'BanqueBundle:Affectation:affectation', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true  
+
+banque_ocr_compte:
+  path: /ocr/compte
+  defaults: { _controller: 'BanqueBundle:Banque:ocrCompte' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_get_pcc:
+  path: /get/pcc
+  defaults: { _controller: 'BanqueBundle:Banque:pcgPcc' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_verif_montant:
+  path: /verif/montant
+  defaults: { _controller: 'BanqueBundle:SaisieOb:verifMontant' }
+  options:
+    expose: true
+  methods: [GET]
+
+banque_set_compte:
+  path: /set/compte
+  defaults: { _controller: 'BanqueBundle:Banque:setCompte' }
+  options:
+    expose: true
+  methods: [POST]  
+
+banque_entete_releve:
+  path: /entete/releve
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:enteteReleve' }
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_entete_remise:
+  path: /entete/remise
+  defaults: { _controller: 'BanqueBundle:SaisieOb:enteteRemise' }
+  options:
+    expose: true
+  methods: [POST] 
+
+banque_entete_lcr:
+  path: /entete/lcr
+  defaults: { _controller: 'BanqueBundle:SaisieOb:enteteLcr' }
+  options:
+    expose: true
+  methods: [POST]    
+
+
+banque_entete_vir:
+  path: /entete/vir
+  defaults: { _controller: 'BanqueBundle:SaisieOb:enteteVir' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_entete_carte_credit_releve:
+   path: /entete/carte-credit-releve
+   defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditReleve' }
+   options:
+     expose: true
+   methods: [POST]
+
+
+banque_entete_carte_debit:
+   path: /entete/carte-debit
+   defaults: { _controller: 'BanqueBundle:SaisieOb:carteDebit' }
+   options:
+     expose: true
+   methods: [POST]
+
+  #Ajouter un lot dans un panier
+banque_add_to_panier:
+  path:     /add-to-panier
+  defaults: { _controller: 'BanqueBundle:Affectation:addToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+
+
+#Retour d'un lot partagé vers à partager
+banque_return_from_panier:
+  path:     /return-from-panier-banque
+  defaults: { _controller: 'BanqueBundle:Affectation:returnFromPanier' }
+  methods: [POST]
+  options:
+    expose: true
+
+banque_move_to_panier:
+  path:     /move-to-panier-banque
+  defaults: { _controller: 'BanqueBundle:Affectation:moveToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    oldoperateur: \d+
+    lot:  \d+
+
+
+banque_soussouscategorie:
+  path:   /soussouscategorie
+  defaults:   {_controller: 'BanqueBundle:Banque:loadSousouscategorie'}
+  methods: [GET]
+  options:
+    expose: true
+
+
+banque_change_categorie:
+  path:   /separation
+  defaults: { _controller: 'BanqueBundle:Banque:changeCategorie'}
+  methods: [POST]
+  options:
+      expose: true
+
+banque_releve_dossier_details:
+  path:   /releve-dossier-details
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:releveDossierDetails'}
+  methods: [POST]
+  options:
+      expose: true
+
+banque_controle_releve_doublon:
+  path:   /controle-releve-doublon/{banquecompteid}/{exercice}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:controleDoublonReleve', banquecompteid: -1, exercice: 2018}
+  methods: [GET]
+  options:
+      expose: true
+
+banque_releve_restore:
+  path: /restore-releve
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:restoreReleveDoublon'}
+  methods: [POST]
+  options:
+      expose: true
+
+banque_releve_delete:
+  path: /delete-releve
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:deleteReleve'}
+  methods: [DELETE]
+  options:
+      expose: true
+
+banque_releve_dossier_details_edit:
+  path:   /releve-dossier-details-edit/{imageid}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:releveDossierDetailsEdit', imageid: -1}
+  methods: [GET,POST]
+  options:
+      expose: true
+
+banque_releve_delete_multiple:
+    path: /delete-releve-multiple
+    defaults: { _controller: BanqueBundle:SaisieBanque:deleteMultipleReleve}
+    methods: [POST]
+    options:
+        expose: true
+
+banque_releve_image_details:
+  path: /releve-image-details
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:releveImageDetails' }
+  methods: [POST]
+  options:
+      expose: true
+
+banque_compte_attente:
+  path: /saisie/controle/attente
+  defaults: { _controller: 'BanqueBundle:Banque:compteAttente'}
+  methods: [GET]
+  options:
+      expose: true
+
+banque_cut_off:
+  path: /saisie/controle/cutoff
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:cutOff' }
+  methods: [POST]
+  options:
+      expose: true
+
+banque_check_cut_off:
+  path: /saisie/controle/check-cutoff
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:checkCutOff' }
+  methods: [GET]
+  options:
+      expose: true
+
+banque_cutoff_list:
+  path: /saisie/controle/list-cutoff/{dossierid}/{exercice}/{banquecompteid}
+  defaults: { _controller: 'BanqueBundle:SaisieBanque:cutoffList' }
+  methods: [GET]
+  options:
+      expose: true
+
+
+#==========================
+banque_controle_releve_grid:
+    path: /saisie/controle/controle-releve-grid
+    defaults: {  _controller: BanqueBundle:ControleReleve:tableauReleve}
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_cb:
+    path: /param/cb
+    defaults: { _controller: BanqueBundle:Parametre:numCb }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_param_cle_list:
+    path: /param/cle-list
+    defaults: { _controller: BanqueBundle:Parametre:cleList }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_cle_edit:
+    path: /param/cle-edit
+    defaults: { _controller: BanqueBundle:Parametre:cleEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_cle_remove:
+    path: /param/cle-remove
+    defaults: { _controller: BanqueBundle:Parametre:cleRemove }
+    methods: [DELETE]
+    options:
+        expose: true
+
+
+banque_param_search_cb:
+    path: /param/search-cb
+    defaults: { _controller: BanqueBundle:Parametre:searchCb }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_add_cb_bc:
+    path: /param/add-cb-cb
+    defaults: { _controller: BanqueBundle:Parametre:addCbBc }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_cb_dossier:
+    path: /param/cb-dossier
+    defaults: { _controller: BanqueBundle:Parametre:cbDossier }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_param_edit_cb_dossier:
+    path: /param/edit-cb-dossier
+    defaults: { _controller: BanqueBundle:Parametre:editAvecCbDossier }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_list_bc_cb:
+    path: /param/list-cb
+    defaults: { _controller: BanqueBundle:Parametre:listCbBc }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_param_avec_frais:
+    path: /param/avec-frais
+    defaults: { _controller: BanqueBundle:Parametre:avecFrais }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_param_banque_compte_sc_edit:
+    path: /param/banque-compte-sc-edit
+    defaults: { _controller: BanqueBundle:Parametre:BanquecompteSouscategorieEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_edit_cb_bc:
+    path: /param/edit-cb-bc
+    defaults: { _controller: BanqueBundle:Parametre:editCbBc}
+    methods: [POST]
+    options:
+        expose: true
+
+
+
+banque_param_delete_bc_cb:
+    path: /param/delete-cb
+    defaults: { _controller: BanqueBundle:Parametre:deleteCbBc }
+    methods: [DELETE]
+    options:
+        expose: true
+
+
+banque_param_search_ob:
+    path: /param/search-ob
+    defaults: { _controller: BanqueBundle:Parametre:searchOb }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_ob_selected:
+    path: /param/ob-selected
+    defaults: { _controller: BanqueBundle:Parametre:obSelected }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_ob_flague:
+    path: /param/ob-flague
+    defaults: { _controller: BanqueBundle:Parametre:obFlague }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_ob_deflague:
+    path: /param/ob-deflague
+    defaults: { _controller: BanqueBundle:Parametre:obDeflague }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_param_ob_manquant_edit:
+    path: /param/ob-manque-edit
+    defaults: { _controller: BanqueBundle:Parametre:obManquantEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+
+banque_dossier:
+    path: /dossier
+    defaults: { _controller: 'BanqueBundle:Banque:dossier' }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_sobank:
+    path: /sobank
+    defaults: { _controller: 'BanqueBundle:SaisieBanque:sobank' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_sobank_edit:
+    path: /sobank-edit
+    defaults: { _controller: 'BanqueBundle:SaisieBanque:sobankEdit' }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_taf:
+    path: /situation/taf
+    defaults: { _controller: 'BanqueBundle:Banque:taf' }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_details_lcr:
+    path: /details-lcr/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:lcrLignes', imageid: -1}
+    options:
+        expose: true
+    methods: [GET]
+
+banque_details_lcr_edit:
+    path: /details-lcr-edit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:lcrLigneEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+
+banque_details_lcr_import:
+  path: /details-lcr-import
+  defaults: { _controller: 'BanqueBundle:SaisieOb:lcrLignesImport' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_details_virement:
+    path: /details-virement/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:virementLignes', imageid: -1}
+    options:
+        expose: true
+    methods: [GET]
+
+banque_details_virement_edit:
+    path: /details-virement-edit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:virementLigneEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_details_virement_import:
+  path: /details-virement-import/{dossierid}/{exercice}
+  defaults: { _controller: 'BanqueBundle:SaisieOb:virementLignesImport', dossierid: -1, exericce: -1 }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_details_remise:
+    path: /details-remise/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:remiseLignes', imageid: -1}
+    options:
+        expose: true
+    methods: [GET]
+
+banque_details_remise_edit:
+    path: /details-remise-edit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:remiseLigneEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_details_remise_import:
+  path: /details-remise-import/{dossierid}/{exercice}
+  defaults: { _controller: 'BanqueBundle:SaisieOb:remiseLignesImport', dossierid: -1, exericce: -1 }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_details_frais:
+    path: /details-frais/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:fraisLignes', imageid: -1}
+    options:
+        expose: true
+    methods: [GET]
+
+banque_details_frais_edit:
+    path: /details-frais-edit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:fraisLigneEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+
+banque_details_carte_credit_releve:
+    path: /details-carte-credit-releve/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditReleveLignes', imageid: -1 }
+    options:
+        expose: true
+    methods: [GET]
+
+
+banque_details_carte_credit_releve_edit:
+    path: /details-carte-credit-releve/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditReleveLignesEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+
+banque_details_carte_credit_releve_import:
+  path: /details-carte-credit-releve-import
+  defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditReleveLignesImport' }
+  options:
+    expose: true
+  methods: [POST]
+
+banque_details_carte_debit:
+    path: /details-carte-debit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteDebitLignes', imageid: -1 }
+    options:
+        expose: true
+    methods: [GET]
+
+
+banque_details_carte_debit_edit:
+    path: /details-carte-debit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteDebitLignesEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+banque_details_carte_credit:
+    path: /details-carte-credit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditLignes', imageid: -1 }
+    options:
+        expose: true
+    methods: [GET]
+
+banque_details_carte_credit_edit:
+    path: /details-carte-credit/{imageid}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:carteCreditLignesEdit', imageid: -1 }
+    options:
+        expose: true
+    methods: [POST]
+
+
+banque_details_ligne_ob_delete:
+    path: /details-lcr-delete
+    defaults: { _controller: 'BanqueBundle:SaisieOb:obLigneDelete' }
+    options:
+        expose: true
+    methods: [DELETE]
+
+
+banque_type_tiers:
+  path: /type-tiers
+  defaults: { _controller: 'BanqueBundle:SaisieOb:typeTiers'}
+  methods: [GET]
+  options:
+      expose: true
+
+banque_taux_tva:
+    path: /taux-tva
+    defaults: { _controller: 'BanqueBundle:SaisieOb:tauxTva' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_nature:
+    path: /nature
+    defaults: { _controller: 'BanqueBundle:SaisieOb:nature' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_tab_image:
+    path: /situation/tab-image
+    defaults: { _controller: 'BanqueBundle:Banque:tableauImage' }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_tab_image_details:
+    path: /situation/tab-image-detail
+    defaults: { _controller: 'BanqueBundle:Banque:detailTableauImage' }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_tab_image_change_statut:
+    path: /situation/tab-image-change-statut
+    defaults: { _controller: 'BanqueBundle:Banque:changeStatutTableauImage' }
+    options:
+        expose: true
+    methods: [POST]
+
+banque_pcc:
+    path: /pcc/{create}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:pcc', create: []}
+    methods: [GET]
+    options:
+        expose: true
+
+banque_pcc_banque_type:
+    path: /pcc-banque-type/{type}/{create}
+    defaults: { _controller: 'BanqueBundle:SaisieOb:pccBanqueType', type: 0, create: []}
+    methods: [GET]
+    options:
+        expose: true
+
+banque_duplique:
+    path: /duplique
+    defaults: { _controller: 'BanqueBundle:SaisieBanque:duplique' }
+    methods: [GET]
+    options:
+        expose: true
+
+
+banque_duplique_edit:
+    path: /duplique
+    defaults: { _controller: 'BanqueBundle:SaisieBanque:dupliqueEdit' }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_count_souscategorie:
+    path: /count-souscategorie
+    defaults: { _controller: 'BanqueBundle:SaisieOb:countSouscategorie' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_show_releve:
+    path: /show-details-releve
+    defaults: { _controller: 'BanqueBundle:SaisieOb:showDetailReleve' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_banque_compte_etat:
+    path: /banque-compte-a-saisir
+    defaults: { _controller: 'BanqueBundle:SaisieOb:banqueCompteASaisir' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_souscategorie_a_sasir:
+    path: /banque-souscategorie-a-saisir
+    defaults: { _controller: 'BanqueBundle:SaisieOb:souscategorieASaisir' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_state_image_tableau_bord:
+    path: /situation/image/tableau-de-bord
+    defaults: { _controller: 'BanqueBundle:Banque:stateImageTableauBord' }
+    options:
+        expose: true
+
+banque_state_image_gestion_bilan:
+    path: /situation/image/gestion-des-taches
+    defaults: { _controller: 'BanqueBundle:Banque:stateImageGestionBilan' }
+    options:
+        expose: true
+
+banque_tab_image_show_rapprochement:
+    path: /situation/image/gestion-des-taches/rapprochement
+    defaults: { _controller: 'BanqueBundle:Banque:stateImageShowRapprochement' }
+    options:
+        expose: true
+
+banque_situation_image_clients_by_responsable:
+    path: /situation/image/client/by-responsable/{responsable}
+    defaults: { _controller: 'BanqueBundle:Banque:listClientsSituationImageByResponsable' }
+    methods: [GET]
+    options:
+        expose: true
+
+banque_compte_etat:
+    path: /banque/gestion_tache/etat
+    defaults: { _controller: 'BanqueBundle:Banque:etatBanqueCompte' }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_priorite_image:
+    path: /banque/gestion_tache/priorite-image
+    defaults: { _controller: 'BanqueBundle:Banque:prioriteImage' }
+    methods: [POST]
+    options:
+        expose: true
+
+
+banque_recategoriesation_filtre:
+    path: /banque/recategorisation-filtre
+    defaults: { _controller: 'BanqueBundle:SaisieBanque:recategoriesationFiltre' }
+    methods: [POST]
+    options:
+        expose: true  
+
+banque_site:
+    path: /site
+    defaults: { _controller: 'BanqueBundle:Banque:site' }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_show_list_title_column:
+    path: /banque/situation/image/list-colonne
+    defaults: { _controller: 'BanqueBundle:Banque:showListeColonne' }
+    methods: [GET]
+    options:
+        expose: true
+

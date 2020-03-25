@@ -1,0 +1,17 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_action">Action</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="id_action">
+                <option value="0" {{ tachesItem is null ? 'selected' : '' }}></option>
+                {% for tacheListeAction in tacheListeActions %}
+                    <option value="{{ tacheListeAction.id }}" {{ tachesAction is not null and tacheListeAction.id == tachesAction.tacheListeAction.id ? 'selected' : '' }}>{{ tacheListeAction.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_taches_action_edit" data-action="1" data-taches_action="{{ (tachesAction is null) ? 0 : tachesAction.id }}" data-taches_item="{{ tachesItem.id }}"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

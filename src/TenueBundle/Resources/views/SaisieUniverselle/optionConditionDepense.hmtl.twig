@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for conditionDepene in conditionDepenses %}
+        <option value="{{ conditionDepense.id }}">{{ conditionDepense.libelle }}</option>
+    {% endfor %}
+</select>

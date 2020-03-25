@@ -1,0 +1,196 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Affectation lot
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/reception/js/reception-tirage.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="tabs-container">
+    {#
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tab-1" id="tabDownload"> Lot(s) en attente de téléchargement</a></li>
+        <li class=""><a data-toggle="tab" href="#tab-3" id="tabDownloadEnCours">Panier tirage</a></li>
+        <li class=""><a data-toggle="tab" href="#tab-2" id="tabDownloaded">Liste lot(s) téléchargé(s)</a></li>
+    </ul>
+    #}
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane active">
+            <div class="panel-body">
+                <div class="row gray-bg">
+
+                    <div class="col-md-10 col-sm-12">
+                        <div class="btn-group">
+                            <div  class="form-inline">
+                                <div class="form-group">
+                                    <label class="control-label">Client</label>
+                                </div>
+                                <div class="form-group">
+                                        <select class="form-control" name="clients" id="idClientFind">
+                                            <option selected="selected"></option>
+                                            {% for key, value in liste_client_N1 %}
+                                            <option value="{{ value }}">{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Dossier</label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="clients" id="idDossierFind">
+
+                                    </select>
+                                </div>
+
+
+                                <button class="btn btn-white" id="findCabinetDossier" title="Recherche cabinet dossier"><i class="fa fa-search"></i></button>
+                                <span class="btn btn-white" id="clearRecherche" title="Effacer les marquages">
+                                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                </span>
+                                <div class="form-group">&nbsp;|&nbsp;</div>
+
+                                <span class="btn btn-white" id="btn_refresh_tir" type="button" title="Rafraîchir">
+                                <i class="fa fa-refresh"  aria-hidden="true" title="Rafraîchir"></i></span>
+                                <span id="btn-save-download" class="btn btn-white" type="button" title="Enregistrer">
+                                <i class="fa fa-save"  aria-hidden="true"></i></span>
+                                <span id="btn-download-encours" class="btn btn-white hidden" data-toggle="modal"
+                                      type="button" title="Lots en cours de téléchargement">
+                                <i class="fa fa-cloud-download"  aria-hidden="true"></i></span>
+                                <div class="form-group">&nbsp;|&nbsp;</div>
+                                <span id="btn-stop-download" class="btn btn-danger" type="button" title="Stopper le téléchargement">
+                                    <i class="fa fa-stop-circle"  aria-hidden="true"></i>
+                                </span>
+                                <span id="btn-run-download" class="btn btn-primary" type="button" title="Relancer le téléchargement">
+                                    <i class="fa fa-play"  aria-hidden="true"></i>
+                                </span>
+                                <div class="form-group">&nbsp;|&nbsp;</div>
+                                <span id="btn-update-extension" class="btn btn-white" type="button" title="Modification extension en pdf">
+                                    <i class="fa fa-arrow-right"  aria-hidden="true"></i><i class="fa fa-file-pdf-o"  aria-hidden="true"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ibox float-e-margins ">
+                            <div class="ibox-title">
+                               <h5>Vous pouvez définir ici la priorité des lots à télécharger</h5>
+                                <div class="ibox-tools">
+                                    Lot <span id="nb-lot-niv1" class="badge badge-danger">{{ nb_lot|number_format(0, ',', '&nbsp;')|raw }}</span>
+                                    Images <span id="nb-image-niv1" class="badge badge-danger">{{ nb_image|number_format(0, ',', '&nbsp;')|raw }}</span>
+
+                                    <i id="niv1-loader" class="loader fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div id="contenu-lotaTelecharger" class="ibox-content liste-lot-tirage lot-tirage noselect resizable" style="padding-top: 1px; padding-bottom: 1px; overflow-y: auto">
+                                {#LOTS A PARTAGER TRAITEMENT NIV. 1#}
+                                    {{ include('@Reception/Reception/tirage-listeLotATelecharger.html.twig') }}
+                                <input type="hidden" value="{{ liste_dossier_N1|json_encode() }}" id="idInputDossierHide">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {#Liste lot dans le panier tirage#}
+                            <div class="col-sm-6">
+                                <div class="ibox">
+                                    {# Tableau liste des lots dans le panier #}
+                                    <div class="ibox-title">
+                                        <h5>Liste des lots dans le panier</h5>
+                                        <div class="ibox-tools">
+                                            <button class="btn btn-warning btn-xs" id="btn_refresh_tir_encours"><i class="fa fa-refresh"  aria-hidden="true"></i></button>&nbsp;
+                                            <button class="btn btn-white btn-xs" id="btn_save_tir_encours" title="Enregistrer les priorités"><i class="fa fa-save"  aria-hidden="true"></i></button>&nbsp;
+                                            Lot <span id="nb-lot-encours" class="badge badge-warning">0</span>
+                                            Images <span id="nb-image-encours" class="badge badge-warning">0</span>
+                                            <i id="niv1-loader-enCours" class="loader fa fa-spinner hidden fa-spin fa-lg fa-fw fa-pulse"></i>
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content" style="overflow-y: auto">
+                                        <div class="lot-en-cours-telechargement">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {#Liste lots téléchargés#}
+                            <div class="col-sm-6" style="padding-left: 0px;">
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <h5>Liste des lots téléchargés</h5>
+                                        <div class="ibox-tools">
+                                            Lot <span id="nb-lot-tir" class="badge badge-primary">0</span>
+                                            Images <span id="nb-image-tir" class="badge badge-primary">0</span>
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="ibox-content">
+                                        <div  class="form-inline">
+                                            <div class="input-group date " style="margin-bottom:10px">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i>&nbsp;</span>
+                                                <input id="date-download" type="text" class="form-control" value="{{ 'now'|date('d/m/Y') }}">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-primary " id="btn_refresh_tir_fini"><i class="fa fa-cloud-download"  aria-hidden="true"></i></button>&nbsp</div>
+                                                </span>
+                                            <div class="input-group" style="margin-bottom:10px">
+                                                <span id="btn-mode-default" class="btn btn-white active" type="button" title="Affichage par défaut">
+                                                    <i class="fa fa-th"  aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <div class="input-group" style="margin-bottom:10px">
+                                                <span id="btn-mode-table" class="btn btn-white" type="button" title="Affichage en ligne">
+                                                    <i class="fa fa-table"  aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+
+                                            {# Si 0: affichage en carré (affichage par défaut); 1: affichage en tableau #}
+                                            <input id="modeAffichageHidden" type="hidden" value="0" >
+                                        </div>
+                                        <div class="lot-fini-download" style="overflow-y: auto">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 hidden-sm hidden-xs no-margins no-paddings">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Liste clients/dossiers tirage</h5>
+                            </div>
+                            <div class="ibox-content liste-client-gauche" style="overflow-y: auto">
+                                <div class="panel-group" id="liste-client-N1" role="tablist"
+                                     aria-multiselectable="true">
+                                    {{ include('@Reception/Reception/tirage-listeClientDossier.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

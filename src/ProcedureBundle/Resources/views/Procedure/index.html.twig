@@ -1,0 +1,194 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ProcedureBundle/Resources/public/js/procedure.js'
+        '@ProcedureBundle/Resources/public/js/unite.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} PROCEDURES
+{% endblock %}
+
+{% block content %}
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Gestion des procédures</h5>
+
+            <div class="ibox-tools">
+                <button id="btn-add-unite" class="btn btn-outline btn-primary btn-sm" style="margin-right: 50px;">
+                    Unité de comptage
+                </button>
+                <button id="btn-add-procedure" class="btn btn-sm btn-primary" style="margin-right: 50px;">
+                    <i class="fa fa-plus-circle"></i> Ajouter une procédure
+                </button>
+                <a class="fullscreen-link">
+                    <i class="fa fa-expand"></i>
+                </a>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            {#Liste des procédures chargé avec AJAX#}
+            <table id="js_procedure_liste"></table>
+            <div id="pager_liste_procedure"></div>
+        </div>
+    </div>
+    {# Modal pour ajouter ou modifier une Procédure #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="procedure-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-procedure-title" class="modal-title">Ajouter une procédure</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger hidden" id="add-procedure-erreur">
+
+                    </div>
+                    <form class="form-horizontal">
+                        <input type="hidden" id="add-procedure-id">
+
+                        <div class="form-group">
+                            <label for="add-procedure-numero" class="col-sm-3 control-label">Numéro</label>
+
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="add-procedure-numero" placeholder="numero"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-nom" class="col-sm-3 control-label">Procédure</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="add-procedure-nom" placeholder="procedure"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-description" class="col-sm-3 control-label">Description</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add-procedure-description" placeholder="description"
+                                          rows="6"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-prec" class="col-sm-3 control-label">Précédente</label>
+
+                            <div class="col-sm-9">
+                                <select id="add-procedure-prec" class="form-control chosen-select"
+                                        data-placeholder="---" multiple>
+                                    {% for procedure in procedures %}
+                                        <option value="{{ procedure.id }}">{{ procedure.numero ~ ' ' ~ procedure.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-suiv" class="col-sm-3 control-label">Suivante</label>
+
+                            <div class="col-sm-9">
+                                <select id="add-procedure-suiv" class="form-control chosen-select"
+                                    data-placeholder="---" multiple>
+                                    {% for procedure in procedures %}
+                                        <option value="{{ procedure.id }}">{{ procedure.numero ~ ' ' ~ procedure.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-poste" class="col-sm-3 control-label">Poste</label>
+
+                            <div class="col-sm-9">
+                                <select id="add-procedure-poste" class="form-control">
+                                    <option value="0"></option>
+                                    {% for poste in postes %}
+                                        <option value="{{ poste.id }}">{{ poste.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-unite" class="col-sm-3 control-label">Unité</label>
+
+                            <div class="col-sm-9">
+                                <select id="add-procedure-unite" class="form-control">
+                                    <option value="0"></option>
+                                    {% for unite in unites %}
+                                        <option value="{{ unite.id }}">{{ unite.unite }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-procedure-duree" class="col-sm-3 control-label">Durée</label>
+
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="add-procedure-duree" placeholder="duree">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btn-add-procedure-save">Enregistrer
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    {# Modal pour liste/ajout une unité de comptage #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="unite-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-procedure-title" class="modal-title">Unité de comptage</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger hidden" id="add-unite-erreur">
+
+                    </div>
+                    <form class="form-inline" id="unite-comptage-form">
+                        <div class="form-group">
+                            <label for="add-unite-code">Code</label>
+
+                            <input type="text" class="form-control" id="add-unite-code" placeholder="code"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-unite-unite">Unité</label>
+
+                            <input type="text" class="form-control" id="add-unite-unite" placeholder="unite"
+                                   style="width: 300px;" required>
+                        </div>
+                        <button id="btn-add-unite-save" type="submit" class="btn btn-info btn-sm btn-outline">Ajouter</button>
+                    </form>
+
+                    <table id="js_unite_liste"></table>
+                    <div id="pager_liste_unite"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}

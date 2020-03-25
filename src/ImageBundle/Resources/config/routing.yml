@@ -1,0 +1,5 @@
+image_consultation:
+  path: /image/consultation
+  defaults: { _controller: ImageBundle:Consultation:consultation }
+  options:
+      expose: true

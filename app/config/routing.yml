@@ -1,0 +1,123 @@
+ajax_login:
+    resource: "@AjaxLoginBundle/Resources/config/routing.yml"
+    prefix:   /login_auto
+
+image:
+    resource: "@ImageBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gamme:
+    resource: "@GammeBundle/Resources/config/routing.yml"
+    prefix:   /param/gamme
+
+priorite:
+    resource: "@PrioriteBundle/Resources/config/routing.yml"
+    prefix:   /param/priorite
+
+procedure:
+    resource: "@ProcedureBundle/Resources/config/routing.yml"
+    prefix:   /param/procedure
+
+tache_libre:
+    resource: "@TacheBundle/Resources/config/routing_tache_libre.yml"
+    prefix:   /param/tache
+
+tache_legale:
+    resource: "@TacheBundle/Resources/config/routing_tache_legale.yml"
+    prefix:   /param/tache-legale
+
+tache_parametre:
+    resource: "@TacheBundle/Resources/config/routing_tache_parametre.yml"
+    prefix:   /param/tache-parametre
+
+tache_client:
+    resource: "@TacheBundle/Resources/config/routing_tache_client.yml"
+    prefix:   /param/tache-client
+
+tache_dossier:
+    resource: "@TacheBundle/Resources/config/routing_tache_dossier.yml"
+    prefix:   /param/tache-dossier
+google_calendrier:
+    resource: "@TacheBundle/Resources/config/routing_google_calendrier.yml"
+    prefix: /param/google-calendrier
+
+pilotage:
+    resource: "@PilotageBundle/Resources/config/routing.yml"
+    prefix:   /pilotage
+
+revision:
+    resource: "@RevisionBundle/Resources/config/routing.yml"
+    prefix:   /revision
+
+revision_agenda:
+    resource: "@RevisionBundle/Resources/config/routing_agenda2.yml"
+    prefix:   /revision/agenda2
+
+revision_agenda3:
+    resource: "@RevisionBundle/Resources/config/routing_agenda3.yml"
+    prefix:   /revision/agenda3
+
+revision_import_export:
+    resource: "@RevisionBundle/Resources/config/routing_import_export.yml"
+    prefix:   /revision/import_export
+
+tenue:
+    resource: "@TenueBundle/Resources/config/routing.yml"
+    prefix:   /tenue
+
+reception:
+    resource: "@ReceptionBundle/Resources/config/routing.yml"
+    prefix:   /reception
+
+parametre:
+    resource: "@ParametreBundle/Resources/config/routing.yml"
+    prefix:   /param
+
+banque:
+    resource: "@BanqueBundle/Resources/config/routing.yml"
+    prefix:   /banque
+
+admin_user:
+    resource: "@AdminUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+dashboard:
+    resource: "@DashboardBundle/Resources/config/routing.yml"
+    prefix:   /
+
+menu:
+    resource: "@MenuBundle/Resources/config/routing.yml"
+    prefix:   /
+
+model:
+    resource: "@ModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
+utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+
+# Tache Parametrage V2
+tache_admin:
+    resource: "@TacheBundle/Resources/config/routting_tache_admin.yml"
+    prefix:   /param/tache-admin
+
+# Tache Parametrage V3
+taches_admin:
+    resource: "@TacheBundle/Resources/config/routing_taches.yml"
+    prefix:   /param/taches
+
+# Taches Parametrage par entites
+taches_admin_entity:
+    resource: "@TacheBundle/Resources/config/routing_taches_entity.yml"
+    prefix:   /param/taches/entity
+

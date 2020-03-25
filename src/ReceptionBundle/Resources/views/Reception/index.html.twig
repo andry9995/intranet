@@ -1,0 +1,317 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Tableau de bord
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/reception/js/reception-index.js') }}"></script>
+
+    {% javascripts filter='?jsqueeze' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    {#<div class="ibox float-e-margins">
+        <div class="ibox-title" id="reception-dashboard-title">
+            <h3 class="reception-dashboard-title-text">
+                Tableau de bord au
+                <span id="current-date-time" class="current-date-time-info">{{ "now"|format_date('dd MMMM HH:mm') }}</span>
+                <i id="refresh-status" class="fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                <button class="btn btn-xs btn-primary pull-right" id="btn_refresh_reception"><i class="fa fa-refresh"  aria-hidden="true"></i></button>
+            </h3>
+
+        </div>
+
+        <div class="ibox-content">#}
+            {#SITUATIONS DES IMAGES#}
+    {#<div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5 class="text-danger">Situation des images</h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content gray-bg p-b-none">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Lots sur picdata non descendus</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="lot-non-descendu" class="box-value">{{ lot_non_descendu|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="image-non-descendu" class="box-value">{{ image_non_descendu|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Lots descendus en attente de traitement</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="lot-attente-traitement" class="box-value">{{ lot_attente_traitement|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="image-attente-traitement" class="box-value">{{ image_attente_traitement|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Remontée en cours</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Lot</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="lot-remonte-current" class="box-value">{{ lot_remonte_current|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="image-remonte-current" class="box-value">{{ image_remonte_current|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>#}
+    {#TRAITEMENT#}
+            {#<div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="text-danger">Traitement</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content gray-bg p-b-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h5 class="text-info">Traitement découpage</h5>
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
+                                            <h5>
+                                                <small>Dont rouge</small>
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="col-md-3">
+                                            <div class="box-title green lot-image">Lot</div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <div id="lot-niv1" class="box-value">{{ lot_niv1|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <div class="box-rect red"></div>
+                                        </div>
+                                        <div class="col-md-3 text-right">
+                                            <div class="box-value">5</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="box-title green lot-image">Images</div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <div id="image-niv1" class="box-value">{{ image_niv1|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="box-rect red"></div>
+                                        </div>
+                                        <div class="col-md-3 text-right">
+                                            <div class="box-value">120</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h5 class="text-info">Traitement séparation (visu 100%)</h5>
+                                        </div>
+                                        <div class="col-sm-5 col-sm-offset-1">
+                                            <h5>
+                                                <small>Dont rouge</small>
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="col-md-3">
+                                            <div class="box-title green lot-image">Lot</div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <div id="lot-niv2" class="box-value">{{ lot_niv2|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <div class="box-rect red"></div>
+                                        </div>
+                                        <div class="col-md-3 text-right">
+                                            <div class="box-value">5</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="box-title green lot-image">Images</div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <div id="image-niv2" class="box-value">{{ image_niv2|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="box-rect red"></div>
+                                        </div>
+                                        <div class="col-md-3 text-right">
+                                            <div class="box-value">120</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>#}
+            {#CAPACITE JOURNALIERE#}
+    {#<div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5 class="text-danger">Capacité journalière</h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content gray-bg p-b-none">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Capacité</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title blue">Capacité totale</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="box-value box-sm">150</div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title blue">Stock en attente</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="box-value box-sm">50</div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title blue">Capacité du jour</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="box-value box-sm">150</div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-6">
+                                    <div class="box-title red">Alerte rouge</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="box-value box-sm red">120</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Nb dossiers avec infos manquantes</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-sm-12">
+                                    <div class="box-value box-lg text-center red">50</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Agent(s) disponible(s)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-sm-12">
+                                    <div class="box-value box-lg text-center green">3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>#}
+        {#</div>
+    </div>#}
+{% endblock %}

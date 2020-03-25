@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Libell&eacute;</th>
+                <th>Montant TTC</th>
+                <th>Catégorie</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in datas %}
+                <tr>
+                    <td>{{ d.date|date('d/m/Y') }}</td>
+                    <td class="js_show_image_ pointer text-primary">{{ d.image }}</td>
+                    <td>{{ d.libelle }}</td>
+                    <td>{{ d.montant }}</td>
+                    <td>{{ d.categorie }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+.list-op {
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.list-op:hover {
+    background-color: #e7eaec;
+}
+
+.list-util {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right:5px;
+}
+
+.opera-6 {
+    padding: 12px;
+    background-color: #1ab394;
+    color: #ffffff;
+}
+
+.op-text {
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding-left:30px;
+}
+
+.ovflow {
+    overflow-y: auto;
+}
+
+.list-group-item.op-active, .list-group-item.op-active:hover, .list-group-item.op-active:focus {
+    z-index: 2;
+    color: #6e6565;
+    background-color: #cfd2d4;
+    border-color: #cfd2d4;
+}

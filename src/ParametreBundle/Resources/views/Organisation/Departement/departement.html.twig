@@ -1,0 +1,92 @@
+{# src/ParametreBundle/Resources/views/Parametre/Departement/departement.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ParametreBundle/Resources/public/js/departement.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | PARAMETRES DEPARTEMENTS
+{% endblock %}
+
+{% block content %}
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Gestion des départements</h5>
+
+                    <div class="ibox-tools">
+                        <button id="btn-add-departement" class="btn btn-sm btn-primary" style="margin-right: 50px;">
+                            <i class="fa fa-plus-circle"></i> Ajouter un département
+                        </button>
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    {#Liste des Département chargé avec AJAX#}
+                    <table id="js_departement_liste"></table>
+                    <div id="pager_liste_departement"></div>
+                </div>
+            </div>
+    {# Modal pour ajouter ou modifier un Département #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="departement-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-departement-title" class="modal-title">Ajouter un département</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger hidden" id="add-departement-erreur">
+
+                    </div>
+                    <form class="form-horizontal">
+                        <input type="hidden" id="add-departement-id">
+
+                        <div class="form-group">
+                            <label for="add-departement-nom" class="col-sm-3 control-label">Nom</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="add-departement-nom" placeholder="nom"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-departement-entite" class="col-sm-3 control-label">Entité</label>
+
+                            <div class="col-sm-6">
+                                <select id="add-departement-entite" class="form-control">
+                                    <option value="0">Séléctionner l'Entité</option>
+                                    {% for entite in entites %}
+                                        <option value="{{ entite.id }}">{{ entite.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btn-add-departement-save">Enregistrer
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}

@@ -1,0 +1,19 @@
+revision_agenda_2:
+    path: /
+    defaults: { _controller: RevisionBundle:Agenda2:index }
+
+revision_agenda_2_tache_calendar:
+    path:   calendar/taches/{periode}
+    defaults: { _controller: RevisionBundle:Agenda2:tachesCalendar }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      periode: \d{4}-\d{2}-\d{2}
+
+revision_agenda_2_moov_tache:
+    path:   calendar/tache/moov
+    defaults: { _controller: RevisionBundle:Agenda2:tacheMoov }
+    methods:  [POST]
+    options:
+      expose: true

@@ -1,0 +1,76 @@
+#Liste des domaines des taches pour jqGrid
+tache_domaine:
+    path:       /domaine
+    defaults:   { _controller: 'TacheBundle:TacheLibre:domaine'}
+    methods: [GET]
+    options:
+      expose: true
+
+tache_domaine_edit:
+    path:       /domaine
+    defaults:   { _controller: 'TacheBundle:TacheLibre:domaineEdit'}
+    methods: [POST]
+    options:
+      expose: true
+
+tache_domaine_remove:
+    path:       /domaine
+    defaults:   { _controller: 'TacheBundle:TacheLibre:domaineRemove'}
+    methods: [DELETE]
+    options:
+      expose: true
+
+#Liste des domaines des taches en JSON ou SELECT
+tache_domaine_liste:
+    path:       /domaine/liste/{json}
+    defaults:   { _controller: 'TacheBundle:TacheLibre:domaineListe', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+#Liste des Régimes Fiscaux
+tache_regime_fiscal:
+  path:     /regime-fiscal
+  defaults: { _controller: 'TacheBundle:Util:regimeFiscal' }
+  options:
+    expose: true
+  methods: [GET]
+
+#Edit Régimes Fiscaux
+tache_regime_fiscal_edit:
+  path:     /regime-fiscal
+  defaults: { _controller: 'TacheBundle:Util:regimeFiscalEdit' }
+  options:
+    expose: true
+  methods: [POST]
+
+#Remove Régimes Fiscaux
+tache_regime_fiscal_remove:
+  path:     /regime-fiscal
+  defaults: { _controller: 'TacheBundle:Util:regimeFiscalRemove' }
+  options:
+    expose: true
+  methods: [DELETE]
+
+#Liste action des taches legales
+tache_liste_action:
+    path:       /tache_liste_action
+    defaults:   { _controller: 'TacheBundle:TacheLegale:TacheListes' }
+    methods: [GET]
+    options:
+      expose: true
+
+tache_liste_action_edit:
+    path:       /tache_liste_action
+    defaults:   { _controller: 'TacheBundle:TacheLegale:tacheListeEdit'}
+    methods: [POST]
+    options:
+      expose: true
+
+tache_liste_action_edit_remove:
+    path:       /tache_liste_action
+    defaults:   { _controller: 'TacheBundle:TacheLegale:tacheListeRemove'}
+    methods: [DELETE]
+    options:
+      expose: true

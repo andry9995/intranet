@@ -1,0 +1,41 @@
+pilotage_homepage:
+    path:     /
+    defaults: { _controller: 'PilotageBundle:Pilotage:index' }
+
+# RECEPTION
+pilotage_reception:
+    path: /reception
+    defaults: { _controller: 'PilotageBundle:Reception:index' }
+
+pilotage_reception_exercice:
+    path: /reception-exercice
+    defaults: { _controller: 'PilotageBundle:Reception:receptionExercice' }
+    options:
+        expose: true
+
+pilotage_reception_jour:
+    path: /reception-jour
+    defaults: { _controller: 'PilotageBundle:Reception:receptionJournalier' }
+    options:
+        expose: true
+
+#SEPARATION
+pilotage_separation:
+    path: /separation
+    defaults: { _controller: 'PilotageBundle:Separation:index' }
+ #SITUATION DES IMAGES
+ 
+pilotage_state_image:
+    path: /image
+    defaults: { _controller: 'PilotageBundle:Pilotage:statusImage' }
+ 
+pilotage_status_image:
+    path: /image-status
+    defaults: { _controller: 'PilotageBundle:Pilotage:dossier' }
+    methods: [POST]
+    options:
+        expose: true
+
+pilotage_general_images:
+    path: /images-general
+    defaults: { _controller: 'RevisionBundle:Image:index' }

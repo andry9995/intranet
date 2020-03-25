@@ -1,0 +1,113 @@
+#Acceuil parametrage tache
+tache_homepage:
+    path:     /
+    defaults: { _controller: 'TacheBundle:TacheLibre:index' }
+    options:
+        expose: true
+
+#Liste tache pour JqGrid
+tache_libre_liste:
+    path:   /liste
+    defaults: { _controller: TacheBundle:TacheLibre:liste }
+    options:
+      expose: true
+
+#Ajouter taches libres
+tache_libre_add:
+    path: /add
+    defaults: { _controller: TacheBundle:TacheLibre:add }
+    options:
+        expose: true
+    methods: [POST]
+
+#Modifier taches libre
+tache_libre_edit:
+    path:     /edit/{tache}
+    defaults: { _controller: TacheBundle:TacheLibre:edit }
+    options:
+      expose: true
+    methods: [POST]
+    requirements:
+        tache: \d+
+
+#Ajouter taches libres
+tache_libre_remove:
+    path: /remove/{tache}
+    defaults: { _controller: TacheBundle:TacheLibre:remove }
+    options:
+        expose: true
+    methods: [DELETE]
+    requirements:
+        tache: \d+
+
+#Listes des taches au format JSON ou HTML
+tache_liste_simple:
+    path:   /liste-simple/{json}
+    defaults:   { _controller: 'TacheBundle:TacheLibre:listeSimple', json: 0 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+#Ajouter tache Précédente
+tache_add_precedente:
+    path: /add-prec/{principale}/{precedente}
+    defaults: { _controller: 'TacheBundle:TacheLibre:addTachePrecedente' }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      principale: \d+
+      precedente: \d+
+
+#Ajouter tache Suivante
+tache_add_suivante:
+    path: /add-suiv/{principale}/{suivante}
+    defaults: { _controller: 'TacheBundle:TacheLibre:addTacheSuivante' }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      principale: \d+
+      suivante: \d+
+
+#Listes des taches Préc. Suiv.
+tache_liste_prec_suiv:
+    path: /liste-prec-suiv/{principale}
+    defaults: { _controller: 'TacheBundle:TacheLibre:listePrecSuiv' }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      principale: \d+
+
+#Supprimer tache Préc. Suiv.
+tache_remove_prec_suiv:
+    path: /remove-prec-suiv/{id}/{type}
+    defaults: { _controller: 'TacheBundle:TacheLibre:removePrecSuiv' }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      id: \d+
+      type: \d*
+
+#Ordre des taches précédentes et suivantes
+tache_reorder_prec_suiv:
+    path: /reorder-prec-suiv/{type}
+    defaults: { _controller: 'TacheBundle:TacheLibre:reorderPrecSuiv' }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      type: 0|1
+
+#Get une tache
+tache_get_one:
+    path: /one/{tache}
+    defaults: { _controller: 'TacheBundle:TacheLibre:getOne' }
+    options:
+      expose: true
+    requirements:
+      tache: \d+
+

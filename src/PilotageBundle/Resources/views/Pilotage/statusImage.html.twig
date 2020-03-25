@@ -1,0 +1,128 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@PilotageBundle/Resources/public/js/pilote.js'
+    %}
+        <script src="{{ asset_url }}"></script>#}
+  {% endjavascripts %}#}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@PilotageBundle/Resources/public/css/pilotage.css'
+    %}
+    <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}">
+    <link rel="stylesheet" href="{{ asset_url }}">
+{% endstylesheets %}
+{% endblock %}
+{% block title %}{{ parent() }} - Panier{% endblock %}
+
+{% block content %}
+    <div>
+    <div class="row filtre">
+        <div class="fil_div">
+            {{ include('PilotageBundle:Pilotage:filtre.html.twig')}}
+        </div>
+    </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row overflo">
+            <div id="first_state" style="display: block;">
+                <div class="col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span style="float: center;margin: 0 100px 7px"><h5>Situation des images reçues</h5></span>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content " style="padding: 0px 20px 20px 20px;">
+                            <div id="first_affich" style="display: block">
+                                <table class="table" data-page-size="8">
+                                    <thead>
+                                    <tr class="th-col">
+                                        <th><div id="periode"><div></th>
+                                        <th>Client</th>
+                                        <th>Dossier Actifs</th>
+                                            <div id="client_active"></div>
+                                        <th>Recues </th>
+                                        <th>Traitées </th>
+                                        <th>Stock </th>
+                                        <th>Moy/j</th>
+                                    </tr>
+                                    </thead>
+                                     <tr class="th-col">
+                                        <td><div> reçues</div>  </td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id="image_recu"></div></td>
+                                        <td><div id="image_recu_trait"></div></td>
+                                        <td><div id="stocky"></div></td>
+                                        <td><div id="moyen_recu"></div></td>
+                                    </tr>
+                                    <tr class="th-col">
+                                        <td> <div>séparation</div></td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id="image_traite"></div></td>
+                                        <td><div id="image_separation_traite"></div></td>
+                                        <td><div id="separation_stock"></div></td>
+                                        <td><div id="moyen_separe" ></div></td>
+                                    </tr>
+                                    <tr class="th-col">
+                                        <td> <div>saisies</div></td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id="image_saisies"></div></td>
+                                        <td><div id="image_saisies_traites"  ></div></td>
+                                        <td> <div id ="saisie_stock"></div> </td>
+                                        <td><div id="saisie_moyen"  ></div></td>
+                                    </tr>
+                                    <tr class="th-col">
+                                        <td><div>imputées</div></td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id="image_imputes"></div></td>
+                                        <td><div id="impute_traite" ></div></td>
+                                        <td><div id="impute_stock" ></div></td>
+                                        <td><div id="impute_moyen" ></div></td>
+                                    </tr>
+                                    <tr class="th-col">
+                                        <td><div>En instance</div></td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id="instance"></div></td>
+                                        <td><div id=""></div></td>
+                                        <td><div id=""></div></td>
+                                        <td><div id=""></div></td>
+                                    </tr>
+                                     <tr class="th-col">
+                                        <td><div>Moyen</div></td>
+                                        <td ></td>
+                                        <td> </td>
+                                        <td><div id=""></div></td>
+                                        <td><div id=""></div></td>
+                                        <td><div id=""></div></td>
+                                        <td><div id="moyen_general"></div></td>
+                                    </tr>
+                                        
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                
+                </div>
+            </div>
+            <div id="resultat_state">
+            </div>
+        </div>
+    </div>
+   
+{% endblock %}

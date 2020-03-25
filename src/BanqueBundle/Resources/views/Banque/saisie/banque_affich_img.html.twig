@@ -1,0 +1,15 @@
+
+<div class="" style="height: {{height}}px;margin-bottom: 100px;" id="">
+    {# <div class="row" style="padding-left: 15px;">
+        <h4>Numero image: <span class="">{{ img.nom }}.{{ img.extImage }} </span>, date scan: <span class="">{{ (img.lot is null) ? '' : img.lot.dateScan|date('d/m/Y') }}</span></h4>
+    </div>
+    show_img_height
+    {{ embed|raw }}#}
+    {# <img width="500px" height="{{ height }}px" src="{{ asset( 'img/TEST.JPG' ) }}?#scrollbar=1&toolbar=0&navpanes=1" />#}
+    <object type="application/pdf" width="100%" height="100%">
+        <param name="src" value="{{asset('img/TEST.pdf')}}" />
+        <p>It appears your Web browser is not configured to display PDF files.
+            No worries, just <a href="{{ asset('img/TEST.pdf') }}">click here to download the PDF file.</a>
+        </p>
+    </object>
+</div>

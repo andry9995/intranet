@@ -1,0 +1,73 @@
+
+<div class="form-inline">
+    <div class="form-group">
+        <label class="control-label">Client</label>
+    </div>
+    <div class="form-group">
+        <select class="form-control" name="clients" id="idClientFindEnCours">
+            <option></option>
+            {% for key, value in liste_client_enCours %}
+                <option>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" value="{{ liste_dossier_enCours|json_encode() }}" id="idInputDossierEnCours">
+    </div>
+    <div class="form-group">
+        <label class="control-label">Dossier</label>
+    </div>
+    <div class="form-group">
+        <select class="form-control" name="dossiers" id="idDossierFindEnCours">
+
+        </select>
+    </div>
+    <button class="btn btn-white" id="findCabinetDossierEnCours" title="Recherche cabinet dossier"><i class="fa fa-search"></i></button>
+</div>
+<div class="lot-tirage-encours">
+    {% set iCpt = 1 %}
+    {% set iNbImage = 0 %}
+    {% for lotDown in downloadEnCours %}
+        <div class="lot" style="background-color: #f7ac59 " data-lot="{{ lotDown.lot2.id }}"
+             data-image="{{ lotDown.nbImage }}"
+             data-client="{{ lotDown.cabinet }}"
+             data-dossier="{{ lotDown.dossier }}"
+             data-datescan="{{ lotDown.dateScan|date('d/m/Y') }}"
+             data-exercice="{{ lotDown.exercice }}"
+             data-lot2="{{ lotDown.lot }}"
+             data-toggle="tooltip"
+             data-flag="0"
+             title="{{ lotDown.cabinet ~ '/' ~ lotDown.dossier ~ '/' ~ lotDown.exercice ~ '/' ~ lotDown.dateScan|date('d-m-Y') ~ '/' ~ lotDown.lot }}">
+
+            {{ lotDown.nbImage }}&nbsp;
+            <i class="infos-recherche-encours hidden fa fa-star fa-spin" style="position:absolute;  top:0px;color: #0E0000 "></i>
+        </div>
+        {% set iNbImage = iNbImage + lotDown.nbImage %}
+    {% endfor %}
+
+    {# Garder temporairement liste #}
+    {% set iCpt = 1 %}
+    {% set iNbImage = 0 %}
+    <select id="lot-numeroter-enCours" class="hidden">
+    {% for lotDown in downloadEnCours %}
+        <option style="background-color: #f7ac59 " data-lot="{{ lotDown.lot2.id }}"
+             data-image="{{ lotDown.nbImage }}"
+             data-client="{{ lotDown.cabinet }}"
+             data-dossier="{{ lotDown.dossier }}"
+             data-datescan="{{ lotDown.dateScan|date('d/m/Y') }}"
+             data-exercice="{{ lotDown.exercice }}"
+             data-lot2="{{ lotDown.lot }}"
+             data-flag="0"
+             title="{{ lotDown.cabinet ~ '/' ~ lotDown.dossier ~ '/' ~ lotDown.exercice ~ '/' ~ lotDown.dateScan|date('d-m-Y') ~ '/' ~ lotDown.lot }}">
+
+            {{ lotDown.nbImage }}&nbsp;
+        </option>
+        {% set iNbImage = iNbImage + lotDown.nbImage %}
+    {% endfor %}
+    </select>
+
+    <input class="hidden" id="idNbLotEnCours" value="{{ downloadEnCours|length }}">
+    <input type="hidden" id="idNbImageEnCours" value="{{ iNbImage }}">
+</div>
+
+
+
+

@@ -1,0 +1,63 @@
+<div class="form-horizontal" id="form-rp">
+
+    {% set typedate = regle.typedate %}
+    {% set nbrejour = regle.nbrejour %}
+    {% set datele = regle.datele %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="rp-date">Date</label>
+                <div class="col-sm-8">
+                    <select class="form-control " name="rpdate" id="rp-date">
+                        <option value=""></option>
+                        <option value="0" {{ (typedate == 0) ? 'selected' : ''}}>Date Facture</option>
+                        <option value="1" {{ (typedate == 1) ? 'selected' : '' }}>Date Livraison</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-8 control-label" for="rp-nbjour">Nombre de jours</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control " name="rpnbjour" id="rp-nbjour" value="{{ nbrejour }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="rp-datele-active">Date le</label>
+                <div class="col-sm-2">
+                    <div class="checkbox checkbox-success checkbox-inline">
+                        <input type="checkbox" class="checkbox-primary" name="rp-datele-active" id="rp-datele-active" {{ (datele != -1) ? 'checked' : '' }}>
+                        <label></label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-control" name="rpdatele" id="rp-datele" {{ (datele == -1) ? 'disabled' : '' }}>
+                        <option value="-1"></option>
+                        {% for i in 5..30  %}
+                            {% if i is divisible by(5) %}
+                                <option value="{{ i }}" {{ (datele == i) ? 'selected' : '' }}>{{ i }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-3 pull-right">
+                <span class="btn btn-primary btn-block" id="rp-save"><i class="fa fa-check"></i>&nbsp;&nbsp;Valider</span>
+            </div>
+        </div>
+    </div>
+
+</div>

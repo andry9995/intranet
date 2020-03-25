@@ -1,0 +1,60 @@
+{# src/BanqueBundle/Resources/view/Banque/base-banque.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+
+{% block title %} {{ parent() }} | BANQUE {% endblock %}
+{% block menu_left %}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <div class="menu-scroll">
+                <ul class="nav metismenu side-menu" id="side-menu">
+                    {% if is_granted('ROLE_CGP_BANQUE') %}
+                        {# <li>
+                            <a href="{{ path('banque_dashboard') }}" title="Tableau de bord"><i class="fa fa-dashboard"></i> <span
+                                        class="nav-label">Tableau de bord</span></a>
+                        </li> #}
+                        <li>
+                            <a href="#" title="Pilotage banque"><i class="fa fa-th-large"></i> <span
+                                        class="nav-label"> Pilotage </span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{{ path('banque_state_image') }}">Situation des images</a></li>
+                                <li><a href="{{ path('banque_statistique') }}">Statistique</a></li>
+                                <li><a href="{{ path('banque_productivite') }}">Productivité</a></li>
+                                {# <li><a href="{{ path('banque_lot') }}">Affectation des lots</a></li> #}
+                                <li><a href="{{ path('banque_tableau_controle') }}">Tableau de contrôle</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                     <li>
+                        <a href="#" title="saisie banque et contrôle"><i class="fa fa-list-alt"></i> <span
+                                    class="nav-label">Saisie banque et Contrôle</span></a>
+                    </li>
+                    <li>
+                        <a href="#" title="Controle RB"><i class="fa fa-check-square"></i> <span
+                                    class="nav-label">Contrôle RB</span></a>
+                    </li>
+<<<<<<< .mine
+                    <li>
+                        <a href="{{ path('banque_saisie') }}" title="Saisie"><i class="fa fa-edit"></i> <span
+                                    class="nav-label">Saisie</span></a>
+                    </li>
+||||||| .r224
+=======
+                     <li>
+                        <a href="#" title="Saisie op banc"><i class="fa fa-th"></i> <span
+                                    class="nav-label">Saisie op banc</span></a>
+                    </li>
+                   
+>>>>>>> .r271
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block menu_top_center %}
+    {{ include('AppBundle:Commun:user-app-office.html.twig') }}
+    <li><a href="#">Picbank</a></li>
+    <li><a href="{{ path('reception_doublon') }}">Doublon</a></li>
+    <li><a href="#">OCR</a></li>
+{% endblock %}

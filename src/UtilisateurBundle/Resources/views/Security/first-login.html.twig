@@ -1,0 +1,36 @@
+{% extends 'base-login.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block title %}
+    Changement mot de passe
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/utilisateur/css/login.css') }}">
+{% endblock %}
+
+{%- block body_class -%}
+    gray-bg
+{%- endblock -%}
+{% block body %}
+    <div class="row space">
+        <div id="first-login-container" class="col-lg-4 col-lg-offset-4 fadeInDown">
+            <div class="text-center"><i class="fa fa-user fa-3x"></i></div>
+            <h3 class="text-center">Changement de mot de passe</h3>
+            <div class="alert alert-info text-center">
+                <p>Bonjour {{ utilisateur.prenom }} {{ utilisateur.nom }}, c'est votre première connexion.</p>
+                <p><strong>Vous devez changer votre mot de passe.</strong></p>
+                <p>Le nouveau mot de passe doit compter <strong>4 caractères au minimum</strong></p>
+            </div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {% if error_pwd %}
+                <div class="alert alert-danger">
+                    Votre nouveau mot de pass ne doit pas être scriptura .
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-block">Modifier</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

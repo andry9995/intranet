@@ -1,0 +1,40 @@
+<thead>
+<tr>
+    <th>Puissance Fiscale</th>
+    {% for distance in distances %}
+        <th>{{ distance.libelle }}</th>
+    {% endfor %}
+</tr>
+</thead>
+
+<tbody>
+
+{% for puissance in puissances %}
+    <tr>
+        <td>{{ puissance.libelle }}</td>
+        {% for dis in distances %}
+            {% set trouve = false %}
+            {% for ik in iks  %}
+                {% if ik.ndfDistanceIndemniteKm == dis and ik.ndfPuissanceFiscal == puissance %}
+                    <td class="ik" data-id="{{ ik.id }}" data-distance="{{ dis.id }}" data-puissance="{{ puissance.id }}">{{ ik.formule }}</td>
+                    {% set trouve = true %}
+                {% endif %}
+            {% endfor %}
+
+            {% if trouve == false %}
+                <td class="ik" data-id="{{ ik.id }}" data-distance="{{ dis.id }}" data-puissance="{{ puissance.id }}"></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+{% endfor %}
+
+</tbody>
+
+
+<tfoot>
+<tr>
+    <td colspan="12">
+        <ul class="pagination pull-right"></ul>
+    </td>
+</tr>
+</tfoot>

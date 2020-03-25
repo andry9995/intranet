@@ -1,0 +1,22 @@
+tache_google_calendrier_homepage:
+    path: /
+    defaults: { _controller: TacheBundle:GoogleCalendrier:index }
+    methods: [GET]
+
+tache_google_calendrier_client:
+    path: /{client}
+    defaults: { _controller: TacheBundle:GoogleCalendrier:googleCalendrierClient }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      client: \d+
+
+tache_google_calendrier_client_edit:
+    path: /{client}
+    defaults: { _controller: TacheBundle:GoogleCalendrier:googleCalendrierClientEdit }
+    methods: [POST]
+    options:
+      expose: true
+    requirements:
+      client: \d+

@@ -1,0 +1,5 @@
+<select>
+    {% for entite in entites %}
+        <option value="{{ entite.id }}">{{ entite.nom }}</option>
+    {% endfor %}
+</select>

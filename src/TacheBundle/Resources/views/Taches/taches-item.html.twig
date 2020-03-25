@@ -1,0 +1,7 @@
+{% if dossier is not defined %}
+    {% set dossier = null %}
+{% endif %}
+
+{% for tachesItem in tachesItems %}
+    {{ render(controller('TacheBundle:Taches:tachesActs',{'tachesItem' : tachesItem, 'dossier':dossier })) }}
+{% endfor %}

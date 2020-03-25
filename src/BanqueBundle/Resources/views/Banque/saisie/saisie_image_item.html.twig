@@ -1,0 +1,36 @@
+{% set color = '' %}
+{% set checked = '' %}
+
+{% if image.ctrl_saisie < 2 %}
+    {#image separée#}
+    {% set color = '#fdffe5' %}
+{% else %}
+    {#jerena raha efa validé#}
+    {% if image.valider == 100 %}
+        {% set color = '#a9d08e' %}
+    {% else %}
+        {#image saisie#}
+        {% set color = '#ffd966' %}
+    {% endif %}
+{% endif %}
+
+{% if image.ctrl_saisie >= 2 %}
+    {% if etape != 'BQ_DETAILS' %}
+        {% set checked = 'checked' %}
+    {% else %}
+        {% if image.avec_releve == 1 %}
+            {% set checked = 'checked' %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% set checkBoxId = 'c'~image.id %}
+
+<td align="right" bgcolor="{{ color }}" style="border:none;">
+    <span id="{{ image.id }}" class="js_imgbq_selected" data-valide="{{ image.valider }}" style="background-color: {{ color }}">
+        {{ image.nom }}
+    </span>
+</td>
+<td align="left" bgcolor="{{ color }}" style="border:none;">
+    <input type="checkbox" id="{{ checkBoxId }}" {{ checked }} />
+</td>

@@ -1,0 +1,11 @@
+.ibox-categorie {
+    clear: both;
+    margin-bottom: 5px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.gras, .gras td span {
+    font-weight: bold;
+    color: #17a688;
+}

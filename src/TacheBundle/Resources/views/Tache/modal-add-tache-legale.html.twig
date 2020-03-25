@@ -1,0 +1,110 @@
+{# Modal pour ajouter ou modifier une Tache Légale #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-legale-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden>&times;</span></button>
+                <h4 id="modal-tache-legale-title" class="modal-title">Ajouter une tâche légale</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hidden" id="add-tache-legale-error"></div>
+                <form class="form-horizontal">
+                    <input type="hidden" id="add-tache-legale-id">
+
+                    <div class="form-group">
+                        <label for="add-tache-legale-nom" class="col-md-3 control-label">Tâche</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="add-tache-legale-nom"
+                                   placeholder="nom de la tâche">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-regime" class="control-label col-md-3">Régimes Fiscaux</label>
+                        <div class="col-lg-9">
+                            <select id="add-tache-legale-regime" class="form-control chosen-select"
+                                    multiple="multiple"
+                                    data-placeholder="---">
+                                {% for regime in regimes_fiscaux %}
+                                    <option value="{{ regime.id }}">{{ regime.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-activite" class="control-label col-md-3">Forme
+                            Activités</label>
+                        <div class="col-lg-9">
+                            <select id="add-tache-legale-activite" class="form-control chosen-select"
+                                    multiple="multiple"
+                                    data-placeholder="---">
+                                {% for activite in forme_activites %}
+                                    <option value="{{ activite.id }}">{{ activite.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-entreprise" class="control-label col-md-3">Formes Juridiques</label>
+                        <div class="col-lg-9">
+                            <select id="add-tache-legale-forme-juridiq" class="form-control chosen-select"
+                                    multiple="multiple"
+                                    data-placeholder="---">
+                                {% for juridique in forme_juridiques %}
+                                    <option value="{{ juridique.id }}">{{ juridique.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-cloture" class="control-label col-md-3">Date Clôture</label>
+                        <div class="col-lg-9">
+                            <select id="add-tache-legale-cloture" class="form-control chosen-select"
+                                    multiple="multiple"
+                                    data-placeholder="---">
+                                <option value="1">janvier</option>
+                                <option value="2">février</option>
+                                <option value="3">mars</option>
+                                <option value="4">avril</option>
+                                <option value="5">mai</option>
+                                <option value="6">juin</option>
+                                <option value="7">juillet</option>
+                                <option value="8">août</option>
+                                <option value="9">septembre</option>
+                                <option value="10">octobre</option>
+                                <option value="11">novembre</option>
+                                <option value="12">décembre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-evenement" class="control-label col-md-3">Evénements Déclencheurs</label>
+                        <div class="col-lg-9">
+                            <input id="add-tache-legale-evenement" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-tache-legale-periode" class="control-label col-md-3">Périodicité Déclaration</label>
+                        <div class="col-lg-3">
+                            <select id="add-tache-legale-periode" class="form-control">
+                                <option value="12">mois</option>
+                                <option value="4">trimestre</option>
+                                <option value="3">quadrimestre</option>
+                                <option value="2">semestre</option>
+                                <option value="1">année</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" id="btn-add-tache-legale-save">Enregistrer
+                </button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

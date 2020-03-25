@@ -1,0 +1,17 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Site</label>
+        <div class="col-lg-8">
+            <select class="form-control" id="site">
+                {% if tous == 1 %}
+                    <option value="0" selected="selected">Tous</option>
+                {% else %}
+                    <option value="0" selected="selected"></option>
+                {% endif %}
+                {% for site in sites %}
+                    <option value="{{ site.id }}">{{ (site.nom != '') ? site.nom : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

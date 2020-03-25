@@ -1,0 +1,929 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Affectation lot
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/reception/js/reception-affectation.js') }}?v=1.0.3"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="tabs-container">
+    <ul class="nav nav-tabs gestion-sous-menu-intranet">
+        <li class="active">
+            <a data-toggle="tab" href="#tab-N1">
+                <i class="fa fa-desktop"></i> Découpage
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#tab-N2">
+                <i class="fa fa-object-ungroup"></i> Séparation
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-N1" class="tab-pane active">
+            <div class="panel-body">
+                <div class="row gray-bg">
+                    <div class="col-md-10 col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Lots disponibles découpage</h5>
+                                <div class="ibox-tools">
+                                    {#Lot <span id="nb-lot-N1" class="badge badge-warning">{{ nb_lot_niv1|number_format(0, ',', '&nbsp;')|raw }}</span>#}
+                                    Lot <span id="nb-lot-N1" class="badge badge-warning"></span>
+                                    {#Images <span id="nb-image-N1" class="badge badge-warning">{{ nb_image_niv1|number_format(0, ',', '&nbsp;')|raw }}</span>#}
+                                    Images <span id="nb-image-N1" class="badge badge-warning"></span>
+                                    <button class="btn btn-xs btn-primary " id="btn_refresh_dec"><i class="fa fa-refresh"  aria-hidden="true"></i></button>&nbsp;
+                                    <i id="niv1-loader" class="loader fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content liste-lot attente noselect">
+                                {#LOTS A PARTAGER TRAITEMENT NIV. 1#}
+                                {% for lot in lot_N1 %}
+                                    {% if lot.priorite is defined and lot.priorite != null %}
+                                        {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                    {% else %}
+                                        {% set date_priorite = '' %}
+                                    {% endif %}
+                                    <div class="lot" style="background-color:{{ lot.color }}"
+                                         data-lot="{{ lot.id }}"
+                                         data-image="{{ lot.nbimage }}"
+                                         data-client="{{ lot.client }}"
+                                         data-site="{{ lot.site }}"
+                                         data-dossier="{{ lot.dossier }}"
+                                         data-cloture="{{ mois[lot.cloture] }}"
+                                         data-datescan="{{ lot.date_scan }}"
+                                         data-priorite="{{ date_priorite }}"
+                                         data-order="{{ lot.order }}"
+                                         data-tache="{{ lot.tache }}"
+                                    >{{ lot.nbimage }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="ibox-content liste-lot-encours noselect encours panel-encours hidden">
+
+                                {# LOTS ENCOURS DE TRAITEMENT SAISIE. 1 #}
+                                {% for lot in lot_N1_encours %}
+                                    {% if lot.priorite is defined and lot.priorite != null %}
+                                        {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                    {% else %}
+                                        {% set date_priorite = '' %}
+                                    {% endif %}
+                                    <div class="lot"
+                                         style="background-color:{{ lot.color }}"
+                                         data-lot="{{ lot.id }}"
+                                         data-image="{{ lot.nbimage }}"
+                                         data-client="{{ lot.client }}"
+                                         data-site="{{ lot.site }}"
+                                         data-dossier="{{ lot.dossier }}"
+                                         data-cloture="{{ mois[lot.cloture] }}"
+                                         data-datescan="{{ lot.date_scan }}"
+                                         data-priorite="{{ date_priorite }}"
+                                         data-order="{{ lot.order }}"
+                                         data-tache="{{ lot.tache }}"
+                                         data-operateur="{{ lot.operateur }}"
+                                         data-operateur-id="{{ lot.operateur_id }}"
+                                    >{{ lot.nbimage }}</div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                        <div>
+                            <table id="table-collab-niv1" class="table table-bordered table-collab">
+                                <thead>
+                                <tr>
+                                    <th>Collaborateurs</th>
+                                    <th>Paramètres</th>
+                                    <th>{{ liste_jour[0]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[1]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[2]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[3]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[4]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[5]|format_date('E dd/MM') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for operateur in operateurs_niv1 %}
+                                    <tr data-operateur="{{ operateur.id }}">
+                                        <td>
+                                            <p>{{ operateur.prenom|title }}</p>
+                                            <img src="{{ asset('img/profile-icon.png') }}"
+                                                 class="img-rounded">
+                                        </td>
+                                        <td>
+                                            <div class="label label-default label-capacite" data-type="0" data-value="{{ operateur.capacite }}">
+                                                Capacité/j: {{ operateur.capacite }}
+                                            </div>
+                                            <div class="label label-default label-capacite" data-type="1" data-value="{{ operateur.coeff }}">
+                                                Coeff: {{ operateur.coeff }}
+                                            </div>
+                                            <div class="label label-default label-capacite" data-type="2" data-value="{{ operateur.capacite }}">
+                                                Capacité réelle: {{ operateur.capacite }}
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[0]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect" data-image="0">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;" class="progress-bar"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier <= liste_jour[0] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[1]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini" style="height:15px">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[1] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[2]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[2] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[3]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[3] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[4]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[4] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[5]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv1 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[5] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2 hidden-sm hidden-xs no-margins no-paddings">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Liste clients/dossiers découpage</h5>
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="input-group-btn">
+                                    <span data-toggle="dropdown" class="btn btn-block btn-white dropdown-toggle">Lot en attente</span>
+                                    <ul class="dropdown-menu">
+                                        <li datatype="0" class="lot-filter N1 active"><a>Lot en attente</a></li>
+                                        <li datatype= "1"  class="lot-filter N1"><a>Lot encours</a></li>
+                                        <li datatype="-1" class="lot-filter N1"><a>Tous les lots</a></li>
+                                    </ul>
+                                </div>
+
+
+
+                                <div class="panel-group attente" id="liste-client-N1" role="tablist"
+                                     aria-multiselectable="true" style="margin-top: 10px;">
+                                    {#<p>#}
+                                        {#<button id="btn-select-all-N1"#}
+                                                {#class="btn panel-liste-selected btn-block liste-client-item active">#}
+                                            {#Afficher#}
+                                            {#tout#}
+                                        {#</button>#}
+                                    {#</p>#}
+                                    {% for key, value in liste_dossier_N1 %}
+                                        <div class="panel panel-default">
+                                            <div data-client="{{ key }}" class="panel-heading liste-client-item-N1"
+                                                 role="tab"
+                                                 id="heading-N1-{{ loop.index }}">
+                                                <h4 class="panel-title" style="margin:0;">
+                                                    <a role="button" data-toggle="collapse"
+                                                       data-parent="#liste-client-N1"
+                                                       href="#collapse-N1-{{ loop.index }}" aria-expanded="false"
+                                                       aria-controls="collapse-N1-{{ loop.index }}">
+                                                        <div class="liste-dossier-nb-image"></div>
+                                                        {{ key|truncate(20) }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse-N1-{{ loop.index }}" class="panel-collapse collapse"
+                                                 role="tabpanel" aria-labelledby="heading-N1-{{ loop.index }}">
+                                                <div class="panel-body" style="padding:5px;overflow-x:auto;">
+                                                    {% for dossier in value %}
+                                                        <div data-dossier="{{- dossier -}}" data-client="{{ key }}"
+                                                             class="liste-dossier-item-N1 pointer">
+                                                            <div class="liste-dossier-nb-image"></div>
+                                                            <div class="liste-dossier-nom">{{- dossier|truncate(20) -}}</div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+
+                                <div class="panel-group encours hidden panel-encours" id="liste-client-encours-N1" role="tablist"
+                                     aria-multiselectable="true" style="margin-top: 10px;">
+
+                                    {% for key, value in liste_dossier_N1_encours %}
+                                        <div class="panel panel-encours">
+                                            <div data-client="{{ key }}" class="panel-heading liste-client-item-encours-N1"
+                                                 role="tab"
+                                                 id="heading-encours-N1-{{ loop.index }}"
+                                                 style="padding: 3px 2px;"
+                                            >
+                                                <h4 class="panel-title" style="margin:0;">
+                                                    <a role="button" data-toggle="collapse"
+                                                       data-parent="#liste-client-encours-N1"
+                                                       href="#collapse-encours-N1-{{ loop.index }}" aria-expanded="false"
+                                                       aria-controls="collapse-encours-N1-{{ loop.index }}">
+                                                        <div class="liste-dossier-nb-image"></div>
+                                                        {{ key|truncate(20) }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse-encours-N1-{{ loop.index }}" class="panel-collapse collapse"
+                                                 role="tabpanel" aria-labelledby="heading-encours-N1-{{ loop.index }}">
+                                                <div class="panel-body" style="padding:5px;overflow-x:auto;">
+                                                    {% for dossier in value %}
+                                                        <div data-dossier="{{- dossier -}}" data-client="{{ key }}"
+                                                             class="liste-dossier-item-encours-N1 panel-encours pointer">
+                                                            <div class="liste-dossier-nb-image"></div>
+                                                            <div class="liste-dossier-nom noselect">{{- dossier|truncate(20) -}}</div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab-N2" class="tab-pane">
+            <div class="panel-body">
+                <div class="row gray-bg">
+                    <div class="col-md-10 col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Lots disponibles séparation</h5>
+                                <div class="ibox-tools">
+                                    {#Lot <span id="nb-lot-N2" class="badge badge-warning">{{ nb_lot_niv2|number_format(0, ',', '&nbsp;')|raw }}</span>#}
+                                    Lot <span id="nb-lot-N2" class="badge badge-warning"></span>
+                                    &nbsp;&nbsp;
+                                    {#Images <span id="nb-image-N2" class="badge badge-warning">{{ nb_image_niv2|number_format(0, ',', '&nbsp;')|raw }}</span>#}
+                                    Images <span id="nb-image-N2" class="badge badge-warning"></span>
+                                    <button class="btn btn-xs btn-primary " id="btn_refresh_sep"><i class="fa fa-refresh"  aria-hidden="true"></i></button>&nbsp;
+                                    <i id="niv2-loader" class="loader fa fa-spinner fa-spin fa-lg fa-fw fa-pulse"></i>
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content liste-lot noselect attente-N2">
+                                {# LOTS A PARTAGER TRAITEMENT NIV. 2 #}
+                                {% for lot in lot_N2 %}
+                                    {% if lot.priorite is defined and lot.priorite != null %}
+                                        {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                    {% else %}
+                                        {% set date_priorite = '' %}
+                                    {% endif %}
+                                    <div class="lot" style="background-color:{{ lot.color }}"
+                                         data-lot="{{ lot.id }}"
+                                         data-image="{{ lot.nbimage }}"
+                                         data-client="{{ lot.client }}"
+                                         data-site="{{ lot.site }}"
+                                         data-dossier="{{ lot.dossier }}"
+                                         data-cloture="{{ mois[lot.cloture] }}"
+                                         data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                         data-priorite="{{ date_priorite }}"
+                                         data-order="{{ lot.order }}"
+                                         data-tache="{{ lot.tache }}"
+                                    >{{ lot.nbimage }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="ibox-content liste-lot-encours noselect encours-N2 panel-encours hidden">
+
+                                {% for lot in lot_N2_encours %}
+                                    {% if lot.priorite is defined and lot.priorite != null %}
+                                        {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                    {% else %}
+                                        {% set date_priorite = '' %}
+                                    {% endif %}
+                                    <div class="lot"
+                                         style="background-color:{{ lot.color }}"
+                                         data-lot="{{ lot.id }}"
+                                         data-image="{{ lot.nbimage }}"
+                                         data-client="{{ lot.client }}"
+                                         data-site="{{ lot.site }}"
+                                         data-dossier="{{ lot.dossier }}"
+                                         data-cloture="{{ mois[lot.cloture] }}"
+                                         data-datescan="{{ lot.date_scan }}"
+                                         data-priorite="{{ date_priorite }}"
+                                         data-order="{{ lot.order }}"
+                                         data-tache="{{ lot.tache }}"
+                                         data-operateur="{{ lot.operateur }}"
+                                         data-operateur-id="{{ lot.operateur_id }}"
+                                    >{{ lot.nbimage }}</div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                        <div>
+                            <table id="table-collab-niv2" class="table table-bordered table-collab">
+                                <thead>
+                                <tr>
+                                    <th>Collaborateurs</th>
+                                    <th>Paramètres</th>
+                                    <th>{{ liste_jour[0]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[1]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[2]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[3]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[4]|format_date('E dd/MM') }}</th>
+                                    <th>{{ liste_jour[5]|format_date('E dd/MM') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for operateur in operateurs_niv2 %}
+                                    <tr data-operateur="{{ operateur.id }}">
+                                        <td>
+                                            <p>{{ operateur.prenom|title }}</p>
+                                            <img src="{{ asset('img/profile-icon.png') }}"
+                                                 class="img-rounded">
+                                        </td>
+                                        <td>
+                                            <div class="label label-default label-capacite" data-type="0" data-value="{{ operateur.capacite }}">
+                                                Capacité/j: {{ operateur.capacite }}
+                                            </div>
+                                            <div class="label label-default label-capacite" data-type="1" data-value="{{ operateur.coeff }}">
+                                                Coeff: {{ operateur.coeff }}
+                                            </div>
+                                            <div class="label label-default label-capacite" data-type="2" data-value="{{ operateur.capacite }}">
+                                                Capacité réelle: {{ operateur.capacite }}
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[0]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect" data-image="0">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;" class="progress-bar"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier <= liste_jour[0] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[1]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[1] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[2]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[2] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[3]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[3] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[4]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail ">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[4] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-date-panier="{{ liste_jour[5]|format_date('y-MM-dd') }}">
+                                            <div class="lot-panier-switch pointer">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <div class="lot-panier-container noselect">
+                                                <div class="lot-info">
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 0%;"
+                                                             class="progress-bar progress-bar-danger"></div>
+                                                    </div>
+                                                    <div class="panier-percentage">
+                                                        <span class="percentage">0%</span>
+                                                        <span class="nb-image">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lot-detail hidden">
+                                                    {% for lot in panier_niv2 if lot.operateur_id == operateur.id and lot.date_panier == liste_jour[5] %}
+                                                        {% if lot.priorite is defined and lot.priorite != null %}
+                                                            {% set date_priorite = lot.priorite|date('d/m/Y') %}
+                                                        {% else %}
+                                                            {% set date_priorite = '' %}
+                                                        {% endif %}
+                                                        <div class="lot dist"
+                                                             style="background-color:{{ lot.color }};"
+                                                             data-panier="{{ lot.id }}"
+                                                             data-lot="{{ lot.lot_id }}"
+                                                             data-client="{{ lot.client }}"
+                                                             data-site="{{ lot.site }}"
+                                                             data-dossier="{{ lot.dossier }}"
+                                                             data-cloture="{{ mois[lot.cloture] }}"
+                                                             data-datescan="{{ lot.date_scan|date('Y-m-d') }}"
+                                                             data-priorite="{{ date_priorite }}"
+                                                             data-order="{{ lot.order }}"
+                                                             data-tache="{{ lot.tache }}"
+                                                             data-image="{{ lot.nb_image }}">{{ lot.nb_image }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2 hidden-sm hidden-xs no-margins no-paddings">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Liste clients/dossiers séparation</h5>
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="input-group-btn">
+                                    <span data-toggle="dropdown" class="btn btn-block btn-white dropdown-toggle">Lot en attente</span>
+                                    <ul class="dropdown-menu">
+                                        <li datatype="0" class="lot-filter N2 active"><a>Lot en attente</a></li>
+                                        <li datatype="1"  class="lot-filter N2"><a>Lot encours</a></li>
+                                        <li datatype="-1" class="lot-filter N2"><a>Tous les lots</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="panel-group attente-N2" id="liste-client-N2" role="tablist"
+                                     aria-multiselectable="true" style="margin-top: 10px;">
+                                    {#<p>#}
+                                        {#<button id="btn-select-all-N2"#}
+                                                {#class="btn panel-liste-selected btn-block liste-client-item active">#}
+                                            {#Afficher#}
+                                            {#tout#}
+                                        {#</button>#}
+                                    {#</p>#}
+                                    {% for key, value in liste_dossier_N2 %}
+                                        <div class="panel panel-default">
+                                            <div data-client="{{ key }}" class="panel-heading liste-client-item-N2"
+                                                 role="tab"
+                                                 id="heading-N2-{{ loop.index }}">
+                                                <h4 class="panel-title" style="margin:0;">
+                                                    <a role="button" data-toggle="collapse"
+                                                       data-parent="#liste-client-N2"
+                                                       href="#collapse-N2-{{ loop.index }}" aria-expanded="false"
+                                                       aria-controls="collapse-N1-{{ loop.index }}">
+                                                        <div class="liste-dossier-nb-image"></div>
+                                                        {{ key|truncate(20) }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse-N2-{{ loop.index }}" class="panel-collapse collapse"
+                                                 role="tabpanel" aria-labelledby="heading-N2-{{ loop.index }}">
+                                                <div class="panel-body" style="padding:5px;overflow-x:auto;">
+                                                    {% for dossier in value %}
+                                                        <div data-client="{{ key }}" data-dossier="{{- dossier -}}"
+                                                             class="liste-dossier-item-N2 pointer">
+                                                            <div class="liste-dossier-nb-image"></div>
+                                                            <div class="liste-dossier-nom">{{- dossier|truncate(20) -}}</div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+
+
+                                <div class="panel-group panel-encours encours-N2 hidden" id="liste-client-encours-N2" role="tablist"
+                                     aria-multiselectable="true" style="margin-top: 10px;">
+
+                                    {% for key, value in liste_dossier_N2_encours %}
+                                        <div class="panel panel-encours">
+                                            <div data-client="{{ key }}" class="panel-heading liste-client-item-encours-N2"
+                                                 role="tab"
+                                                 id="heading-encours-N2-{{ loop.index }}">
+                                                <h4 class="panel-title" style="margin:0;">
+                                                    <a role="button" data-toggle="collapse"
+                                                       data-parent="#liste-client-encours-N2"
+                                                       href="#collapse-encours-N2-{{ loop.index }}" aria-expanded="false"
+                                                       aria-controls="collapse-encours-N2-{{ loop.index }}">
+                                                        <div class="liste-dossier-nb-image"></div>
+                                                        {{ key|truncate(20) }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse-encours-N2-{{ loop.index }}" class="panel-collapse collapse"
+                                                 role="tabpanel" aria-labelledby="heading-N2-{{ loop.index }}">
+                                                <div class="panel-body" style="padding:5px;overflow-x:auto;">
+                                                    {% for dossier in value %}
+                                                        <div data-client="{{ key }}" data-dossier="{{- dossier -}}"
+                                                             class="liste-dossier-item-encours-N2 pointer">
+                                                            <div class="liste-dossier-nb-image"></div>
+                                                            <div class="liste-dossier-nom">{{- dossier|truncate(20) -}}</div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

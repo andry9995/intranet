@@ -1,0 +1,25 @@
+{% for cb in cbs %}
+    <li data-id="{{ cb.id }}" class="list-group-item">
+
+        <div class="form-horizontal">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="col-lg-5">  {{ cb.numCb }}</label>
+                <div class="col-lg-5 no-padding">
+                    <select class="form-control select-cb-bc-type">
+                        <option value="" {{ (cb.typeRecherche is null) ? 'selected' : ''  }}>Inconnu</option>
+                        <option value="0" {{ (cb.typeRecherche is not null and cb.typeRecherche == 0) ? 'selected' : '' }}>Immédiat</option>
+                        <option value="1" {{ (cb.typeRecherche == 1) ? 'selected' : '' }}>Différé</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 pull-right">
+                    <div class="btn-group">
+                        <span class="btn btn-primary btn-xs btn-block edit-cb-bc"><i class="fa fa-save"></i></span>
+                    </div>
+                    <div class="btn-group">
+                        <span class="btn btn-danger btn-xs btn-block delete-cb-bc"><i class="fa fa-trash"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+{% endfor %}

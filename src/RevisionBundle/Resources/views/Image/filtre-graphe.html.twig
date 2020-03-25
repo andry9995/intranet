@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="client-graphe" class="control-label col-lg-2">
+                            <span>Client</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="client-graphe" data-placeholder="Séléctionner un client" class="form-control chosen-select-client-graphe">
+                                {% if isPicdataUser == false or clients|length > 1 %}
+                                    <option value=""></option>
+                                    <option value="0">Tous</option>
+                                {% endif %}
+                                {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.nom }}</option>
+                                {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="hidden">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site-graphe" class="col-md-3 control-label">Site</label>
+                    <div class="col-md-10">
+                        <select id="site-graphe" data-placeholder="Séléctionner un site" class="form-control chosen-select-site-graphe">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier-graphe" class="control-label col-lg-2">
+                            <span>Dossier</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="dossier-graphe" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier-graphe">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':0, 'label_col':3, 'select_col':4, 'in_form' : false, 'attr_id' : 'exercice-graphe' } )) }}
+
+                        <div class="col-lg-5">
+                            <select class="form-control" name="filtre_fourchette" id="js_filtre_periode_graphe">
+                            <option value=""></option>
+                            <option value="1">Aujourd'hui</option>
+                            <option value="2">Semaine</option>
+                            <option value="3">Deux semaines</option>
+                            <option value="4">Mois</option>
+                            <option value="5" selected="">Exercice</option>
+                            <option value="6">Fourchette</option>
+                        </select>
+                        </div>
+                        <div class="modal" id="js-filtre-fourchette-graphe" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content animated fadeInRight">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                        </button>
+                                        <h4 class="modal-title">Fourchette</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                                        <div  class="col-md-10">
+                                            <form class="form-horizontal">
+                                                <div class="input-group row date col-md-12">
+                                                    <div class="col-sm-20">
+                                                        <input type="text" class="input form-control" name="debut" id="js_debut_date_graphe">
+                                                    </div>
+                                                    <span class="input-group-addon">Au</span>
+                                                    <input type="text" class="input form-control" name="fin" id="js_fin_date_graphe">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="btn-annuler-graphe">Annuler</button>
+                                        <button type="button" id="btn-valider-graphe" class="btn btn-sm btn-primary btn-outline">
+                                            Valider
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="js_filtre_analyse_graphe" class="control-label col-lg-3">
+                            <span>Analyse</span>
+                        </label>
+                        <div class="col-lg-9">
+                           <select class="form-control" name="filtre_analyse" id="js_filtre_analyse_graphe">
+                            <option value=""></option>
+                            <option selected="selected" value="1">Par mois</option>
+                            <option value="2">En cumul</option>
+                        </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        {# <label class="col-md-3 control-label">
+                            <span>Date</span>
+                        </label> #}
+                        <div class="col-md-10">
+                            <select class="form-control" name="filtre_typedate" id="js_filtre_typedate_graphe">
+                                <option value=""></option>
+                                <option value="1" selected="">Date envoi</option>
+                                <option value="2">Date pièce</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 150px;">
+                    {#<button id="btn-go-tableau" class="btn btn-primary" style="width: 150px;">#}
+                    <button id="btn_get_images_graphe" class="btn btn-primary" style="width: 70%;">
+                        <i class="fa fa-arrow-circle-o-right"></i> Go
+                    </button>
+
+                    <div class="btn-group" style="width:30%">
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false"><i class="fa fa-download"> </i> <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li id="export-print"><a href="#"><i class="fa fa-print" aria-hidden="true"></i> Imprimer</a></li>
+                            <li class="divider"></li>
+                            <li id="export-png"><a href="#"><i class="fa fa-download" aria-hidden="true"></i> En format PNG</a></li>
+                            <li id="export-jpeg"><a href="#"><i class="fa fa-download" aria-hidden="true"></i> En format JPEG</a></li>
+                            <li id="export-pdf"><a href="#"><i class="fa fa-download" aria-hidden="true"></i> En format PDF</a></li>
+                            <li class="divider"></li>
+                            <li id="export-csv"><a href="#"><i class="fa fa-file" aria-hidden="true"></i> Exporter en CSV</a></li>
+                            <li id="export-xls"><a href="#"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exporter en XLS</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

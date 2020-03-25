@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for nature in natures %}
+        <option value="{{ nature.id }}">{{ nature.libelleNew }}</option>
+    {% endfor %}
+</select>

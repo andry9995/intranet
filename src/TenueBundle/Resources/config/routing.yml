@@ -1,0 +1,718 @@
+#Index Tenue: Saisie et Imputation
+tenue_default:
+  path:     /
+  defaults: { _controller: 'TenueBundle:TenueSaisie:index' }
+  options:
+    expose: true
+
+
+#Dashbord Tenue: Saisie et Imputation
+tenue_dashboard:
+  path:     /tableau-de-bord
+  defaults: { _controller: 'TenueBundle:TenueSaisie:dashBord' }
+  options:
+    expose: true
+
+#Affichage lot par catégorie
+tenue_show_par_categorie:
+  path:     /tenue-show-lot-par-categorie/{lot}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:categorieShow' }
+  options:
+    expose: true
+  requirements:
+    lot:  \d+
+
+#======================================================
+#ROUTES SAISIE
+#======================================================
+
+#Pilotage Saisie
+tenue_pilotage_saisie:
+  path:     /p-saisie
+  defaults: { _controller: 'TenueBundle:TenueSaisie:psaisie' }
+
+#Index affectation saisie
+tenue_affectation_saisie:
+  path:     /aff-saisie/{json}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:affection', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+
+#Affectation saisie par groupe
+tenue_affectation_saisie_groupe:
+  path:     /aff-saisie-group/{json}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:affectionGroupe', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#Affectation saisie par tenue
+tenue_affectation_lot_tenue:
+  path:     /aff-lot-tenue/{json}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:affectationLotTenue', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#Ajouter un lot dans un panier Saisie1/2/controle
+saisie_add_to_panier:
+  path:     /add-to-panier-saisie/{operateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:addToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Ajouter un lot dans un panier groupe Saisie1/2/controle
+saisie_add_to_panier_groupe:
+  path:     /add-to-panier-saisie-groupe/{operateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:addToPanierGroupe' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Ajouter un lot dans un panier tenue Saisie1/2/controle
+saisie_add_to_panier_tenue:
+  path:     /add-to-panier-tenue/{operateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:addToPanierTenue' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Déplacer un lot d'un panier vers un autre panier
+saisie_move_to_panier:
+  path:     /move-to-panier-saisie/{operateur}/{oldoperateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:moveToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    oldoperateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Retour d'un lot partagé vers à partager
+saisie_return_from_panier:
+  path:     /return-from-panier-saisie/{operateur}/{lot}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:returnFromPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    lot:  \d+
+    operateur:  \d+
+
+#Retour d'un lot partagé vers à partager
+saisie_return_from_lot_groupe:
+  path:     /return-from-lot_groupe/{operateur}/{lot}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:returnFromLot' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    lot:  \d+
+    operateur:  \d+
+
+#Panier Saisie
+tenue_saisie_panier:
+  path:     /panier-saisie/{json}
+  defaults: { _controller: 'TenueBundle:TenueSaisie:panier', json: 0 }
+  options:
+    expose: true
+  requirements:
+    json: 0|1
+
+
+#======================================================
+#ROUTES IMPUTATION
+#======================================================
+
+#Pilotage Imputation
+tenue_pilotage_imputation:
+  path:     /p-imputation
+  defaults: { _controller: 'TenueBundle:TenueImputation:pilotage' }
+
+#Index Affectation Imputation
+tenue_affectation_imputation:
+  path:     /aff-imputation/{json}
+  defaults: { _controller: 'TenueBundle:TenueImputation:affectation', json: 0 }
+  requirements:
+    json: 0|1
+  options:
+    expose: true
+
+#Ajouter un lot dans un panier Imputation
+imputation_add_to_panier:
+  path:     /add-to-panier-imputation/{operateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueImputation:addToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Déplacer un lot d'un panier vers un autre panier
+imputation_move_to_panier:
+  path:     /move-to-panier-imputation/{operateur}/{oldoperateur}/{lot}/{categorie}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueImputation:moveToPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    operateur: \d+
+    oldoperateur: \d+
+    lot:  \d+
+    categorie: \d*
+
+#Retour d'un lot partagé vers à partager
+imputation_return_from_panier:
+  path:     /return-from-panier-imputation/{operateur}/{lot}/{etape}
+  defaults: { _controller: 'TenueBundle:TenueImputation:returnFromPanier' }
+  methods: [POST]
+  options:
+    expose: true
+  requirements:
+    lot:  \d+
+    operateur:  \d+
+
+
+#Panier Imputation
+tenue_imputation_panier:
+  path:     /panier-imputation/{json}
+  defaults: { _controller: 'TenueBundle:TenueImputation:panier', json: 0 }
+  options:
+    expose: true
+  requirements:
+    json: 0|1
+
+
+
+#======================================================
+#ROUTES SAISIE FACTURETTE
+#======================================================
+
+tenue_saisie_facturette:
+  path:     /saisie-facturette
+  defaults: { _controller: 'TenueBundle:SaisieFacturette:saisieFacturette' }
+
+
+tenue_traitement_facturette:
+  path:     /traitement-facturette
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:traitementFacturette' }
+
+tenue_traitement_facturette_content:
+  path:     /traitement-facturette-content
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:traitementFacturetteContent' }
+  options:
+      expose: true
+
+tenue_traitement_facturette_list:
+  path:     /facturette-liste
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:facturetteList'}
+  methods: [POST]
+  options:
+    expose: true
+
+tenue_traitement_facturette_edit:
+  path:     /facturette-edit
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:facturetteEdit'}
+  methods: [POST]
+  options:
+    expose: true
+
+
+tenue_rapprochement_facturette_list:
+  path:     /facturette-rapprochement
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:rapprochementList'}
+  methods: [POST]
+  options:
+    expose: true
+
+tenue_rapprochement_facturette_edit:
+  path:     /facturette-rapprochement-edit
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:rapprochementEdit' }
+  methods: [POST]
+  options:
+    expose: true
+
+
+tenu_rapprochement_pcg:
+  path:   /facturette-pcg/{typecompte}
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:rapprochementPcg' , typcompte: 'bilan' }
+  methods: [POST]
+  options:
+    expose: true
+
+tenu_rapprochement_pcc:
+  path:   /facturette-pcc/{dossierid}/{pcgid}
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:rapprochementPcc' , dossierid: -1, pcgid: -1 }
+  methods: [GET]
+  options:
+    expose: true
+
+tenue_rapprochement_situation:
+  path:   /facturette-situation
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:traitementFacturetteSituation' }
+  methods: [GET]
+  options:
+    expose: true
+
+tenue_rapprochement_indication:
+  path:   /facturette-indication
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:indicaction'}
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_rapprochement_distance:
+  path:   /facturette-distance
+  defaults: { _controller: 'TenueBundle:TraitementFacturette:distance'}
+  methods: [GET]
+
+
+tenue_su:
+  path: /su
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:index'}
+
+tenue_su_dossier:
+  path: /su-dossier
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:dossier'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenue_su_exercice:
+  path: /su-exercice
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:exercice'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenue_su_souscategorie:
+  path: /su-souscategorie/{toutes}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:souscategories', toutes: 1}
+  methods: [GET]
+  options:
+      expose: true
+
+
+tenue_su_soussouscategorie:
+  path: /su-soussouscategorie/{toutes}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:soussouscategories', toutes: 1}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_select_organisme:
+  path: /su-select-organisme/{select}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:selectOrganisme', select: 'nature' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_sousnature:
+  path: /su-sousnature
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:sousNature' }
+  methods: [GET]
+  options:
+      expose: true
+
+
+tenu_su_statut:
+  path: /su-statut
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:statut'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_categorie:
+  path: /su-categorie
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:categorie' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_list_image:
+  path: /su-list-image
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:listImage'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_image:
+  path: /su-image
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:image' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_data_image:
+  path: /su-data
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:dataImage' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_ecriture:
+  path: /su-ecriture
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ecriture' }
+  methods: [GET]
+  options:
+      expose: true
+
+
+tenu_su_ecriture_recap:
+  path: /su-ecriture-recap
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ecritureRecap'}
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_ecriture_recap_edit:
+  path: /su-ecriture-recap/{imageid}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ecritureRecapEdit' }
+  methods: [GET,POST]
+  options:
+      expose: true
+
+tenu_su_ecriture_recap_delete:
+  path: /su-ecriture-delete
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ecritureRecapDelete' }
+  methods: [DELETE]
+  options:
+      expose: true
+
+tenu_su_siren:
+  path: /su-siren
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:siren' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_save:
+  path: /su-save
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:save'}
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_save_fiscal_social:
+  path: /su-save-fiscal-social/{categorie}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveFiscalSocial', categorie: 'social'}
+  methods: [GET,POST]
+  options:
+      expose: true
+
+tenu_su_save_ndf_caisse:
+  path: /su-save-ndf-caisse/{categorie}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveNdfCaisse', categorie: 'ndf' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_save_ecriture:
+  path: /su-save-ecriture
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveEcriture' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_supprimer_ecriture:
+  path: /su-del-ecriture
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:deleteEcriture'}
+  methods: [DELETE]
+  options:
+      expose: true
+
+tenue_su_regle:
+  path: /su-regle/{regle}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:reglePaiement', regle: 'dossier' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenue_su_regle_save:
+  path: /su-regle-save
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:reglePaiementSave' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_ecriture_dossier:
+  path: /su-ecriture-dossier/{typeRecherche}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ecritureDossier', typeRecherche: 'siren' }
+  methods: [GET,POST]
+  options:
+      expose: true
+
+tenu_su_recategoriser_form:
+  path: /su-recategoriser-form
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:recategoriserForm' }
+  methods: [GET]
+  options:
+      expose: true
+
+
+tenu_su_recategoriser:
+  path: /su-recategoriser
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:recategoriser' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_valider_image:
+  path: /su-valider-image
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:validerImage' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_valider_beneficiaire:
+  path: /su-valider-beneficiaire
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveBeneficiaire' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_ndf_caisse_details:
+  path: /su-ndf-details/{categorie}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ndfCaisseDetails', categorie: 'ndf' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_ndf_caisse_details_edit:
+  path: /su-ndf-caisse-details-edit/{imageid}/{categorie}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ndfCaisseDetailsEdit', categorie: 'ndf' }
+  methods: [GET,POST]
+  options:
+      expose: true
+
+tenu_su_ndf_caisse_details_pcc_edit:
+  path: /su-ndf-caisse-details-pcc-edit
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ndfCaisseDetailsPccEdit' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_ndf_caisse_details_delete:
+  path: /su-ndf-caisse-details-delete/{imageid}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:ndfCaisseDetailsDelete' }
+  methods: [DELETE]
+  options:
+      expose: true
+
+tenu_su_mode_reglement:
+  path: /su-mode-reglement
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:modeReglement' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_caisse_nature:
+  path: /su-caisse-nature/{type}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:caisseNature' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_caisse_type:
+  path: /su-caisse-type
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:caisseType' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_code_analytique:
+  path: /su-code-analytique/{imageid}
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:codeAnalytique', imageid: -1 }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_condition_depense:
+  path: /su-condition-depense
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:conditionDepense' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_pays:
+  path: /su-pays
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:pays'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_devise:
+  path: /su-devise
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:devise'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_calcul_devise:
+  path: /su-calcul-devise
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:calculDevise' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_tva_taux:
+  path: /su-tva-taux
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tvaTaux'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_calcul_tva_ht:
+  path: /su-calcul-tva-ht
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:calculTvaHt' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_td_ndf_pcg:
+  path: /su-td-ndf-pcg
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tdNdfPcg' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_check_tva_ns:
+  path: /su-tva-sousnature
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:checkTvaNs' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_td_ndf_sousnature_pcc:
+  path: /su-td-ndf-sousnature-pcc
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tdNdfSousnaturePcc' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_td_ndf_sousnature_pcc_ecriture:
+  path: /su-td-ndf-sousnature-pcc-ecriture
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tdNdfSousnaturePccEcriture' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_td_vc_pcg:
+  path: /su-td-vc-pcg
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tdVcPcg' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_td_caisse_pcc:
+  path: /su-td-caisse-pcc
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tdTdCaissePcc' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_vehicule:
+  path: /su-vehicule-ik
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:vehicule' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_valider_vehicule:
+  path: /su-valider-vehicule
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveVehicule' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenu_su_calcul_ik:
+  path: /su-calcul-ik
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:calculIk' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_souscategorie:
+  path: /su-sousnature-souscategorie
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:souscategorie' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_compte_collectif:
+  path: /su-compte-collectif
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:compteCollectif'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_tiers:
+  path: /su-tiers
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:tiers' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_save_tiers:
+  path: /su-save-tiers
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:saveTiers' }
+  methods: [POST]
+  options:
+      expose: true
+
+tenue_su_pcc_dossier:
+  path: /su-pcc-dosssier
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:pccDossier'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenue_su_cartebleu_banquecompte:
+  path: /su-cb-bc
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:carteBleuBanqueCompte'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_check_rel_cb:
+  path: /su-check-rel-cb
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:checkRelCb' }
+  methods: [GET]
+  options:
+      expose: true
+
+tenue_su_all_pcc_dossier:
+  path: /su-all-pcc-dosssier
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:allPccDossier'}
+  methods: [GET]
+  options:
+      expose: true
+
+tenu_su_import:
+  path: /su-import
+  defaults: { _controller: 'TenueBundle:SaisieUniverselle:import'}
+  methods: [POST]
+  options:
+      expose: true

@@ -1,0 +1,46 @@
+<div class="col-sm-12">
+    <div class="row data-image">
+        <div class="col-sm-7 details-data-{{ indexTab }}" data-datas="{{ data }}" data-encours="{{ isEncours }}">
+            <table id="js_tb_detail_image_{{ indexTab }}" class="js-jqgrid-table"></table>
+            <div id="pager_tb_detail_image"></div>
+        </div>
+        <div class="col-sm-5 details-image-{{ indexTab }}">{#
+            <div class="row" style="padding-left: 15px;">
+                <h4>Numero image: <span class="">{{ image.nom }}.{{ image.extImage }} </span>, date scan: <span class="">{{ (image.lot is null) ? '' : image.lot.dateScan|date('d/m/Y') }}</span></h4>
+            </div>#}
+            {% if categorieId == 0 %}
+                <div class="col-sm-7">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                <span>Statut</span>
+                            </label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="option_statut_image" id="js_option_statut_image">
+                                    <option value="0"></option>
+                                    <option value="903">Inutile</option>
+                                    <option value="139">ANPC</option>
+                                    <option value="1">A Comptabiliser</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+            <div class="col-sm-12">
+                {% for image in tableauImage %}
+                    <div class="details-image-id hidden" data-id="{{ image.imageId }}">
+                        {{ image.embed|raw }}
+                    </div>
+                {% endfor %}
+                <div class="nextCircle">
+                    <i class="fa fa-arrow-right btn-next-detail-image" aria-hidden="true"></i>
+                </div>
+                <div class="prevCircle">
+                    <i class="fa fa-arrow-left btn-prev-detail-image" aria-hidden="true"></i>
+                </div>
+                <input type="hidden" id="image_no" value="0">
+            </div>
+        </div>
+    </div>
+</div>

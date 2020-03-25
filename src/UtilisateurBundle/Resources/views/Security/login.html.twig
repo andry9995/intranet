@@ -1,0 +1,39 @@
+{% extends '::base-login.html.twig' %}
+
+{%- block body_class -%}
+    img-bg
+{%- endblock -%}
+{% block body %}
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <h1 class="logo-name">In</h1>
+
+            <h3>Connexion à Intranet</h3>
+
+            <form class="m-t" role="form" action="{{ path("login_check", {}) }}" method="post">
+                {% if error %}
+                    <h4 class="text-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </h4>
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required="" autofocus
+                           value="{{ last_username }}" id="username" name="_username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required=""
+                           id="password" name="_password">
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <div class="form-group text-left">
+                    <label> <input type="checkbox" class="i-checks" id="remember_me" name="_remember_me"> Mémoriser
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

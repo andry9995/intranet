@@ -1,0 +1,39 @@
+login:
+    path:     /login
+    defaults: { _controller: 'UtilisateurBundle:Security:login' }
+    methods: [GET]
+
+login_check:
+    path:     /login_check
+    methods: [POST]
+
+logout:
+    path:     /logout
+    methods: [GET]
+
+access_operateur_liste:
+    path:     /role/liste/{json}
+    defaults: { _controller: 'UtilisateurBundle:Role:liste', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+operateur_rattachement_liste:
+    path:     /rattachement/liste/{json}
+    defaults: { _controller: 'UtilisateurBundle:Rattachement:liste', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+operateur_chef_superieur:
+    path:     /chef-superieur/liste
+    defaults: { _controller: 'UtilisateurBundle:ChefSuperieur:liste' }
+    methods: [POST, GET]
+    options:
+      expose: true
+
+#User first login
+user_first_login:
+    path:     /user/first-login
+    defaults:  { _controller: UtilisateurBundle:Security:firstLogin }

@@ -1,0 +1,25 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %} {{ parent() }} | Import Export {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/ajaxForm/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/revision/js/import_export/index.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="ibox">
+        <div class="ibox-content">
+            <form action="{{ path('rev_import_export_result') }}" method="post" id="id_form">
+                <span class="btn btn-white" id="id_save">Valider</span>
+                <table id="id_export"></table>
+                <button>sub</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

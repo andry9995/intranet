@@ -1,0 +1,6 @@
+<select>
+    <option></option>
+    {% for tva in tvas %}
+        <option value="{{ tva.id }}">{{ tva.taux }} %</option>
+    {% endfor %}
+</select>

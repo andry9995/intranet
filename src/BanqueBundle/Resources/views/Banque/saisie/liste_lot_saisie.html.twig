@@ -1,0 +1,32 @@
+{% for lot in paniers %}
+    <div class="lot"
+         style="background-color:{{ lot.color }}"
+         {#data-lot="{{ lot.lot_id }}"#}
+         data-image="{{ lot.nbimage }}"
+         data-client="{{ lot.client }}"
+         data-site="{{ lot.site }}"
+         data-dossier="{{ lot.dossier }}"
+         data-exercice="{{ lot.exercice }}"
+         data-dossier-id="{{ lot.dossier_id }}"
+         {#data-datescan="{{ lot.date_scan }}"#}
+         data-date-panier-org="{{ lot.date_panier|date('Y-m-d') }}"
+         data-categorie="{{ lot.categorie }}"
+         data-souscategorie-id="{{ lot.souscategorie_id }}"
+         data-souscategorie="{{ lot.souscategorie}}"
+         data-order="{{ lot.order }}"
+         data-tache="{{ lot.tache }}"
+         data-categ-tous="1"
+         {% if lot.soussouscategorie_id is defined %}
+             data-soussouscategorie-id = "{{ lot.soussouscategorie_id }}"
+         {% endif %}
+         {% if lot.banque is defined %}
+             data-banque="{{ lot.banque }}"
+         {% endif %}
+        {% if lot.num_compte is defined %}
+            data-num-compte="{{ lot.num_compte }}"
+        {% endif %}
+        {% if lot.banque_compte_id is defined %}
+            data-banque-compte-id = "{{ lot.banque_compte_id }}"
+        {% endif %}
+    >{{ lot.nbimage }}</div>
+{% endfor %}

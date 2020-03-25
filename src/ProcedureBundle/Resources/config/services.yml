@@ -1,0 +1,4 @@
+services:
+#    procedure.example:
+#        class: ProcedureBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

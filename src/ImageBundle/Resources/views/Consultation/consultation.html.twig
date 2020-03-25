@@ -1,0 +1,17 @@
+<div class="row data-image" data-id="{{ img.id }}">
+
+    <div class="col-sm-12 details-image" style="height: 90vh;">
+
+        <div class="row" style="padding-left: 15px;">
+            <h4>
+                Numero image:
+                <span class="">{{ img.nom }}.{{ img.extImage }} </span>,
+                date scan:
+                <span class="">{{ (img.lot is null) ? '' : img.lot.dateScan|date('d/m/Y') }}</span>
+            </h4>
+        </div>
+        {{ embed|raw }}
+
+    </div>
+
+</div>

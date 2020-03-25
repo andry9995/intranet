@@ -1,0 +1,98 @@
+{# src/ParametreBundle/Resources/views/Parametre/base-parametre.html.twig #}
+{% extends '::base.html.twig' %}
+{% block menu_left %}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <div class="menu-scroll">
+                <ul class="nav metismenu side-menu" id="side-menu">
+                    {% for menu in menus %}
+                        {% set lien = '#' %}
+                        {% if menu.lien is not null and menu.lien != "" %}
+                            {% set lien = path(menu.lien) %}
+                        {% endif %}
+                        <li>
+                            <a href="{{ lien }}" title="Paramètres">
+                                <i class="fa {{ menu.icon }}"></i> <span class="nav-label">{{ menu.libelle }}</span>
+                                {% if menu.child|length > 0 %}
+                                    <span class="fa arrow"></span>
+                                {% endif %}
+                            </a>
+                            {% if menu.child|length > 0 %}
+                                <ul class="nav nav-second-level collapse">
+                                    {% for menu_child in menu.child %}
+                                        {% set lien_child = '#' %}
+                                        {% if menu_child.lien is not null and menu_child.lien != "" %}
+                                            {% set lien_child = path(menu_child.lien) %}
+                                        {% endif %}
+                                        <li>
+                                            <a href="{{ lien_child }}">
+                                                {{ menu_child.libelle }}
+                                                {% if menu_child.child|length > 0 %}
+                                                    <span class="fa arrow"></span>
+                                                {% endif %}
+                                            </a>
+                                            {% if menu_child.child|length > 0 %}
+                                                <ul class="nav nav-second-level collapse">
+                                                    {% for menu_child2 in menu_child.child %}
+                                                        {% set lien_child2 = '#' %}
+                                                        {% if menu_child2.lien is not null and menu_child2.lien != "" %}
+                                                            {% set lien_child2 = path(menu_child2.lien) %}
+                                                        {% endif %}
+                                                        <li>
+                                                            <a href="{{ lien_child2 }}">
+                                                                {{ menu_child2.libelle }}
+                                                                {% if menu_child2.child|length > 0 %}
+                                                                    <span class="fa arrow"></span>
+                                                                {% endif %}
+                                                            </a>
+                                                            {% if menu_child2.child|length > 0 %}
+                                                                <ul class="nav nav-second-level collapse">
+                                                                    {% for menu_child3 in menu_child2.child %}
+                                                                        {% set lien_child3 = '#' %}
+                                                                        {% if menu_child3.lien is not null and menu_child3.lien != "" %}
+                                                                            {% set lien_child3 = path(menu_child3.lien) %}
+                                                                        {% endif %}
+                                                                        <li>
+                                                                            <a href="{{ lien_child3 }}">
+                                                                                {{ menu_child3.libelle }}
+                                                                                {% if menu_child3.child|length > 0 %}
+                                                                                    <span class="fa arrow"></span>
+                                                                                {% endif %}
+                                                                            </a>
+                                                                            {% if menu_child3.child|length > 0 %}
+                                                                                <ul class="nav nav-second-level collapse">
+                                                                                    {% for menu_child4 in menu_child3.child %}
+                                                                                        {% set lien_child4 = '#' %}
+                                                                                        {% if menu_child4.lien is not null and menu_child4.lien != "" %}
+                                                                                            {% set lien_child4 = path(menu_child4.lien) %}
+                                                                                        {% endif %}
+                                                                                        <li>
+                                                                                            <a href="{{ lien_child4 }}">
+                                                                                                {{ menu_child4.libelle }}
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    {% endfor %}
+                                                                                </ul>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+{% endblock %}
+

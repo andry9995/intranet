@@ -1,0 +1,33 @@
+
+<div class="row">
+    <input id="cocherToutPostes" type="checkbox" data-cocher="0">
+    <label for="cocherToutPostes">Cocher tout</label>
+</div>
+<div class="row" style="height: 300px; overflow: auto">
+    <div id="container-poste">
+    {% for poste in postes  %}
+        <div class="dd-handle">
+            {% set cocher = false %}
+            {% for key, value in postesChoisis %}
+                {% if poste.id == value.id %}
+                    {% set cocher = true %}
+                {% endif %}
+            {% endfor %}
+            {%  if cocher == true %}
+                <input type="checkbox" class="poste-select" data-poste-id="{{ poste.id }}" data-nom="{{ poste.nom }}" checked="checked" >
+            {% else %}
+                <input type="checkbox" class="poste-select" data-poste-id="{{ poste.id }}" data-nom="{{ poste.nom }}" >
+            {% endif %}
+            <span class="label label-primary"><i class="fa fa-square"></i></span>
+            {{ poste.nom }}
+        </div>
+    {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <div class="row" style="margin:15px">
+        <span class="btn btn-primary pull-right"
+                                               id="btn-choose-poste" data-id="{{ processId }}">
+            <i class="fa fa-check"></i>&nbsp;Choisir</span>
+    </div>
+</div>

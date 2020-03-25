@@ -1,0 +1,81 @@
+{# src/ReceptionBundle/Resources/views/Reception/base-reception.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | RECEPTION {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/nestable/jquery.nestable.js') }}"></script>
+{% endblock %}
+{% block menu_left %}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <div class="menu-scroll">
+                <ul class="nav metismenu side-menu" id="side-menu">
+                    {#{% if is_granted('ROLE_CGP_RECEPTION') %}#}
+                       {# <li>
+                            <a href="{{ path('reception_dashboard') }}" title="Tableau de bord"><i
+                                        class="fa fa-dashboard"></i> <span
+                                        class="nav-label">Tableau de bord</span></a>
+                        </li>#}
+                    <li>
+                        <a href="{{ path('reception_dashboard') }}" title="Tableau de bord"><i
+                                    class="fa fa-tachometer" aria-hidden="true"></i> <span
+                                    class="nav-label">Tableau de bord</span></a>
+                    </li>
+                    <li>
+                        <a href="#" title="Pilotage réception - séparation"><i class="fa fa-th-large"></i> <span
+                                    class="nav-label">Pilotage</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('reception_controle_flux_image') }}">Contrôle flux des images</a>
+                            </li>
+                            <li><a href="{{ path('reception_controle_image_traite') }}">Contrôle des images
+                                    traitées</a></li>
+                            <li><a href="{{ path('reception_controle_separation') }}">Contrôle séparation</a></li>
+                            <li><a href="{{ path('reception_histogramme') }}">Histogramme</a></li>
+                            <li><a href="{{ path('reception_priorisation') }}">Priorisation</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ path('reception_tirage') }}" title="Gestion priorité tirage picdata"><i
+                                    class="fa fa-download" aria-hidden="true"></i> <span
+                                    class="nav-label">Gestion tirage picdata</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('reception_affectation') }}" title="Affectation lots"><i
+                                    class="fa fa-tags"></i> <span
+                                    class="nav-label">Affectation lot</span></a>
+                    </li>
+                     <li>
+                        <a href="#" title="Infoperdos"><i
+                                    class="fa fa-cloud"></i> <span
+                                    class="nav-label">Infoperdos</span></a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('reception_affectation_dossier') }}" title="Affectation dossiers"><i class="fa fa-hand-lizard-o"></i> <span
+                                    class="nav-label">Affectation dossiers</span></a>
+                    </li>
+                    {#{% endif %}#}
+
+<li>
+    <a href="{{ path('reception_panier') }}" title="Panier"><i
+                class="fa fa-shopping-cart"></i> <span
+                class="nav-label">Panier</span></a>
+</li>
+ <li>
+    <a href="#" title="Import Compta"><i
+                class="fa fa-file"></i> <span
+                class="nav-label">Import compta</span></a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+{% endblock %}
+{% block menu_top_center %}
+{{ include('AppBundle:Commun:user-app-office.html.twig') }}
+<li><a href="{{ path('reception_doublon') }}">Doublon</a></li>
+{% endblock %}
+{% block content %}
+{% endblock %}

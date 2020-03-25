@@ -1,0 +1,35 @@
+tache_admin_client:
+    path: /par_client
+    defaults: { _controller: TacheBundle:TacheAdmin:indexClient }
+
+tache_admin_dossier:
+    path: /par_dossier
+    defaults: { _controller: TacheBundle:TacheAdmin:indexDossier }
+
+tache_admin_taches:
+    path: /taches
+    defaults: { _controller: TacheBundle:TacheAdmin:taches }
+    methods:  [POST]
+    options:
+        expose: true
+
+tache_admin_show_imputation_tache:
+    path: /tache/imputation
+    defaults: { _controller: TacheBundle:TacheAdmin:showImputationTache }
+    methods:  [POST]
+    options:
+        expose: true
+
+tache_admin_save_tache_entity_lg:
+    path: /tache/save/entity_lg
+    defaults: { _controller: TacheBundle:TacheAdmin:saveTacheEntityLg }
+    methods:  [POST]
+    options:
+        expose: true
+
+tache_admin_save_tache_entity_lb:
+    path: /tache/save/entity_lb
+    defaults: { _controller: TacheBundle:TacheAdmin:saveTacheEntityLb }
+    methods:  [POST]
+    options:
+        expose: true

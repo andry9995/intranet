@@ -1,0 +1,45 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_taches_nom">Nom</label>
+        <div class="col-lg-10">
+            <input type="text" id="id_taches_nom" placeholder="Nom de la tache" value="{{ (taches is null) ? '' : taches.nom }}" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_taches_nom">Fiscale</label>
+        <div class="col-lg-10">
+            <select class="form-control prest_fiscal_tache" name="prest_fiscal_tache" id="js_prest_fiscal_tache">
+                <option value="-1"></option>
+                {% for prestation in prestationFiscaleTache %}
+                    {% set tacheNameSelected = (taches is null) ? '' : (taches.prestationFiscaleTache is null) ? '' : taches.prestationFiscaleTache.libelle %}
+                    <option value="{{ prestation.id }}" {{ (prestation.libelle == tacheNameSelected) ? 'selected' : '' }}>{{ prestation.libelle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <div class="col-lg-12 text-center">
+            <div class="checkbox checkbox-success checkbox-inline">
+                <input type="checkbox" id="id_taches_is_tva" {{ (taches is not null and taches.responsable == 1) ? 'checked' : '' }}>
+                <label for="id_taches_is_tva">TVA</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_taches_edit" data-action="1" data-taches="{{ (taches is null) ? 0 : taches.id }}" data-type="{{ regimeFiscal is not null ? 0 : 1 }}" data-regime="{{ regimeFiscal is not null ? regimeFiscal.id : tachesGroup.id }}"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>
+
+{# <div class="row">
+    <div class="ibox ibox-shadow">
+        <div class="ibox-title">
+            <div class="col-sm-2"><h5>Fiscales</h5></div>
+            <div class="col-sm-1"><button class="btn btn-sm btn-primary" type="submit" id = "btn-validation-prest-fiscal">Valider</button></div>
+        </div>
+
+        <div class="ibox-content">
+            {{ include('TacheBundle:Taches:prestation-fiscale-tache.html.twig') }}
+        </div>
+    </div>
+</div> #}

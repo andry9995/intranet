@@ -1,0 +1,83 @@
+<div class="tabs-container hidden" id="infoperdos-container" style="margin-top: 15px;">
+    <input type="hidden" id="with-instruction" value="{{ (instructionSaisie is not null) ? (instructionSaisie.instruction is not null) ? 1 : (instructionDossier is not null) ? (instructionDossier.instruction is not null) ? 1 : 0 }}">
+    <div class="col-lg-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab-generale" aria-expanded="true">Générale</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-comptable" aria-expanded="false">Comptable</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-fiscale" aria-expanded="false">Fiscale</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-instruction" aria-expanded="false">Instruction</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-generale" class="tab-pane active">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table id="generale" class="table">
+                            <tr><td>R.S Société :</td><td>{{ dossier.rsSte }}</td></tr>
+                            <tr><td>Siren|Siret :</td><td>{{ dossier.sirenSte }}</td></tr>
+                            <tr><td>Num et rue :</td><td>{{ dossier.numRue }}</td></tr>
+                            <tr><td>Ville :</td><td>{{ dossier.ville }}</td></tr>
+                            <tr><td>Code Postale :</td><td>{{ dossier.codePostal }}</td></tr>
+                            <tr><td>Pays :</td><td>{{ dossier.pays }}</td></tr>
+                            <tr><td>Tél. Société :</td><td></td></tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div id="tab-comptable" class="tab-pane">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table id="comptable" class="table">
+                            <tr><td>Dates écritures :</td><td>{{ (dateEcriture is null) ? '' : dateEcriture|date('d/m/Y') }}</td></tr>
+                            <tr><td>Note de frais :</td><td></td></tr>
+                            <tr><td>Périodicité tenue :</td><td>{{ tenueComptabilite }}</td></tr>
+                            <tr><td>Date démarrage 1er exercice :</td><td>{{ (dossier.debutActivite is null) ? '' : dossier.debutActivite|date('d/m/Y') }}</td></tr>
+                            <tr><td>Date clôture :</td><td>{{ (dateCloture is null) ? '' : dateCloture|date('d/m/Y') }}</td></tr>
+                            <tr><td>Compte à globaliser :</td><td></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-fiscale" class="tab-pane">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table id="fiscale" class="table">
+                            <tr><td>Régime fiscal :</td><td>{{ (dossier.regimeFiscal is null) ? '' : dossier.regimeFiscal.libelle }}</td></tr>
+                            <tr><td>Régime imposition :</td><td>{{ (dossier.regimeImposition is null) ? '' :  dossier.regimeImposition.libelle }}</td></tr>
+                            <tr><td>TVA :</td><td>{{ (dossier.regimeTva is null) ? '' :  dossier.regimeTva.libelle }}</td></tr>
+                            <tr><td>Type TVA :</td><td></td></tr>
+                            <tr><td>Num Intracom :</td><td>...</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-instruction" class="tab-pane">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="tabs-container">
+                            <div class="tabs-left">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-instruction-client" aria-expanded="false">Instruction Saisie</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-instruction-dossier" aria-expanded="false">Instruction Tous Dossier</a></li>
+                                </ul>
+                                <div class="tab-content">
+
+                                    <div id="tab-instruction-client" class="tab-pane active">
+                                        <div class="panel-body" id="idossier">
+                                            {{ (instructionSaisie is null) ? '' : instructionSaisie.instruction|raw }}
+                                        </div>
+                                    </div>
+                                    <div id="tab-instruction-dossier" class="tab-pane">
+                                        <div class="panel-body" id="isaisie">
+                                            {{ (instructionDossier is null) ? '' : instructionDossier.instruction|raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

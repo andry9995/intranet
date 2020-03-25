@@ -1,0 +1,124 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <div class="menu-scroll">
+            {% set newArrayChild = [] %}
+            <ul class="nav metismenu side-menu" id="side-menu">
+                {% for menu in menus if menu.id in menus_id and menu.lien|route_exists  %}
+                    {% if menu.id not in newArrayChild %}
+                        {% set newArrayChild = newArrayChild|merge([menu.id]) %}
+                        {% set lien = '#' %}
+                        {% if menu.lien is not null and menu.lien != "" and menu.class is null and menu.parametre is null %}
+                            {% set lien = path(menu.lien) %}
+                        {% elseif menu.parametre is not null %}
+                            {% set param =  menu.parametre|json_decode   %}
+                            {% set lien = path(menu.lien,param) %}
+                        {% endif %}
+                        <li data-id="{{ menu.libelle }}" data-lien="{{ (menu.menuIntranet.class != null) ? menu.menuIntranet.lien : '' }}" class="{{ (menu.menuIntranet.class != null) ? menu.menuIntranet.class : '' }}">
+                            <a href="{{ lien }}">
+                                <i class="fa {{ menu.icon }}"></i> <span class="nav-label">{{ menu.libelle }}</span>
+                                {% if menu.child|length > 0 %}
+                                    <span class="fa arrow"></span>
+                                {% endif %}
+                            </a>
+                            {% if menu.child|length > 0 %}
+                                <ul class="nav nav-second-level collapse">
+                                    {% for menu_child in menu.child if menu_child.id in menus_id and menu.lien|route_exists %}
+                                        {% if menu_child.id not in newArrayChild %}
+                                            {% set newArrayChild = newArrayChild|merge([menu_child.id]) %}
+                                            {% set lien_child = '#' %}
+                                            {% if menu_child.lien is not null and menu_child.lien != "" and menu_child.class is null and menu_child.parametre is null %}
+                                                {% set lien_child = path(menu_child.lien) %}
+                                            {% elseif menu_child.parametre is not null %}
+                                                {% set param =  menu_child.parametre|json_decode   %}
+                                                {% set lien_child = path(menu_child.lien,param) %}
+                                            {% endif %}
+
+                                            <li data-id="{{ menu_child.libelle }}" data-lien="{{ (menu_child.class != null) ? menu_child.lien : '' }}" class="{{ (menu_child.class != null) ? menu_child.class : '' }}">
+                                                <a href="{{ lien_child }}">
+                                                    {{ menu_child.libelle }}
+                                                    {% if menu_child.child|length > 0 %}
+                                                        <span class="fa arrow"></span>
+                                                    {% endif %}
+                                                </a>
+                                                {% if menu_child.child|length > 0 %}
+                                                    <ul class="nav nav-second-level collapse" style="margin-left: 15px;">
+                                                        {% for menu_child2 in menu_child.child if menu_child2.id in menus_id and menu.lien|route_exists %}
+                                                            {% if menu_child2.id not in newArrayChild %}
+                                                                {% set newArrayChild = newArrayChild|merge([menu_child2.id]) %}
+                                                                {% set lien_child2 = '#' %}
+                                                                {% if menu_child2.lien is not null and menu_child2.lien != "" and menu_child2.class is null and menu_child2.parametre is null %}
+                                                                    {% set lien_child2 = path(menu_child2.lien) %}
+                                                                {% elseif menu_child2.parametre is not null %}
+                                                                    {% set param =  menu_child2.parametre|json_decode   %}
+                                                                    {% set lien_child2 = path(menu_child2.lien,param) %}
+                                                                {% endif %}
+                                                                <li data-id="{{ menu_child2.libelle }}" data-lien="{{ (menu_child2.class != null) ? menu_child2.lien : '' }}" class="{{ (menu_child2.class != null) ? menu_child2.class : '' }}">
+                                                                    <a href="{{ lien_child2 }}">
+                                                                        {{ menu_child2.libelle }}
+                                                                        {% if menu_child2.child|length > 0 %}
+                                                                            <span class="fa arrow"></span>
+                                                                        {% endif %}
+                                                                    </a>
+                                                                    {% if menu_child2.child|length > 0 %}
+                                                                        <ul class="nav nav-second-level collapse" style="margin-left: 15px;">
+                                                                            {% for menu_child3 in menu_child2.child if menu_child3.id in menus_id %}
+                                                                                {% if menu_child3.id not in newArrayChild %}
+                                                                                    {% set newArrayChild = newArrayChild|merge([menu_child3.id]) %}
+                                                                                    {% set lien_child3 = '#' %}
+                                                                                    {% if menu_child3.lien is not null and menu_child3.lien != "" and menu_child3.class is null and menu_child3.parametre is null %}
+                                                                                        {% set lien_child3 = path(menu_child3.lien) %}
+                                                                                    {% elseif menu_child2.parametre is not null %}
+                                                                                        {% set param =  menu_child3.parametre|json_decode   %}
+                                                                                        {% set lien_child3 = path(menu_child3.lien,param) %}
+                                                                                    {% endif %}
+                                                                                    <li data-id="{{ menu_child3.libelle }}" data-lien="{{ (menu_child3.class != null) ? menu_child3.lien : '' }}" class="{{ (menu_child3.class != null) ? menu_child3.class : '' }}">
+                                                                                        <a href="{{ lien_child3 }}">
+                                                                                            {{ menu_child3.libelle }}
+                                                                                            {% if menu_child3.child|length > 0 %}
+                                                                                                <span class="fa arrow"></span>
+                                                                                            {% endif %}
+                                                                                        </a>
+                                                                                        {% if menu_child3.child|length > 0 %}
+                                                                                            <ul class="nav nav-second-level collapse" style="margin-left: 15px;">
+                                                                                                {% for menu_child4 in menu_child3.child if menu.id in menus_id and menu.lien|route_exists %}
+                                                                                                    {% set lien_child4 = '#' %}
+                                                                                                    {% if menu_child4.lien is not null and menu_child4.lien != "" and menu_child4.class is null and menu_child4.parametre is null %}
+                                                                                                        {% set lien_child4 = path(menu_child4.lien) %}
+                                                                                                    {% elseif menu_child2.parametre is not null %}
+                                                                                                        {% set param =  menu_child4.parametre|json_decode   %}
+                                                                                                        {% set lien_child4 = path(menu_child4.lien,param) %}
+                                                                                                    {% endif %}
+                                                                                                    {% if menu_child4.class is not null %}
+                                                                                                        {% set class_picdata = 'data-id="{{ menu_child4.libelle }}" data-lien="{{ (menu_child4.lien) }}"  class="{{ menu_child4.class) }}"' %}
+                                                                                                    {% endif %}
+                                                                                                    <li {{ class_picdata | raw }}>
+                                                                                                        <a href="{{ lien_child4 }}">
+                                                                                                            {{ menu_child4.libelle }}
+                                                                                                        </a>
+                                                                                                    </li>
+                                                                                                {% endfor %}
+                                                                                            </ul>
+                                                                                        {% endif %}
+                                                                                    </li>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    {% endif %}
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
+

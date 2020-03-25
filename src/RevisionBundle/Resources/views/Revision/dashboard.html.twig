@@ -1,0 +1,196 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@RevisionBundle/Resources/public/css/revision.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@RevisionBundle/Resources/public/js/revision-dashboard.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="white-bg" style="padding: 20px 10px 10px;position: relative;height: 500px; overflow-y: auto;" id="liste-container">
+        <h3>Avancement des dossiers</h3>
+        <hr>
+        <div class="col-md-12">
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-md-4">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="client" class="col-md-2 control-label">Client</label>
+                            <div class="col-md-10">
+                                <select id="client" data-placeholder="Séléctionner un client"
+                                        class="form-control chosen-select-client">
+                                    <option value=""></option>
+                                    {% for client in clients %}
+                                        <option value="{{ client.id }}">{{ client.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="hidden">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="site" class="col-md-2 control-label">Site</label>
+                            <div class="col-md-10">
+                                <select id="site" data-placeholder="Séléctionner un site"
+                                        class="form-control chosen-select-site">
+                                    <option value=""></option>
+                                    {#Liste site#}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="dossier" class="col-md-2 control-label">Dossier</label>
+                            <div class="col-md-10">
+                                <select id="dossier" data-placeholder="Séléctionner un dossier"
+                                        class="form-control chosen-select-dossier">
+                                    <option value="">Tous</option>
+                                    {#Liste dossier#}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+				<div class="col-md-2">
+                    <form class="form-horizontal">
+                         <div class="form-group">
+							<label for="exercice" class="col-md-4 control-label">Exercice</label>
+							<div class="col-md-6">
+								<select class="form-control" id="exercice">
+										<option value=""></option>
+									{% for exercice in exercices %}
+										<option value="{{ exercice }}">{{ exercice }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+                    </form>
+                </div>
+                <div class="col-md-1">
+                    <button id="btn-show-list" class="btn btn-sm btn-primary btn-block">Go</button>
+                </div>
+                <div class="col-md-2 text-right" id="change-view">
+                    <button class="btn btn-white btn-bitbucket btn-change-view active" id="btn-show-box">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </button>
+                    <button class="btn btn-white btn-bitbucket btn-change-view" id="btn-show-table">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </button>
+                </div>
+            </div>
+			<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                <div class="modal-content animated flipInY">
+                                        <div class="modal-body">
+                                           <div class="ibox-content">
+											   <div class="table-responsive">
+													<table class="table table-striped">
+														<thead id="headt">
+														<tr>
+															<th>
+																Lots
+															</th>
+															<th>
+																nb images
+															</th>
+															<th>
+																statuts
+															</th>
+															<th>
+																Date statut
+															</th>
+															<th>
+																QUI
+															</th>
+															<th>
+																Tache
+															</th>
+															<th>
+																Date due
+															</th>
+															<th>
+																Modif date
+															</th>
+															<th>
+																Priorite
+															</th>
+														</tr>
+														</thead>
+														<tbody id="priocontent">
+															<div id="attente">	
+																 <div class="sk-spinner sk-spinner-three-bounce">
+																	<div class="sk-bounce1"></div>
+																	<div class="sk-bounce2"></div>
+																	<div class="sk-bounce3"></div>
+																</div>
+															</div>
+														</tbody>
+													</table>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        </div>
+		<div id="loader" style="display:none;">	
+			 <div class="sk-spinner sk-spinner-three-bounce">
+				<div class="sk-bounce1"></div>
+				<div class="sk-bounce2"></div>
+				<div class="sk-bounce3"></div>
+			</div>
+		</div>
+        <div style="margin: 10px;padding: 10px;">
+            <div id="box-list" class="row">
+                {#<div class="col-sm-3 col-md-2 card">#}
+                    {#<h4>DOSSIER 1</h4>#}
+                    {#<p><i class="fa fa-file-image-o"></i> 200</p>#}
+                    {#<p><i class="fa fa-calendar-check-o"></i> 20/05/2018</p>#}
+                    {#<p><i class="fa fa-tasks"></i> TVA IS</p>#}
+                {#</div>#}
+            </div>
+            <div id="table-list-container" class="hidden" style="margin-top:40px;">
+                <table id="table-list">
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="box-detail">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Détail</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Dossier:</p>
+                    <p>Images à reviser:</p>
+                    <p>Date demandée:</p>
+                    <p>Tâche:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

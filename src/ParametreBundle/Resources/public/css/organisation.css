@@ -1,0 +1,35 @@
+.dhx_diagram_item {
+    font-size: 13px;
+}
+
+.dhx_diagram_item.dhx_diagram_image .dhx_context_img {
+    width: 40px;
+    height: 40px;
+    margin: 25px 5px 0;
+    border-radius: 20px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+#org-niveau-list .list-group-item {
+    margin-bottom: 5px;
+}
+
+#org-niveau-list .list-group-item:last-of-type {
+    margin-bottom: 0;
+}
+
+#org-niveau-list .list-group-item .fa {
+    margin-right: 5px;
+}
+
+.onoffswitch-inner:before {
+    content: "";
+}
+.onoffswitch-inner:after {
+    content: "";
+}
+
+.btn-closable:hover{
+    text-decoration: underline;
+}

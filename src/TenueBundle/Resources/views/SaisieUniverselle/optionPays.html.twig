@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for pay in pays %}
+        <option value="{{ pay.id }}">{{ pay.nom }}</option>
+    {% endfor %}
+</select>

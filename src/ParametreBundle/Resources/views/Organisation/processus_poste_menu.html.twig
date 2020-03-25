@@ -1,0 +1,200 @@
+
+    <table class="table table-striped" id="table-processus-poste-menu">
+        <thead>
+        <tr data-parent="~">
+            <th width="8%"><a href="#" id="code-head" data-collapse="1"><i class="fa fa-minus code-head"></i></a>&nbsp;Code</th>
+            <th width="12%">| Processus </th>
+
+            <th width="25%">| Process</th>
+            <th width="20%">| Poste</th>
+            <th width="28%">| Menus</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for key, value in Processus %}
+            {% set nbLigne = value.nb_ligne %}
+            {% set codeParent = "" %}
+            <tr data-parent="~">
+                <td><a class="row-parent" data-parent="{{ key }}" data-expand="1">
+                        <i class="fa fa-minus" id="data-parent-{{ key }}"></i>
+                    <span class="label label-primary">
+                        [
+                        {% if value.parent_rang|length == 1 %}
+                            P{{ 0~value.parent_rang }}
+                            {% set codeParent = 0~value.parent_rang  %}
+                        {% else %}
+                            P{{ value.parent_rang }}
+                            {% set codeParent = value.parent_rang  %}
+                        {% endif %}
+                        ]
+                    </span>
+                    </a>
+                </td>
+                <th colspan="5">
+                        <strong>{{ value.parent_nom }}</strong>
+                </th>
+            </tr>
+            {% set idx = 1 %}
+            {% for keydet, valueDet in value.details %}
+                {% set codeFils = valueDet.rang %}
+                {% if codeFils|length == 1 %}
+
+                    {% set codeFils = 0~codeFils %}
+
+                {% else %}
+                    {% set codeFils = codeFils %}
+
+                {% endif %}
+
+                <tr class="row-parent-{{ key }}" data-parent="{{ key }}">
+                    <td colspan="2"></td>
+                    {#Numero et nom process#}
+                    <td data-process-id="id-process-{{ valueDet.id }}">
+                        <ul class="sortable-list agile-list" style="height: 35px;marging:0px;padding:0px">
+                            {% if idx is divisible by(2) %}
+                                <li class="warning-element" data-id="{{ valueDet.id }}"  id="id-process-{{ valueDet.id }}" style="height: 35px;marging:0px;">
+                                [{{ codeParent ~ codeFils }}]&nbsp; {{ valueDet.nom }}
+                                </li>
+                            {% else %}
+                                <li class="success-element" data-id="{{ valueDet.id }}"id="id-process-{{ valueDet.id }}" style="height: 35px;marging:0px;">
+                                    [{{ codeParent ~ codeFils }}]&nbsp; {{ valueDet.nom }}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </td>
+
+                    {# Colonne poste #}
+                    <td data-poste-id="id-poste-{{ valueDet.id }}" data-process="{{ valueDet.id }}">
+                        <div class="row" style="margin:0px; padding: 0px;">
+                            <div class="col-sm-1" style="margin:0px; padding: 0px;">
+                                <span class="btn btn-sm btn-xs liste-poste-processus" data-id="{{ valueDet.id }}"><i class="fa fa-list"></i></span>
+                            </div>
+                            <div class="col-lg-11 " id="contenu-poste-processus-{{ valueDet.id }}" style="margin:0px; padding: 0px;">
+                                <select id="select-poste-{{ valueDet.id }}" data-id="{{ valueDet.id }}" data-placeholder="Aucun poste..." class="hidden">
+                                    {% for keyOrg, valueOrg in Organisations %}
+                                        {% if (valueDet.org_id|length) > 0  %}
+                                            {% for cle, value1 in valueDet.org_id %}
+                                                {% if value1 == valueOrg.id %}
+                                                    <option value="{{ valueOrg.id }}">{{ valueOrg.nom }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor  %}
+                                </select>
+                                {% if (valueDet.org_id|length) > 0  %}
+                                        {% if (valueDet.org_id|length) > 1  %}
+                                            <button data-toggle="dropdown" class="btn btn-white  btn-block dropdown-toggle" style="width:280px">
+                                                Plusieurs <span class="caret pull-right"></span>
+                                            </button>
+                                            <ul class="dropdown-menu folder-list m-b-md" style="width:280px; height: 250px; margin:0px; padding:0px; overflow: auto">
+
+                                                {% for cle, value1 in valueDet.org_id %}
+                                                    {% set break = false %}
+                                                    {% for keyOrg, valueOrg in Organisations if not break %}
+                                                        {% if value1 == valueOrg.id %}
+                                                            <li style="padding:5px">{{ valueOrg.nom }} </li>
+                                                            {% set break = true %}
+                                                        {% endif %}
+                                                    {% endfor  %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            {% if (valueDet.org_id|length) > 0  %}
+                                                {% for cle, value1 in valueDet.org_id %}
+                                                        {% set break = false %}
+                                                        {% for keyOrg, valueOrg in Organisations if not break %}
+                                                            {% if value1 == valueOrg.id %}
+                                                                {% set break = true %}
+                                                                <button data-toggle="dropdown" class="btn btn-white  btn-block dropdown-toggle" style="width:280px">
+                                                                    {{ valueOrg.nom }}
+                                                                </button>
+                                                            {% endif %}
+                                                        {% endfor  %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <p style="text-align: center"><em>Pas de poste ...</em></p>
+                                            {% endif %}
+                                        {% endif %}
+
+                                {% else %}
+                                    <p style="text-align: center"><em>Pas de poste ...</em></p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </td>
+
+                    {#  Colonne    Menus    #}
+                    <td data-menu-id="id-menu-{{ valueDet.id }}" data-process="{{ valueDet.id }}">
+                        <div class="row" style="margin:0px; padding: 0px;">
+                            <div class="col-sm-1" style="margin:0px; padding: 0px;">
+                                <span class="btn btn-sm btn-xs liste-menu-processus" data-id="{{ valueDet.id }}"><i class="fa fa-list"></i></span>
+                            </div>
+                            <div class="col-lg-11 " id="contenu-menus-processus-{{ valueDet.id }}" style="margin:0px; padding: 0px;">
+
+                                    <select id="select-{{ valueDet.id }}" class="hidden" data-id="{{ valueDet.id }}">
+                                        {% for keyMenu, valueMenu in menusParProcessus %}
+                                            {% if keyMenu == valueDet.id %}
+                                                {% for idx, val in valueMenu %}
+                                                    <option value="{{ val.id }}" data-parent="{{ val.parent }}"></option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    {% if (menusParProcessus|length) > 0 %}
+                                        {% set break = false %}
+                                        {% set existMenu = false %}
+                                        {% for keyMenu, valueMenu in menusParProcessus if not break %}
+                                            {% if keyMenu == valueDet.id %}
+                                                {% set break = true %}
+                                                {% set menusChoisis = valueMenu %}
+                                                <div class="btn-group">
+                                                    {% if (menusChoisis|length) > 1 %}
+                                                        <button data-toggle="dropdown" class="btn btn-white  btn-block dropdown-toggle" style="width:300px">
+                                                            Plusieurs <span class="caret pull-right"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu folder-list m-b-md" style="width:300px; height: 250px; margin:0px; padding:0px; overflow: auto">
+                                                            {% for cle, valeur in menusChoisis %}
+                                                                {% if valeur.parent != 0 %}
+                                                                    <li style="padding:5px">{{ valeur.nom }} </li>
+                                                                    {% set existMenu = true %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        {% if (menusChoisis|length) > 0 %}
+                                                            {% for cle, valeur in menusChoisis %}
+                                                                <button class="btn btn-white btn-block dropdown-toggle" data-id="{{ valeur.id }}" data-parent="{{ valeur.parent }}" style="width:300px">
+                                                                    {{ valeur.nom }}
+                                                                </button>
+                                                                {% set existMenu = true %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <p style="text-align: center"><em>Pas de menu ...</em></p>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if existMenu == false %}
+                                            <p style="text-align: center"><em>Pas de menu ...</em></p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p style="text-align: center"><em>Pas de menu ...</em></p>
+                                    {% endif %}
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% set idx = idx + 1 %}
+            {% endfor %}
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>

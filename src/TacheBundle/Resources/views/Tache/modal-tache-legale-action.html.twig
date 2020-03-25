@@ -1,0 +1,54 @@
+{# Modal pour ajouter ou modifier Actions Tache Légale #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-legale-action-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden>&times;</span></button>
+                <h4 id="modal-tache-legale-action-title" class="modal-title">Actions pour Tâche Légale</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hidden" id="add-tache-legale-action-error"></div>
+                <input type="hidden" id="add-tache-legale-action-id">
+                <h4 id="modal-tache-legale-action-nom" class="modal-title"></h4>
+                <br>
+                {#Liste des actions chargées avec AJAX#}
+                <table id="js_tache_libre_legale_action" class="js-jqgrid-table"></table>
+                <div id="pager_liste_tache_legale_action"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+{# Modal pour modifier date Actions #}
+<div class="modal fade" tabindex="-1" role="dialog" id="tache-legale-action-date-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden>&times;</span></button>
+                <h4 id="modal-tache-legale-action-date-title" class="modal-title">Date</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hidden" id="add-tache-legale-action-date-error"></div>
+                <input type="hidden" id="add-tache-legale-action-date-id">
+                <h4 id="modal-tache-legale-action-date-nom" class="modal-title"></h4>
+                <br>
+                {# Règle de gestion des dates #}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn-save-action-date">Enregistrer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -1,0 +1,9 @@
+<option
+        value="{{ beneficiaire.id }}"
+        data-nom="{{ beneficiaire.nom }}"
+        data-prenom="{{ beneficiaire.prenom }}"
+        data-mandataire="{{ beneficiaire.isManager }}"
+        {{ (beneficiaireId is not defined) ? '' : (beneficiaireId == beneficiaire.id) ? 'selected' : '' }}
+>
+{{ beneficiaire.nom ~ ' ' ~ beneficiaire.prenom }}
+</option>

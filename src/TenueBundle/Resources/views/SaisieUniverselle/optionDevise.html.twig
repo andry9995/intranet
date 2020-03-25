@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for devise in devises %}
+        <option value="{{ devise.id }}">{{ devise.nom }}</option>
+    {% endfor %}
+</select>

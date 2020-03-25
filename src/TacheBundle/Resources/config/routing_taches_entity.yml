@@ -1,0 +1,42 @@
+taches_param_entity:
+    path:   /{entity}
+    defaults: { _controller: TacheBundle:TachesEntity:index, entity: 0 }
+    options:
+        expose: true
+    requirements:
+        tache: \d+
+
+taches_param_entity_liste:
+    path:   /entity/liste
+    defaults: { _controller: TacheBundle:TachesEntity:chargerTable }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_admin_show_imputation_tache:
+    path:   /imputation/taches
+    defaults: { _controller: TacheBundle:TachesEntity:imputationTaches }
+    methods: [POST]
+    options:
+        expose: true
+
+taches_param_save_entity:
+    path:   /entity/save
+    defaults: { _controller: TacheBundle:TachesEntity:saveEntity }
+    methods:  [POST]
+    options:
+        expose: true
+
+taches_libre_date_edit:
+    path:   /tache_libre/date_edit
+    defaults: { _controller: TacheBundle:TachesEntity:editTachesLibreDate }
+    methods:  [POST]
+    options:
+        expose: true
+
+taches_libre_heriter_change:
+    path:   /tache_libre/heritage/change
+    defaults: { _controller: TacheBundle:TachesEntity:heriterChange }
+    methods:  [POST]
+    options:
+        expose: true

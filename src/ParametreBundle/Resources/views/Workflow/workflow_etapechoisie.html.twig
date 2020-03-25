@@ -1,0 +1,16 @@
+
+{% if etapeChoisie|length > 0 %}
+{% for item in etapeChoisie %}
+    <li class="dd-item no-drag liste-categorie-choisie" data-id="{{ item.etapeTraitement.id }}" data-code="{{ item.etapeTraitement.code }}" >
+        <div class="dd-handle">
+            <span class="label label-info"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+            &nbsp;{{ item.etapeTraitement.libelle }}
+        </div>
+    </li>
+{% endfor %}
+{% else %}
+    <li class="dd-item liste-categorie-choisie liste-choisie-vide" data-id="0" data-code="" >
+        <div class="dd-handle">
+        </div>
+    </li>
+{% endif %}

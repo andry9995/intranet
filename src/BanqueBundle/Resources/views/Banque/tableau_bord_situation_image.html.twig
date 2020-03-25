@@ -1,0 +1,295 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@BanqueBundle/Resources/public/css/banque.css'
+    %}
+        <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}">
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+{% block title %}{{ parent() }} - Panier{% endblock %}
+
+{% block content %}
+    <div class="row filtre">
+        <div class="">
+            {{ include('BanqueBundle:Banque:filtre.html.twig')}}
+            <input type="hidden" class="data_deb">
+            <input type="hidden" class="data_fin">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="first_state" style="display: block; max-height: calc(100vh - 100px);">
+                <div class="ibox float-e-margins">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Situation des images</h5></span>
+                                </div>
+                                <div class="ibox-content sitimage-banque-content" style="padding: 0px 20px 20px 20px; min-height: 507px !important;display: none;">
+                                    <div id="first_affich" style="display: block">
+                                        <table class="table" data-page-size="8">
+                                            <thead>
+                                            <tr class="th-col">
+                                                <th class="text-center">Catégories et détails</th>
+                                                <th class="text-center sitimage_depuis">Arrivée depuis</th>
+                                                <th class="text-center">En stock Aujourd'hui</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            <tr>
+                                                <td style="text-align:left;background-color: #fbfaf9;"><strong>Banques</strong></td>
+                                                <td class="color-col text-center" style="font-weight: bold;" id="banque-sitimage">0</td>
+                                                <td class="color-col text-center" style="font-weight: bold" id="banque-stock-sitimage">0</td>
+                                            </tr>
+                                            <tbody id="col_data_sitimage"></tbody>
+                                            <tr id ="col_inconnu_sitimage">
+                                                <td><strong>En cours</strong></td>
+                                                <td class="text-center">0</td>
+                                                <td class="text-center">0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Pièces Bancaires manquantes</h5></span>
+                                </div>
+                                <div class="ibox-content " id="result_rb_bancaire" style="min-height: 507px !important;display: none;">
+                                    <div style="display: block">
+                                        <table class="table" data-page-size="8">
+                                            <thead>
+                                            <tr class="th-col">
+                                                <th colspan="2">Clients : <span class="label label-warning text-right" id="releves_manquants-cli"> 0 </span></th>
+                                                <th colspan="2">Dossiers : <span class="label label-warning text-right" id="releves_manquants-do"> 0 </span></th>
+                                                <th colspan="2">Comptes : <span class="label label-warning text-right" id="releves_manquants-cpt"> 0 </span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="">
+                                                <th></th>
+                                                <th class="cent">A jour &nbsp;&nbsp;&nbsp;</th>
+                                                <th class="cent">Manque<br>dernier mois</th>
+                                                <th class="cent">Manque 2<br>derniers mois</th>
+                                                <th class="cent">Incomplet</th>
+                                                <th class="cent">Aucun</th>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>Relevés</strong></td>
+                                                <td class="text-center" id="releves_manquants-un"> 0 </td>
+                                                <td class="text-center" id="releves_manquants-deux"> 0 </td>
+                                                <td class="text-center" id="releves_manquants-trois"> 0 </td>
+                                                <td class="text-center" id="releves_manquants-inc"> 0 </td>
+                                                <td class="text-center" id="releves_manquants-abs"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>Remises</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>Relevés LCR</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>CB Relevés</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>Frais Bancaires</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>Vrt & Chq émis</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            <tr >
+                                                <td class="pad-m"><strong>En cours</strong></td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                                <td class="text-center"> 0 </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4"  {# style="width: 28.333333% !important;" #}>
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Travaux à faire</h5></span>
+                                </div>
+                                <div class="ibox-content " id="result_piece_manquant" style="min-height: 507px !important;display: none;">
+                                    <div>
+                                        <table class="table" data-page-size="8">
+                                            <thead>
+                                            <tr class="th-col">
+                                                <th>Clients: <span class="label label-warning text-right" id="piece-manquant-cli">0</span></th>
+                                                <th colspan="2">Dossiers: <span class="label label-warning text-right" id="piece-manquant-do">0</span></th>
+                                                <th>Comptes: <span class="label label-warning text-right" id="piece-manquant-cpt">0</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th class=""> </th>
+                                                <th class="">Lignes&nbsp;&nbsp;&nbsp;</th>
+                                                <th class="cent">Pièces manquantes</th>
+                                                <th class="cent">Chèques inconnus</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>Total</strong></td>
+                                                <td class="text-center" id="piece-total">0</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>Lettrées</strong></td>
+                                                <td class="text-center" id="piece-lettre"> 0 </td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>Imputées (clefs)</strong></td>
+                                                <td class="text-center" id="piece-clef"> 0 </td>
+                                                <td class="text-center" id="piece-pc-manquant"> 0 </td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>A lettrer</strong></td>
+                                                <td class="text-center" id="piece-alettrer"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>Reste à rapproc</strong></td>
+                                                <td class="text-center" id="piece-arapprocher"> 0 </td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center" id="piece-chq-inconnu"> 0 </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pad-m"><strong>% rapproché</strong></td>
+                                                <td class="text-center" id="piece-rapprochee"> 0 </td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4" style="padding-bottom: 50px;">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    <span><h5 style="display: block !important;text-align: center !important;margin: 0 0 -19px !important; float: none; !important;">Travaux à faire</h5></span>
+                                </div>
+                                <div class="ibox-content result-taf" style="display: none;">
+                                    <div>
+                                        <table class="table" data-page-size="8" id="js_taf">
+                                            <thead>
+                                                <tr>
+                                                    <th class=""> </th>
+                                                    <th class="cent">A saisir</th>
+                                                    <th class="cent">A controler</th>
+                                                    <th class="cent">Trou</th>
+                                                    <th class="cent">Doublon</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# modal filtre fourchette #}
+    <div class="modal" id="js-filtre-fourchette" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Fourchette</h4>
+                </div>
+                <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                    <div  class="col-md-10">
+                        <form class="form-horizontal">
+                            <div class="input-group row date col-md-12">
+                                <div class="col-sm-20">
+                                    <input type="text" class="input form-control" name="debut" id="js_debut_date">
+                                </div>
+                                <span class="input-group-addon">Au</span>
+                                <input type="text" class="input form-control" name="fin" id="js_fin_date">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-fourchette-filtre">
+                        Valider
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# modal form filtre fourchette #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/banque/js/taf.js') }}"></script>
+
+    <script src="{{ asset('bundles/banque/js/banque_imputee.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banque.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banque_tab_image.js') }}"></script>
+    <script type="text/javascript">
+        var assetsBaseDir = "{{ asset('img/') }}";
+    </script>
+{% endblock %}

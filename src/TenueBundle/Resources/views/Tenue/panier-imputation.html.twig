@@ -1,0 +1,175 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Mon panier
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+    '@TenueBundle/Resources/public/js/tenue-imputation-panier.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5 class="text-danger">Mon panier imputation au <span class="current-date">{{ "now"|format_date('dd MMMM') }}</span></h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content gray-bg p-b-none">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Stock Imputation à
+                                <span class="label label-info pull-right current-hour">{{ current_date|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-IMP" class="box-value">{{ nbimage_IMP|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Stock Contrôle à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title orange lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="panier-CTRL" class="box-value">{{ nbimage_CTRL|number_format(0, ',', '&nbsp;')|raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Traité(s) Imputation à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="fini-IMP" class="box-value">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5 class="text-info">Traité(s) Contrôle à
+                                <span class="label label-info pull-right current-hour">{{ "now"|format_date('HH:mm') }}</span>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box-title green lot-image">Images</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="fini-CTRL" class="box-value">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="bg-danger" style="padding: 5px">Traitement</h4>
+                {#{{ dump(panier_S1S2) }}#}
+                <table class="table table-bordered table-panier" id="table-panier-imputation">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Dossier</th>
+                        <th class="text-center">Exercice</th>
+                        <th class="text-center">Date scan</th>
+                        <th class="text-center">Lot</th>
+                        <th>Catégorie</th>
+                        <th class="text-center">Nb Img</th>
+                        <th class="text-center">Traitement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for panier in panier_IMP %}
+                        <tr data-client="{{ panier.client }}" data-dossier="{{ panier.dossier }}" data-exercice="{{ panier.exercice }}"
+                            data-date-scan="{{ panier.datescan|date('Y-m-d') }}" data-lot="{{ panier.lot}}"
+                            data-nb-image="{{ panier.nbimage }}" data-lot-id="{{ panier.lot_id }}"
+                            data-user-id="{{ panier.operateur_id }}" data-traitement-id="{{ panier.etape_id }}"
+                            data-categorie-id="{{ panier.categorie_id }}"
+                            data-app="{{ panier.etape_code }}">
+                            <td>{{ panier.client }}</td>
+                            <td>{{ panier.dossier }}</td>
+                            <td>{{ panier.exercice }}</td>
+                            <td>{{ panier.datescan|date('d-m-Y') }}</td>
+                            <td>{{ panier.lot }}</td>
+                            <td>{{ panier.categorie }}</td>
+                            <td>{{ panier.nbimage }}</td>
+                            <td>{{ panier.etape_libelle }}
+                                {% if panier.etape_code == 'IMP' %}
+                                    <span class="pull-right"><i class="fa fa-desktop"></i></span>
+                                {% elseif panier.etape_code == 'CTRL_IMP' %}
+                                    <span class="pull-right"><i class="fa fa-pause"></i></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="bg-primary" style="padding: 5px">Déjà traité(s)</h4>
+                <table class="table table-bordered table-panier" id="table-fini-imputation">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Dossier</th>
+                        <th class="text-center">Exercice</th>
+                        <th class="text-center">Date scan</th>
+                        <th class="text-center">Lot</th>
+                        <th>Catégorie</th>
+                        <th class="text-center">Nb Img</th>
+                        <th class="text-center">Traitement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

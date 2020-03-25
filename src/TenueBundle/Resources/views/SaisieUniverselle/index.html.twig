@@ -1,0 +1,424 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/pdf/pdfobject.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/viewer/viewer.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('bundles/tenue/js/SaisieUniverselle/saisie-universelle.js') }}"></script>
+
+    <script src="{{ asset('bundles/banque/js/banque_imputee.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banque_tab_image.js') }}"></script>
+
+    <script type="text/javascript">
+        var assetsBaseDir = "{{ asset('img/') }}";
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/iCheck/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css')}}">
+
+    <link rel="stylesheet" href="{{ asset('bundles/tenue/css/saisie-universelle.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/banque.css') }}">
+{% endblock %}
+
+{% block title %}Saisie universelle{% endblock %}
+
+{% block content %}
+
+    <div class="row ibox-content">
+        {{ include('@Tenue/SaisieUniverselle/filtre.html.twig') }}
+    </div>
+
+    <div class="row ibox-content" id="tab-impute">
+        <table id="js_impute_liste"></table>
+    </div>
+
+    <div class="row ibox-content">
+        <div class="col-lg-12">
+            <div class="form-group">
+                {{ include('TenueBundle:SaisieUniverselle:filtreBottom.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="su-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-11">
+                        <div class="ibox collapsed">
+                            <div class="ibox-title">
+                                <div class="col-lg-10" style="z-index: 100 !important;">
+                                    {{ include('@Tenue/SaisieUniverselle/btnInfoPerdosRecategorisation.html.twig') }}
+                                </div>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="form-group">
+                                        {{ include('TenueBundle:SaisieUniverselle:filtreBottom.html.twig') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div id="mySidenav" class="col-lg-1" style="overflow: auto;">
+                        </div>
+                        <div class="col-lg-11 no-padding" id="saisie-content">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="regle-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="recategorisation-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="beneficiaire-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="form-beneficiaire">
+                        <input type="hidden" id="ben-id" name="benid">
+                        <input type="hidden" id="ben-image-id" name="benimageid">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label class="control-label" for="ben-nom">Nom</label>
+                                    <input type="text" class="form-control" name="bennom" id="ben-nom">
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="control-label" for="ben-prenom">Prénom</label>
+                                    <input type="text" class="form-control" name="benprenom" id="ben-prenom">
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="control-label"></label>
+                                    <div class="checkbox m-r-xs">
+                                        <input type="checkbox" name="benmandataire" id="ben-mandataire">
+                                        <label for="ben-mandataire">
+                                            Mandataire
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <label></label>
+                                    <span id="btn-ben-valider" class="btn btn-xs btn-primary btn-block" >Valider</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="ik-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="form-ik">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label class="control-label" for="ikvehicule">Véhicule</label>
+                                    <div class="input-group">
+                                        <select class="form-control" name="ikvehicule" id="ikvehicule"></select>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-edit" id="vehicule-edit"></i>
+                                        </span>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-plus" id="vehicule-add"></i>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="control-label" for="iktrajet">Trajet</label>
+                                    <input type="text" class="form-control" name="iktrajet" id="iktrajet">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="control-label">Periode du</label>
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <input type="text" class="input-sm form-control" name="ikperiodedu" id="ikperiodedu" value="">
+                                        <span class="input-group-addon">Au</span>
+                                        <input type="text" class="input-sm form-control" name="ikperiodeau" id="ikperiodeau" value="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <label></label>
+                                    <span id="btn-ik-valider" data-row-id="" class="btn btn-primary btn-block" >Valider</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="vehicule-modal" role="dialog" aria-hidden="true" style="z-index: 100000 !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="form-vehicule">
+                        <input type="hidden" id="vehicule-id" name="vehiculeid">
+                        <input type="hidden" id="vehicule-image-id" name="vehiculeimageid">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="marque">Marque</label>
+                                    <select class="form-control" id="marque" name="marque">
+                                        <option value="-1"></option>
+                                        {% for vehiculeMarque in vehiculeMarques %}
+                                            <option value="{{ vehiculeMarque.id }}">{{ vehiculeMarque.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="modele">Modèle</label>
+                                    <input class="form-control" id="modele" name="modele">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="immatricule">Immatricule</label>
+                                    <input class="form-control" id="immatricule" name="immatricule">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="typevehicule">Type Remboursement</label>
+                                    <select class="form-control" name="typevehicule" id="typevehicule">
+                                        <option value="-1"></option>
+                                        {% for typevehicule in typeVehicules %}
+                                            <option value="{{ typevehicule.id }}">{{ typevehicule.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="ndftypevehicule">Type Vehicule</label>
+                                    <select class="form-control" name="ndftypevehicule" id="ndftypevehicule">
+                                        <option value="-1"></option>
+                                        {% for typevehicule in ndfTypeVehicules %}
+                                            <option value="{{ typevehicule.id }}">{{ typevehicule.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="carburant">Carburant</label>
+                                    <select class="form-control" name="carburant" id="carburant">
+                                        <option value="-1"></option>
+                                        {% for carburant in carburants %}
+                                            <option value="{{ carburant.id }}">{{ carburant.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="puissance">Puissance</label>
+                                    <input class="form-control" id="puissance" name="puissance">
+                                </div>
+
+                                <div class="col-lg-2  col-lg-offset-4 pull-right">
+                                    <label></label>
+                                    <span id="btn-vehicule-valider" class="btn btn-primary btn-block" >Valider</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="ndf-caisse-td-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="ndf-caisse-tree"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="tiers-modal" role="dialog" aria-hidden="true" style="z-index: 100000 !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="form-tiers">
+                        <input type="hidden" id="tiers-ecriture-id">
+                        <input type="hidden" name="tiersimage" id="tiers-image">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="tiers-intitule">Intitule</label>
+                                    <input type="text" class="form-control" name="tiersintitule" id="tiers-intitule">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="tiers-compte">Compte</label>
+                                    <input class="form-control" id="tiers-compte" name="tierscompte">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="control-label" for="tiers-pcc">Compte Collectif</label>
+                                    <select class="form-control" id="tiers-pcc" name="tierspcc">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2  col-lg-offset-4 pull-right">
+                                    <label></label>
+                                    <span id="btn-tiers-valider" class="btn btn-primary btn-block" >Valider</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="import-modal" role="dialog" aria-hidden="true" style="z-index: 100000 !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-1 pull-right no-padding">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="categorie" class="control-label">Catégorie</label>
+                            <select class="form-control" id="categorie-import">
+                                <option value=""></option>
+                                {% for categorie in importCategories %}
+                                    <option value="{{ categorie.id }}">{{ categorie.libelleNew }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="categorie" class="control-label">&nbsp;</label>
+
+                            {#<form class="form-horizontal" enctype="multipart/form-data">#}
+                                {#<div class="form-group">#}
+                                    {#<div class="col-md-12">#}
+                                        <input type="file" class="form-control" name="upload" id="excel" multiple>
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</form>#}
+                        </div>
+                    </div>
+                    {#<div class="row">#}
+                        {##}
+                    {#</div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

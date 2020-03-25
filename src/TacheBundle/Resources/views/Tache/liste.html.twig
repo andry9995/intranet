@@ -1,0 +1,6 @@
+<select id="tache-generale" class="form-control">
+    <option value="">Séléctionner une tâche</option>
+    {% for tache in taches %}
+        <option value="{{ tache.id }}">{{ tache.nom }}</option>
+    {% endfor %}
+</select>

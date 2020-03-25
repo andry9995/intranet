@@ -1,0 +1,175 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='scssphp' filter='cssrewrite'
+        '@ParametreBundle/Resources/public/css/workflow.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+
+    {% endstylesheets %}
+    <link href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ParametreBundle/Resources/public/js/workflow.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} WORKFLOW
+{% endblock %}
+{% block content %}
+
+    <div class="ibox float-e-margins ibox-categorie">
+        <div class="ibox-title ">
+            <div class="row">
+                <div class="col-sm-2"><h3><i class="fa fa fa-sitemap"></i>&nbsp;Workflow</h3></div>
+
+                <div class="col-sm-10 text-right">
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="id-par-client" value="0" name="parClient" checked="">
+                        <label for="id-par-client"> par CLIENT </label>
+                    </div>
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="id-par-dossier" value="1" name="parClient">
+                        <label for="id-par-dossier"> par DOSSIER </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="client" class="col-md-2 control-label">Client</label>
+                            <div class="col-md-10">
+                                <select id="client" data-placeholder="Séléctionner un client"
+                                        class="form-control chosen-select-client">
+                                    <option value="-1"></option>
+                                    {% for client in clients %}
+                                        <option value="{{ client.id }}">{{ client.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="hidden">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="site" class="col-md-2 control-label">Site</label>
+                            <div class="col-md-10">
+                                <select id="site" data-placeholder="Séléctionner un site"
+                                        class="form-control chosen-select-site">
+                                    <option value=""></option>
+                                    {#Liste site#}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 hidden" id="id-content-dossier">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="client" class="col-md-2 control-label">Dossier</label>
+                            <div class="col-md-10">
+                                <select id="dossier" data-placeholder="Dossier"
+                                        class="form-control chosen-select-dossier">
+                                    <option value=""></option>
+                                    {#Liste dossier#}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="client" class="col-md-4 control-label">Exercice</label>
+                            <div class="col-md-6">
+                                <select id="exercice" data-placeholder="Séléctionner un client"  class="form-control">
+                                    <option value="2016" >2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-1">
+                    <button id="btn-show-workflow" class="btn btn-sm btn-primary btn-block">Go</button>
+                </div>
+                <div class="col-md-1" id="loader">
+                    {# eto le miodikodina #}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-12" style="padding:0">
+        <div class="col-sm-4" style="padding-left: 0">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Catégorie</h5>
+                </div>
+                <div class="ibox-content content-proposer" style="padding:0;overflow-y:auto">
+                    <ul class="list-group pointer " id="id-liste-categorie" >
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" style="padding: 0">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <input id="id-input-categ" class="" type="text" value="0">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h5>Etape traitement appliquée</h5>
+                        </div>
+                        <div class="col-sm-5">
+                            <textarea id="nestable-output" class="form-control"></textarea>
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="btn-save-workflow" class="btn btn-xs btn-primary btn-block" style="margin:0"><i class="fa fa-floppy-o"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ibox-content content-proposer" style="padding:0;overflow-y:auto">
+                    <div class="dd" id="nestable-choisi">
+                        <ol class="dd-list no-drag" id="id-liste-etape-choisi">
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>#}
+        {#<div class="col-sm-4" style="padding-right: 0">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-warning pull-right" id="id-nb-etape-dispo"></span>
+                    <h5>Etape traitement disponible</h5>
+                </div>
+                <div class="ibox-content content-proposer" style="padding:0;overflow-y:auto">
+                    <div class="dd" id="nestable-dispo">
+                        <ol class="dd-list" id="id-liste-etape-dispo">
+                            {{ render(controller('ParametreBundle:Workflow:etapeDisponible')) }}}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #}
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-sm-12 fix text-right">
+        {#<span class="btn btn-white btn-sm cl_taches_entity_cancel"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>#}
+        <span class="btn btn-primary btn-outline cl_taches_entity_edit" data-dossier="{{ dossier is not null ? dossier.id : 0 }}"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></span>
+    </div>
+    <div class="col-sm-12" id="id_taches_item_container_pop_up" data-taches="{{ taches.id }}" style="overflow: auto;">
+        {{ include('@Tache/Taches/taches-item.html.twig', { 'tachesItems': tachesItems,'dossier' : dossier }) }}
+    </div>
+</div>

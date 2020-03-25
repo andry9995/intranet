@@ -1,0 +1,6 @@
+<select>
+    <option value="0">Non rattaché</option>
+    {% for rattachement in rattachements %}
+        <option value="{{ rattachement.id }}">{{ rattachement.prenom ~ " " ~ rattachement.nom }}</option>
+    {% endfor %}
+</select>

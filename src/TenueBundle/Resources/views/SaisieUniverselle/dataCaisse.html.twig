@@ -1,0 +1,130 @@
+<div class="col-lg-12">
+    <div class="col-lg-12" id="form-resize">
+        <div id="data-image" style="overflow-y: scroll;">
+            <div class="ibox">
+                {#<div class="form-group">#}
+                    {#{{ include('@Tenue/SaisieUniverselle/btnInfoPerdosRecategorisation.html.twig') }}#}
+                {#</div>#}
+                <div class="row">
+                    {{ include('@Tenue/SaisieUniverselle/dataCategorie.html.twig') }}
+                </div>
+                <div class="row">
+                    {{ include('@Tenue/SaisieUniverselle/infoperdos.html.twig') }}
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-title" id="title-saisie">
+                   {{ include('@Tenue/SaisieUniverselle/titleSaisie.html.twig') }}
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="form-ndf-caisse">
+
+                                {% set mois = {
+                                    1:'Janvier',
+                                    2:'Fevrier',
+                                    3:'Mars',
+                                    4:'Avril',
+                                    5: 'Mai',
+                                    6:'Juin',
+                                    7:'Juillet',
+                                    8:'Août',
+                                    9: 'Septembre',
+                                    10: 'Octobre',
+                                    11: 'Novembre',
+                                    12: 'Décembre'
+                                }
+                                %}
+
+
+                                {% set moisDu = -1 %}
+                                {% set moisAu = -1 %}
+                                {% set annee = -1 %}
+                                {% set typeCaisse =  -1 %}
+
+                                {% if saisie is not null %}
+                                    {% set moisDu = (saisie.moisDu is null) ? -1 :saisie.moisDu %}
+                                    {% set moisAu = (saisie.moisAu is null) ? -1 :saisie.moisAu %}
+                                    {% set annee = (saisie.annee is null) ? -1 : saisie.annee %}
+                                    {% set typeCaisse = (saisie.typeCaisse is null) ? -1 : saisie.typeCaisse %}
+                                {% endif %}
+
+                                <input type="hidden" name="image" id="image" value="{{ image.id }}">
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label" for="typecaisse">Type caisse</label>
+                                        <select class="form-control" name="typecaisse" id="typecaisse">
+                                            <option value="-1"></option>
+                                            <option value="0" {{ (typeCaisse == 0) ? 'selected' : '' }}>Vente comptoir</option>
+                                            <option value="1" {{ (typeCaisse == 1) ? 'selected' : '' }}>Caisse</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label" for="annee">Année</label>
+                                        <select class="form-control" id="annee" name="annee">
+                                            <option value="-1"></option>
+                                            {% for i in 2017..2020 %}
+                                                <option value="{{ i }}" {{ (annee == i) ? 'selected' : '' }}>{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label" for="mois-du">Mois du</label>
+                                        <select class="form-control" id="mois-du" name="moisdu">
+                                            <option value="-1"></option>
+                                            {% for key , value in mois%}
+                                                <option value="{{ key }}" {{ (moisDu == key) ? 'selected' : '' }}>{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label" for="mois-au">Mois au</label>
+                                        <select class="form-control" id="mois-au" name="moisau">
+                                            <option value="-1"></option>
+                                            {% for key, value in mois %}
+                                                <option value="{{ key }}" {{ (moisAu == key) ? 'selected' : '' }}>{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <label class="control-label">.</label>
+                                    <button class="btn btn-sm btn-primary btn-block" id="btn-save-caisse">Valider</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row {{ (typeCaisse == 1) ? 'hidden' : '' }}">
+                        <div class="col-lg-12">
+                            <table id="vente-comptoir-details"></table>
+                        </div>
+                    </div>
+                    <div class="row {{ (typeCaisse == 0 or typeCaisse == -1) ? 'hidden' : '' }}">
+                        <div class="col-lg-12">
+                            <table id="caisse-details"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="col-lg-12" id="pdf-resize">
+        <div id="pdf" class="ndf-caisse">
+
+        </div>
+    </div>
+</div>
+
+

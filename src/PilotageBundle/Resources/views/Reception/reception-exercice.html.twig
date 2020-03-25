@@ -1,0 +1,35 @@
+<div id="stat-reception-exercice">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            PICDATA
+        </div>
+        <div class="panel-body" style="overflow-x:auto">
+            <table class="table table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-center">Exercice</th>
+                    <th class="text-center">Aujourd'hui</th>
+                    <th class="text-center">Semaine</th>
+                    <th class="text-center">mois</th>
+                    <th class="text-center">Total Exercice</th>
+                    <th class="text-center">%</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for image in images %}
+                    <tr>
+                        <td>{{ image.title }}</td>
+                        <td class="text-center">{{ image.exercice }}</td>
+                        <td class="text-center">{{ image.today != 0 ? image.today|number_format(0, ',', '&nbsp;')|raw : '-' }}</td>
+                        <td class="text-center">{{ image.week != 0 ? image.week|number_format(0, ',', '&nbsp;')|raw : '-' }}</td>
+                        <td class="text-center">{{ image.month != 0 ? image.month|number_format(0, ',', '&nbsp;')|raw : '-' }}</td>
+                        <td class="text-center">{{ image.total != 0 ? image.total|number_format(0, ',', '&nbsp;')|raw : '-' }}</td>
+                        <td class="text-center">{{ 0|number_format(0, ',', '&nbsp;')|raw }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

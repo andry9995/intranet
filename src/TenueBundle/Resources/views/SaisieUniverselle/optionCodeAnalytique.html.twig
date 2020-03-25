@@ -1,0 +1,6 @@
+<select>
+    <option value="-1"></option>
+    {% for codeAnalytique in codeAnalytiques %}
+        <option value="{{ codeAnalytique.id }}">{{ codeAnalytique.code }}</option>
+    {% endfor %}
+</select>

@@ -1,0 +1,47 @@
+{% set textIndication = "Pas d'indication sur le paiement" %}
+
+{% if personnel == true %}
+    {% set textIndication = "Payé Personnelement" %}
+{% else %}
+    {% if societe == true %}
+        {% set textIndication = "Utilisation CB Société" %}
+    {% endif %}
+{% endif %}
+
+<div class="well">
+    <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{ textIndication }}
+</div>
+
+<div class="form-horizontal">
+
+    {% if personnel == true %}
+    <div class="form-group">
+        <label class="control-label col-sm-4">Mention Manuscrite</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control"  disabled
+                   value="{{ (saisie == null) ? '' : (saisie.mentionManuscrite == null) ? '' : saisie.mentionManuscrite.libelle}}">
+        </div>
+    </div>
+    {% else %}
+        {% if societe == true %}
+            <div class="form-group">
+                <label class="control-label col-sm-4">Num Paiement</label>
+                <div class="col-sm-8">
+                   <input type="text" class="form-control" value="{{ (saisie == null) ? '' : (saisie.numPaiement) }}" disabled >
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="form-group">
+        <label class="control-label col-sm-4">Catégorie</label>
+        <div class="col-sm-8">
+            <select type="text" class="form-control" disabled>
+                <option value=""></option>
+                <option value="CODE_FOURNISSEUR" {{ (societe == true or (societe == false and personnel == false)) ? 'selected': '' }}>Achat</option>
+                <option value="CODE_NDF" {{ (personnel == true) ? 'selected' : '' }}>Note de frais</option>
+            </select>
+        </div>
+    </div>
+</div>
+

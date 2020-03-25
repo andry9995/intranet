@@ -1,0 +1,5 @@
+<select>
+    {% for action in actions %}
+        <option value="{{ action.id }}">{{ action.nom }}</option>
+    {% endfor %}
+</select>

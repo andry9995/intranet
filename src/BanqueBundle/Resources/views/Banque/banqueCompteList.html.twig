@@ -1,0 +1,10 @@
+{% if banquecomptes|length > 1 or saisie == 1 %}
+    <option value="-1"></option>
+{% endif %}
+{% for banque in banquecomptes %}
+    {% if iban ==  0 %}
+        <option value="{{ banque.id }}" data-banque="{{ banque.banque.id }}">{{ banque.numcompte }}</option>
+    {% else %}
+        <option value="{{ banque.id }}" data-banque="{{ banque.banque.id }}">{{ banque.iban }}</option>
+    {% endif %}
+{% endfor %}

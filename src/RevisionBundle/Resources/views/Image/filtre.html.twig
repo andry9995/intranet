@@ -1,0 +1,250 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="client" class="control-label col-lg-2">
+                            <span>Client</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="client" data-placeholder="Séléctionner un client" class="form-control chosen-select-client">
+                                {% if isPicdataUser == false or clients|length > 1 %}
+                                    <option value=""></option>
+                                    <option value="0">Tous</option>
+                                {% endif %}
+                                {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.nom }}</option>
+                                {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="hidden">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site" class="col-md-3 control-label">Site</label>
+                    <div class="col-md-10">
+                        <select id="site" data-placeholder="Séléctionner un site" class="form-control chosen-select-site">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier" class="control-label col-lg-2">
+                            <span>Dossier</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="dossier" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':0, 'label_col':3, 'select_col':4, 'in_form' : false } )) }}
+
+                        <div class="col-lg-5">
+                            <select class="form-control" name="filtre_fourchette" id="js_filtre_periode">
+                            <option value=""></option>
+                            <option value="1">Aujourd'hui</option>
+                            <option value="2">Semaine</option>
+                            <option value="3">Deux semaines</option>
+                            <option value="4">Mois</option>
+                            <option value="5" selected="">Exercice</option>
+                            <option value="6">Fourchette</option>
+                        </select>
+                        </div>
+                        <div class="modal" id="js-filtre-fourchette" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content animated fadeInRight">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                        </button>
+                                        <h4 class="modal-title">Fourchette</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                                        <div  class="col-md-10">
+                                            <form class="form-horizontal">
+                                                <div class="input-group row date col-md-12">
+                                                    <div class="col-sm-20">
+                                                        <input type="text" class="input form-control" name="debut" id="js_debut_date">
+                                                    </div>
+                                                    <span class="input-group-addon">Au</span>
+                                                    <input type="text" class="input form-control" name="fin" id="js_fin_date">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="btn-annuler">Annuler</button>
+                                        <button type="button" id="btn-valider" class="btn btn-sm btn-primary btn-outline" id="btn-fourchette-drt">
+                                            Valider
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="js_filtre_analyse" class="control-label col-lg-3">
+                            <span>Analyse</span>
+                        </label>
+                        <div class="col-lg-9">
+                           <select class="form-control" name="filtre_analyse" id="js_filtre_analyse">
+                            <option value=""></option>
+                            <option selected="selected" value="1">Par mois</option>
+                            <option value="2">En cumul</option>
+                        </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        {# <label class="col-md-3 control-label">
+                            <span>Date</span>
+                        </label> #}
+                        <div class="col-md-10">
+                            <select class="form-control" name="filtre_typedate" id="js_filtre_typedate">
+                                <option value=""></option>
+                                <option value="1" selected="">Date envoi</option>
+                                <option value="2">Date pièce</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="btn-group" style="width: 150px; margin-top:-6px; margin-bottom:10px;">
+                    <button id="btn_nb" class="btn btn-sm btn-default btn-outline btn-block" >Selection dossiers</button>
+                </div>
+            </div>
+            <div class="modal" id="js-filtre-nb" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content animated fadeInRight">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title">Selection dossiers</h4>
+                        </div>
+                        <div class="modal-body" style="padding-bottom: 40px; padding-left: 55px;">
+                            <div  class="col-md-12">
+                                <form class="form-horizontal">
+                                    <div class="input-group row date col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="operateur_nb">
+                                                    <option value="0">Opérateur</option>
+                                                    <option value="1">Egal</option>
+                                                    <option value="2">Supérieur</option>
+                                                    <option value="3">Inférieur</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="number" placeholder="Valeur" id="value_nb"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="filtre_nb">
+                                                    <option value="0"></option>
+                                                    <option value="1">Images</option>
+                                                    <option value="2">% N - 1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="btn-annuler-nb"><i class="fa fa-times-circle"></i> Annuler</button>
+                            <button type="button" id="btn-valider-nb" class="btn btn-sm btn-primary btn-outline">
+                                <i class="fa fa-arrow-circle-o-right"></i> Valider
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 150px;">
+                    {#<button id="btn-go-tableau" class="btn btn-primary" style="width: 150px;">#}
+                    <button id="btn_get_images" class="btn btn-primary" style="width: 70%;">
+                        <i class="fa fa-arrow-circle-o-right"></i> Go
+                    </button>
+
+                    {# <button id="btn_export_details" class="btn btn-default" style="width: 30%;">
+                        <i class="fa fa-download"></i>
+                    </button> #}
+
+                </div>
+
+            </div>
+        </div>
+        <div id="dossiers-filter" class="row hidden" style="margin-top: 16px;margin-bottom: 10px;" >
+            <div class="col-lg-10">
+                <div class="row">
+                    <label class="control-label col-lg-6">
+                        <span>Dossiers filtrés</span>
+                    </label>
+                    <div class="col-lg-4" style="margin-left: 14px;">
+                        <div class="row" style="margin-bottom: 5px;">
+                            <span class="label label-warning" id="count-dossiers-filter">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-lg-6">
+                        <span>Pourcentage</span>
+                    </label>
+                    <div class="col-lg-4" style="margin-left: 14px;">
+                        <div class="row">
+                            <span class="label label-warning" id="percent-dossiers-filter">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

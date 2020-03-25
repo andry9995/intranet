@@ -1,0 +1,88 @@
+#GESTION DES PROCEDURES
+#Index procedure
+procedure_homepage:
+    path:     /
+    defaults: { _controller: 'ProcedureBundle:Procedure:index' }
+
+#liste des procedure pour jqGrid
+procedure_liste:
+    path:     /liste
+    defaults: { _controller: 'ProcedureBundle:Procedure:liste' }
+    options:
+      expose: true
+
+#liste procedures pour HTML select ou JSON
+procedure_liste_simple:
+    path:     /liste-simple/{json}
+    defaults: { _controller: 'ProcedureBundle:Procedure:listeSimple', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+procedure_get_one:
+    path:     /one/{id}
+    defaults: { _controller: 'ProcedureBundle:Procedure:one' }
+    methods: [GET]
+    options:
+      expose: true
+    requirements:
+      id: \d+
+
+#modifier une procedure existante
+procedure_edit:
+    path:     /edit
+    defaults: { _controller: 'ProcedureBundle:Procedure:edit' }
+    options:
+      expose: true
+
+#ajouter une nouvelle procedure
+procedure_add:
+    path:     /add
+    defaults: { _controller: 'ProcedureBundle:Procedure:add' }
+    options:
+      expose: true
+    methods: [POST]
+
+#supprimer une procedure
+procedure_delete:
+    path:     /delete
+    defaults: { _controller: 'ProcedureBundle:Procedure:delete' }
+    options:
+      expose: true
+    methods: [POST]
+
+
+#GESTION DES UNITES DE COMPTAGE
+#Liste des unités de comptage JSON (pour jqGrid) ou HTML select
+unite_comptage_liste:
+    path:     /unite-comptage/{json}
+    defaults: { _controller: 'ProcedureBundle:Unite:liste', json: 1 }
+    options:
+      expose: true
+    requirements:
+      json: 0|1
+
+#Ajouter nouvelle unité
+unite_comptage_add:
+    path:     /unite-comptage/add
+    defaults: { _controller: 'ProcedureBundle:Unite:add' }
+    options:
+      expose: true
+    methods: [POST]
+
+#Modifier une unité existante
+unite_comptage_edit:
+    path:     /unite-comptage/edit
+    defaults: { _controller: 'ProcedureBundle:Unite:edit' }
+    options:
+      expose: true
+    methods: [POST]
+
+#Supprimer une unité
+unite_comptage_delete:
+    path:     /unite-comptage/delete
+    defaults: { _controller: 'ProcedureBundle:Unite:delete' }
+    options:
+      expose: true
+    methods: [DELETE]

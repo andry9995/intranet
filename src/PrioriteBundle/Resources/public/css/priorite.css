@@ -1,0 +1,34 @@
+.panel-body {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.panel-body table {
+    margin-bottom: 0;
+}
+#table-jour-travail tr th,
+#table-jour-travail tr td,
+#table-couleur tr th,
+#table-couleur tr td
+{
+    text-align: center;
+}
+
+#table-jour-travail tr input[type="text"],
+#table-couleur tr input[type="text"]
+{
+    border: none;
+    max-width: 80px;
+    height: 30px;
+    text-align: center;
+}
+
+#table-jour-travail tr:hover input[type="text"],
+#table-jour-travail tr input[type="text"]:active,
+#table-jour-travail tr input[type="text"]:focus,
+#table-couleur tr:hover input[type="text"],
+#table-couleur tr input[type="text"]:active,
+#table-couleur tr input[type="text"]:focus
+{
+    border: 1px solid #1ab394;
+}

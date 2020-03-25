@@ -1,0 +1,39 @@
+<div class="col-lg-12">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2"><label class="control-label">Client</label>
+                <label for="filtre-client"></label>
+                <select data-placeholder="Séléctionner un client" class="form-control" id ="filtre-client">
+                    <option value="-1"></option>
+                    {% for client in clients %}
+                        <option value="{{ client.id }}">{{ client.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3"><label for="filtre-dossier" class="control-label">Dossier</label>
+                <select data-placeholder="Séléctionner un dossier" class="form-control" id="filtre-dossier">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-2"><label for="filtre-exercice" class="control-label">Exercice</label>
+                <select class="form-control"  id="filtre-exercice">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-2"><label  for="filtre-date-scan" class="control-label">Date-scan</label>
+                <select class="form-control" id="filtre-date-scan">
+                </select>
+            </div>
+            <div class="col-md-2"><label  for="filtre-lot" class="control-label">Lot</label>
+                <select class="form-control" id= "filtre-lot">
+                </select>
+            </div>
+            <div class="col-md-1">
+                <label class="control-label"></label>
+                <button class="btn btn-sm btn-primary btn-block btn-go" id="btn-go"><i class="fa fa-check"></i> Go</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

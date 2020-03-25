@@ -1,0 +1,3 @@
+{% for tier in tiers %}
+    <option value="{{ tier.id }}" {{ (tiersId is not defined) ? '' : (tiersId == tier.id) ? 'selected' : '' }} data-table="tiers">{{ tier.compteStr }} - {{ tier.intitule }} </option>
+{% endfor %}

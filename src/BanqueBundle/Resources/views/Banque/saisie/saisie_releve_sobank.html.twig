@@ -1,0 +1,87 @@
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div id="js_pdf_sb">
+            {% if url is defined %}
+                <embed src="{{ url }}" style="width: 100%; height: 500px;" type="application/pdf">
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <form class="form-horizontal" id="form-sb">
+
+            <input type="hidden" name="img_rel_id" value="{{ (scRel is null) ? '' : scRel.image.id }}">
+            <input type="hidden" name="img_sb_id" value="{{ (scSb is null) ? '' : scSb.image.id }}">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Date </label>
+                        <div class="col-md-4">
+                            <input type="text" name="date_debut_sb" class="input form-control"
+                                   value="{{  (scRel is null) ? '' : scRel.periodeD1|date('d/m/Y') }}">
+                        </div>
+
+                        <label class="col-md-2 control-label">Au</label>
+                        <div class="col-md-4">
+                            <input type="text" name="date_fin_sb" class="input form-control"
+                                   value="{{ (scSb is null) ? '' : scSb.periodeF1|date('d/m/Y') }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+
+                        <label class="col-md-2 control-label">Débit </label>
+                        <div class="col-md-4">
+                            <input type="text" name="debit_sb_init" class="input form-control" value="0.00">
+                        </div>
+
+                        <label class="col-md-2 control-label">Débit </label>
+                        <div class="col-md-4">
+                            <input type="text" name="debit_sb_fin" class="input form-control"  value="0.00">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Crédit </label>
+                        <div class="col-md-4">
+                            <input type="text" name="credit_sb_init" class="input form-control"
+                                   value="{{ (scRel is null) ? '0.00': scRel.soldeDebut }}">
+                        </div>
+
+                        <label class="col-md-2 control-label">Crédit </label>
+                        <div class="col-md-4">
+                            <input type="text" name="credit_sb_fin" class="input form-control"
+                                   value="{{ (scSb is null) ? '0.00' : scRel.soldeFin }}">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 pull-right"><span class="btn btn-primary btn-block btn-xs" id="js_save_sobank">Enregistrer</span></div>
+            </div>
+        </form>
+
+        <div class="row" style="padding-top: 10px;">
+            <div class="col-lg-12">
+                <table class="table" id="sobank-list">
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

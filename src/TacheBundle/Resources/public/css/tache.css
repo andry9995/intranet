@@ -1,0 +1,55 @@
+th.ui-th-column div {
+    white-space: normal !important;
+    height: auto !important;
+    padding: 2px;
+}
+
+@media screen and (min-width: 1200px) {
+    #tache-legale-action-modal .modal-dialog {
+        min-width: 1200px;
+    }
+}
+
+/* TACHES */
+.tache-jalon {
+    color: #0a6aa1;
+}
+
+li.tache-item {
+    margin: 0 0 3px 0;
+    padding: 5px;
+}
+
+.tache-item-order {
+    width: 25px;
+}
+
+.delete-prec-suiv-item {
+    margin-top: 3px;
+}
+
+.multi-date-item {
+    display: inline-block;
+    background-color: #4a6a89;
+    color: #fff;
+    white-space: nowrap;
+    margin: 3px;
+    padding: 1px 3px;
+}
+
+.multi-date-item .close {
+    color: #fff;
+    margin-top: -2px;
+    margin-right: -4px;
+    font-size: 14px;
+}
+
+.pull-resp-right {
+    float: right;
+}
+
+@media screen and (max-width: 992px) {
+    .pull-resp-right {
+        float: none;
+    }
+}

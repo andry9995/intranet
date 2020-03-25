@@ -1,0 +1,36 @@
+<p>
+    <button id="btn-select-all-N1"
+            class="btn panel-liste-selected btn-block liste-client-item active">
+        Afficher
+        tout
+    </button>
+</p>
+{% for key, value in liste_dossier_N1 %}
+    <div class="panel panel-default">
+        <div data-client="{{ key }}" class="panel-heading liste-client-item-N1"
+             role="tab"
+             id="heading-N1-{{ loop.index }}">
+            <h4 class="panel-title" style="margin:0;">
+                <a role="button" data-toggle="collapse"
+                   data-parent="#liste-client-N1"
+                   href="#collapse-N1-{{ loop.index }}" aria-expanded="false"
+                   aria-controls="collapse-N1-{{ loop.index }}">
+                    <div class="liste-dossier-nb-image"></div>
+                    {{ key|truncate(20) }}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse-N1-{{ loop.index }}" class="panel-collapse collapse"
+             role="tabpanel" aria-labelledby="heading-N1-{{ loop.index }}">
+            <div class="panel-body" style="padding:5px;overflow-x:auto;">
+                {% for dossier in value %}
+                    <div data-dossier="{{- dossier -}}" data-client="{{ key }}"
+                         class="liste-dossier-item-N1 pointer">
+                        <div class="liste-dossier-nb-image"></div>
+                        <div class="liste-dossier-nom">{{- dossier|truncate(20) -}}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,26 @@
+priorite_homepage:
+    path:     /
+    defaults: { _controller: PrioriteBundle:Priorite:index }
+
+priorite_param_jour_edit:
+    path: /jour
+    defaults: { _controller: PrioriteBundle:Priorite:jourEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+priorite_param_color_edit:
+    path: /color
+    defaults: { _controller: PrioriteBundle:Priorite:colorEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+priorite_load_param:
+    path: /load/{param}
+    defaults: { _controller: PrioriteBundle:Priorite:loadParam, param: 0 }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        param: \d*

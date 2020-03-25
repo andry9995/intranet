@@ -1,0 +1,31 @@
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block title %} {{ parent() }} | T-{{ (entity == 0) ? 'CLIENT' : 'DOSSIER' }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/datapicker/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/tache/css/tache-admin.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/tacheAdmin/tache-legale.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/tacheAdmin/tache-libre.js') }}"></script>
+    <script src="{{ asset('bundles/tache/js/tacheAdmin/index.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {{ include('TacheBundle:TacheAdmin:filtre.html.twig') }}
+
+    <div class="ibox">
+        <div class="ibox-content" id="id_table_tache_container">
+            <table id="id_table_tache"></table>
+            <div id="id_pager_tache"></div>
+        </div>
+    </div>
+
+    <input id="id_param_entity" value="{{ entity }}" type="hidden">
+{% endblock %}

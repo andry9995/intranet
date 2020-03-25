@@ -1,0 +1,10 @@
+.table-danger, .table-danger>td, .table-danger>th
+{
+    background-color: #f5c6cb;
+}
+
+.checkbox-disabled
+{
+    cursor: not-allowed!important;
+    pointer-events : none!important;
+}

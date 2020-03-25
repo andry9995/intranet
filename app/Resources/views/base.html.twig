@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=icon href="{{ asset('favicon.ico') }}" sizes="32x32 48x48" type="image/vnd.microsoft.icon">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.css') }}">
+        {#<link rel="stylesheet" href="{{ asset('css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css') }}">#}
+        <link rel="stylesheet" href="{{ asset('css/plugins/jqGrid/ui.jqgrid.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/jQueryUI1/jquery-ui-1.10.4.custom.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/iCheck/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/dataTables/dataTables.bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/dataTables/dataTables.responsive.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/dataTables/dataTables.tableTools.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/footable/footable.core.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/select2/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/chosen/chosen.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/contextMenu/jquery.contextMenu.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/datapicker/datepicker3.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/switchery/switchery.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/plugins/loading/jquery.loadingModal.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/commun.css') }}?v=1.0.2">
+        <link rel="stylesheet" href="{{ asset('css/plugins/morris/morris-0.4.3.min.css') }}">
+
+        <!-- highslide -->
+        <link rel="stylesheet" href="{{ asset('css/plugins/highslide/highslide.css') }}">
+
+        
+
+        {#{% stylesheets filter='scssphp' filter='cssrewrite'
+            'css/bootstrap.min.css'
+            'font-awesome/css/font-awesome.css'
+            'css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css'
+            'css/plugins/jqGrid/ui.jqgrid.css'
+            'css/plugins/iCheck/custom.css'
+            'css/animate.css'
+            'css/plugins/dataTables/dataTables.bootstrap.css'
+            'css/plugins/dataTables/dataTables.responsive.css'
+            'css/plugins/dataTables/dataTables.tableTools.min.css'
+            'css/plugins/footable/footable.core.css'
+            'css/plugins/qtip/jquery.qtip.min.css'
+            'css/plugins/toastr/toastr.min.css'
+            'css/plugins/select2/select2.min.css'
+            'css/plugins/chosen/chosen.min.css'
+            'css/plugins/contextMenu/jquery.contextMenu.min.css'
+            'css/plugins/datapicker/datepicker3.css'
+            'css/plugins/sweetalert/sweetalert.css'
+            'css/plugins/switchery/switchery.css'
+            'css/style.css'
+            'css/commun.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}#}
+    {% endblock %}
+    <title>{% block title %}INTRANET{% endblock %}</title>
+</head>
+<body class="fixed-nav">
+<div id="wrapper">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% block menu_left %}
+        {% endblock %}
+    {% endif %}
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="hidden-sm hidden-xs navbar-minimalize minimalize-styl-2 btn btn-primary menu-left-minimize" href="#"><i
+                                class="fa fa-bars"></i>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-navbar">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <ul class="nav navbar-top-links navbar-left">
+                            <li>
+                                <a href="{{ path('home_page') }}">
+                                    <i class="fa fa-arrow-circle-left"></i> Menu général
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-left m-l-lg">
+                            {% block menu_top_center %}{% endblock %}
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            {{ include('AppBundle:Commun:userinfo.html.twig') }}
+                        </ul>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+        <div class="">
+            <div class="row animated fadeInRight">
+                <div class="col-lg-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                <strong>INTRANET</strong>
+            </div>
+            <div>
+                <strong>Copyright</strong> Scriptura &copy; 2016 - {{ "now"|date('Y') }}
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-ui" data-id="0"></div>
+
+    <div class="modal inmodal" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" id="modal-size">
+            <div class="modal-content animated" id="modal-animated">
+                <div class="modal-header deplacer">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="modal-header">Modal title</h5>
+                </div>
+                <div class="modal-body" id="modal-body" style="height: 100%!important;">...</div>
+                <div class="modal-footer hidden" id="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-migrate-3.0.0.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fetch/fetch.js') }}"></script>
+    <script src="{{ asset('js/plugins/axios/es6-promise.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/axios/es6-promise.auto.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/axios/axios.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/hinclude/hinclude.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jqGrid/i18n/grid.locale-fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/jqGrid/jquery.jqGrid.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.tableTools.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/footable/footable.all.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jqueryUIPosition/jquery.ui.position.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/chosen/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('js/plugins/cookies/cookies.js') }}"></script>
+    <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/contextMenu/jquery.contextMenu.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/numeraljs/numeral.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/numeraljs/numeral-language-fr.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/momentjs/moment.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
+    <script src="{{ asset('js/plugins/loading/jquery.loadingModal.min.js') }}"></script>
+    <script src="{{ asset('js/fonctions.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/sous-menu.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/picdata-menu.js') }}"></script>
+    <script src="{{ asset('js/commun.js' ) }}"></script>
+    <script src="{{ asset('js/ready.js') }}"></script>
+    <script src="{{ asset('js/plugins/morris/raphael-2.1.0.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/morris/morris.js') }}"></script>
+
+    <!-- highcharts -->
+    <script src="{{ asset('js/plugins/highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/data.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/series-label.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/exporting.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/export-data.js') }}"></script>
+
+    <!-- highcharts -->
+    <script src="{{ asset('js/plugins/highslide/highslide-full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/highslide/highslide.config.js') }}"></script>
+
+    {# {% javascripts filter='?jsqueeze'
+    'js/jquery-3.2.1.min.js'
+    'js/bootstrap.min.js'
+    'js/plugins/fetch/fetch.js'
+    'js/plugins/axios/es6-promise.min.js'
+    'js/plugins/axios/es6-promise.auto.min.js'
+    'js/plugins/axios/axios.min.js'
+    'js/plugins/hinclude/hinclude.js'
+    'js/plugins/metisMenu/jquery.metisMenu.js'
+    'js/plugins/slimscroll/jquery.slimscroll.min.js'
+    'js/plugins/jqGrid/i18n/grid.locale-fr.js'
+    'js/plugins/jqGrid/jquery.jqGrid.min.js'
+    'js/plugins/dataTables/jquery.dataTables.js'
+    'js/plugins/dataTables/dataTables.bootstrap.js'
+    'js/plugins/dataTables/dataTables.responsive.js'
+    'js/plugins/dataTables/dataTables.tableTools.min.js'
+    'js/plugins/footable/footable.all.min.js'
+    'js/plugins/qtip/jquery.qtip.min.js'
+    'js/inspinia.js'
+    'js/plugins/pace/pace.min.js'
+    'js/plugins/jquery-ui/jquery-ui.min.js'
+    'js/plugins/jqueryUIPosition/jquery.ui.position.min.js'
+    'js/plugins/toastr/toastr.min.js'
+    'js/plugins/select2/select2.full.min.js'
+    'js/plugins/chosen/chosen.jquery.min.js'
+    'js/plugins/nestable/jquery.nestable.js'
+    'js/plugins/cookies/cookies.js'
+    'js/plugins/iCheck/icheck.min.js'
+    'js/plugins/contextMenu/jquery.contextMenu.min.js'
+    'js/plugins/numeraljs/numeral.min.js'
+    'js/plugins/numeraljs/numeral-language-fr.min.js'
+    'js/plugins/momentjs/moment.min.js'
+    'js/plugins/datapicker/bootstrap-datepicker.js'
+    'js/plugins/datapicker/locales/bootstrap-datepicker.fr.min.js'
+    'js/plugins/sweetalert/sweetalert.min.js'
+    'js/plugins/switchery/switchery.js'
+    'js/fonctions.js'
+    'js/commun.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %} #}
+{% endblock %}
+</body>
+</html>

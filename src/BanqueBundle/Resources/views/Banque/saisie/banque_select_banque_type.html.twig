@@ -1,0 +1,6 @@
+<select>
+    <option></option>
+    {% for banqueType in banqueTypes %}
+        <option value="{{ banqueType.id }}">{{ banqueType.libelle }}</option>
+    {% endfor %}
+</select>

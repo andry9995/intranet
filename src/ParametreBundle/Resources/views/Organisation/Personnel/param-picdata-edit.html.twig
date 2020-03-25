@@ -1,0 +1,27 @@
+<div class="ibox">
+    <div class="ibox-content">
+        <div>
+            <div class="feed-activity-list">
+                <div class="feed-element text-center">
+                    <div class="media-body ">
+                        <strong>{{ operateur.prenom ~ ' ' ~ operateur.nom }}</strong> ({{ operateur.login }})<br>
+                    </div>
+                </div>
+                <div style="margin: 5px">
+                    <div class="form-group">
+                        <label class="font-noraml" for="id_utilisateur_select">Aff&eacute;cter&nbsp;&agrave;</label>
+                        <div class="input-group">
+                            <select id="id_utilisateur_select" data-placeholder="Choisir l'utilisateur" class="chosen-select" style="width:400px;">
+                                <option value="0">&nbsp;</option>
+                                {% for utilisateur in utilisateurs %}
+                                    <option value="{{ utilisateur.id }}" {{ utilisateurId == utilisateur.id ? 'selected' : '' }}>{{ utilisateur.nom ~ ' ' ~ utilisateur.prenom ~ '(' ~ utilisateur.login ~ ')'  }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="btn btn-primary btn-block m-t" id="id_save" data-operateur="{{ operateur.id }}"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+        </div>
+    </div>
+</div>

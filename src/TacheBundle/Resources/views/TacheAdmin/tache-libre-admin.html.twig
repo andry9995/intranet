@@ -1,0 +1,131 @@
+{% if tacheEntityClient is not null %}
+    {{ include('@Tache/TacheAdmin/extends-client.html.twig') }}
+{% endif %}
+
+<div class="row cl_container_tache_param" id="id_tache_libre_edited" data-id="{{ tache.id }}" data-id_old="{{ (tacheEntity is not null) ? tacheEntity.id : 0 }}" data-client="{{ (client is not null) ? client.id : 0 }}" data-dossier="{{ (dossier is not null) ? dossier.id : 0 }}">
+    <div class="col-lg-5">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_periode">P&eacute;riode</label>
+                <div class="col-lg-8">
+                    {% set periode = (tacheEntityLibreAction) ? tacheEntityLibreAction.periode : -1 %}
+                    {#0=ponctuel,1=annuel,2=semestriel,3=quadrimestriel,4=trimestriel,6=bimensuel,12=mensuel#}
+                    <select id="id_tache_libre_periode" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0" {{ (periode == 0) ? 'selected' : '' }}>Ponctuel</option>
+                        <option value="1" {{ (periode == 1) ? 'selected' : '' }}>Annuel</option>
+                        <option value="2" {{ (periode == 2) ? 'selected' : '' }}>Semestriel</option>
+                        <option value="3" {{ (periode == 3) ? 'selected' : '' }}>Quadrimestriel</option>
+                        <option value="4" {{ (periode == 4) ? 'selected' : '' }}>Trimstriel</option>
+                        <option value="6" {{ (periode == 6) ? 'selected' : '' }}>Bimensuel</option>
+                        <option value="12 {{ (periode == 12) ? 'selected' : '' }}">Mensuel</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-lg-12 text-center">
+                    {% set responsable = (tacheEntityLibreAction is not null) ? tacheEntityLibreAction.responsable : -1 %}
+                    <div class="btn-group btn-group-sm cl_tache_libre_container">
+                        <span class="btn {{ (responsable == 0) ? 'btn-primary' : 'btn-white' }} cl_tache_lb_resp" data-value="0">Scriptura</span>
+                        <span class="btn {{ (responsable == 1) ? 'btn-primary' : 'btn-white' }} cl_tache_lb_resp" data-value="1">EC</span>
+                        <span class="btn {{ (responsable == 2) ? 'btn-primary' : 'btn-white' }} cl_tache_lb_resp" data-value="2">Client</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 text-center">
+        <div class="checkbox checkbox-default">
+            <input id="id_tache_libre_jalon" type="checkbox" {{ (tacheEntityLibreAction is not null and tacheEntityLibreAction.jalon == 1) ? 'checked' : '' }}>
+            <label for="id_tache_libre_jalon">Jalon</label>
+        </div>
+    </div>
+</div>
+<div class="row cl_container_tache_param">
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_demarrage">D&eacute;marrage</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_demarrage" value="{{ (tacheEntityLibreAction is not null and tacheEntityLibreAction.demarrage is not null) ? tacheEntityLibreAction.demarrage|date('d/m/Y') : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_a_partir_de">A&nbsp;partir</label>
+                <div class="col-lg-8">
+                    {% set aPartirDe = (tacheEntityLibreAction is not null) ? tacheEntityLibreAction.calculerAPartir : -1 %}
+                    {#0:debut exercice; 1:demarrage;2:1er janvier;3:date_calcul#}
+                    <select id="id_tache_libre_a_partir_de" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0" {{ (aPartirDe == 0) ? 'selected' : '' }}>D&eacute;but&nbsp;d'exercice</option>
+                        <option value="1" {{ (aPartirDe == 1) ? 'selected' : '' }}>Date&nbsp;d&eacute;marrage</option>
+                        <option value="2" {{ (aPartirDe == 2) ? 'selected' : '' }}>01 Janvier</option>
+                        <option value="3" {{ (aPartirDe == 3) ? 'selected' : '' }}>Date</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_date_calcul">Date</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_date_calcul" value="{{ (tacheEntityLibreAction is not null and tacheEntityLibreAction.dateCalcul is not null) ? tacheEntityLibreAction.dateCalcul|date('d/m/Y') : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_a_jour">Jour</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_tache_libre_a_jour" value="{{ (tacheEntityLibreAction is not null and tacheEntityLibreAction.jour != 0) ? tacheEntityLibreAction.jour : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    {#0:dimanche,1:lindi..,6:samedi#}
+    {#
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_tache_libre_jour_semaine">Jour&nbsp;Semaine</label>
+                <div class="col-lg-8">
+                    <select id="id_tache_libre_jour_semaine" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0">Dimanche</option>
+                        <option value="1">Lundi</option>
+                        <option value="2">Mardi</option>
+                        <option value="3">Mercredi</option>
+                        <option value="0">Jeudi</option>
+                        <option value="1">Vendredi</option>
+                        <option value="2">Samedi</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    #}
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        {% if tacheEntity is not null and tacheEntity.desactiver == 0 %}
+            <span class="btn btn-sm btn-danger" id="id_delete_tlb"><i class="fa fa-bell-slash-o" aria-hidden="true"></i>&nbsp;D&eacute;sactiver</span>
+        {% endif %}
+        <span class="btn btn-sm btn-primary" id="id_save_tlb_actions"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>
+
+<div id="tache_test"></div>

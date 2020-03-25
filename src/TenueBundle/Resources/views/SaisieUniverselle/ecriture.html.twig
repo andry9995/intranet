@@ -1,0 +1,178 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Ecriture {{ ecritureid }}
+        <span class="pull-right btn btn-danger btn-xs btn-del-ecriture"><i class="fa fa-trash"></i>&nbsp;Supprimer</span>
+        <span class="pull-right">&nbsp;&nbsp;</span>
+        <span class="pull-right btn btn-default btn-xs btn-dupliquer-ecriture"><i class="fa fa-copy"></i>&nbsp;Dupliquer&nbsp;</span>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal ecriture" id="form-{{ ecritureid }}">
+            <div class="form-group">
+
+                <input type="hidden" name="imageid" value="{{ image.id }}">
+                <input type="hidden" name="tvaentity" value="{{ tvaEntity }}">
+                <input type="hidden" name="tvaid" value="{{ (tva is not defined) ? 'new'~ecritureid : tva.id }}">
+
+                <label class="col-lg-2 control-label" for="typevente{{ ecritureid }}">Type Vente</label>
+                <div class="col-lg-4">
+                    <select class="form-control typevente-ecriture" name="typevente" id="typevente{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {% for typevente in typeVentes %}
+                            <option value="{{ typevente.id }}" {{ (typeventeId is not defined) ? '' : (typevente.id == typeventeId) ? 'selected' : '' }}>{{ typevente.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label class="col-lg-2 control-label" for="libelle{{ ecritureid }}">Libelle</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="libelle" id="libelle{{ ecritureid }}" value="{{ (libelle is not defined) ? '' : libelle }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="nature{{ ecritureid }}">Nature</label>
+                <div class="col-lg-4">
+                    <select class="form-control nature" name="nature" id="nature{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {% for nature in natures %}
+                            <option value="{{ nature.id }}" {{ (natureId is not defined) ? '' : (nature.id == natureId) ? 'selected' : '' }}>{{ nature.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label class="col-lg-2 control-label" for="sousnature{{ ecritureid }}">Sous Nature</label>
+                <div class="col-lg-4">
+                    <select class="form-control sousnature" name="sousnature" id="sousnature{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {% for sousnature in sousnatures %}
+                            <option value="{{ sousnature.id }}" {{ (sousnatureId is not defined) ? '' : (sousnature.id == sousnatureId) ? 'selected' : '' }}>{{ sousnature.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="souscategorie{{ecritureid}}">Sous categorie</label>
+                <div class="col-lg-4">
+                    <select class="form-control souscategorie-ecriture" name="souscategorie" id="souscategorie{{ecritureid}}">
+                        <option value="-1"></option>
+                        {% for souscategorie in souscategories %}
+                            <option value="{{ souscategorie.id }}" {{ (souscategorieId is not defined) ? '' : (souscategorie.id == souscategorieId) ? 'selected' : '' }}>{{ souscategorie.libelleNew }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label class="col-lg-2 control-label" for="soussouscategorie{{ecritureid}}">Sous sous categorie</label>
+                <div class="col-lg-4">
+                    <select class="form-control soussouscategorie-ecriture" name="soussouscategorie" id="soussouscategorie{{ecritureid}}">
+                        <option value="-1"></option>
+                        {% for soussouscategorie in soussouscategories %}
+                            <option value="{{ soussouscategorie.id }}" {{ (soussouscategorieId is not defined) ? '' : (soussouscategorie.id == soussouscategorieId) ? 'selected' : '' }}>{{ soussouscategorie.libelleNew }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group ecrituredatelivraison {{ (typeventeId is not defined) ? '' : (typeventeId == 2) ? 'hidden' : '' }}">
+                <label class="col-lg-2 control-label" for="datelivraisontva{{ ecritureid }}">Date livraison</label>
+                <div class="col-lg-4">
+                    <div class="input-group date">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <input type="text" class="form-control date-ecriture" value="{{ (dateLivraisonTva is not defined) ? '' : dateLivraisonTva }}" name="datelivraisontva" id="datelivraisontva{{ ecritureid }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ecritureperiodelivraison {{ (typeventeId is not defined) ? '' : (typeventeId == 1) ? 'hidden' : '' }}">
+                <label class="col-lg-2 control-label" for="periodedebuttva{{ ecritureid }}">Période Du</label>
+                <div class="col-lg-4">
+                    <div class="input-daterange input-group">
+                        <input type="text" class="input-sm form-control date-ecriture" name="periodedebuttva" id="periodedebuttva{{ ecritureid }}" value="{{ (periodeDebutTva is not defined) ? '' : periodeDebutTva }}">
+                        <span class="input-group-addon">Au</span>
+                        <input type="text" class="input-sm form-control date-ecriture" name="periodefintva" id="periodefintva{{ ecritureid }}" value="{{ (periodeFinTva is not defined) ? '' : periodeFinTva }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="pccdossier{{ ecritureid }}">PCC Dossier</label>
+                <div class="col-lg-4">
+                    <select class="form-control chosen" name="pccdossier" id="pccdossier{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {{ include('@Tenue/SaisieUniverselle/optionPcc.html.twig') }}
+                    </select>
+                </div>
+                <label class="col-lg-2 control-label" for="montantpcc{{ ecritureid }}">Montant TTC</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control montant-pcc montant" name="montantpcc" id="montantpcc{{ ecritureid }}" value="{{ (montantPcc is not defined) ? '' : montantPcc|number_format('2', '.', ' ') }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="pcctva{{ ecritureid }}">PCC TVA</label>
+                <div class="col-lg-4">
+                    <select class="form-control chosen" name="pcctva" id="pcctva{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {% for pcc in pccTvas %}
+                            <option value="{{ pcc.id }}" {{ (pccTvaId is not defined) ? '' : (pccTvaId == pcc.id) ? 'selected' : '' }}>{{ pcc.compte }} - {{ pcc.intitule }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label class="col-lg-2 control-label" for="montanttvasaisi{{ ecritureid }}{{ ecritureid }}">Montant TVA</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control montant-tva-saisi montant" name="montanttvasaisi" id="montanttvasaisi{{ ecritureid }}" value="{{ (montantTvaSaisi is not defined) ? '' : montantTvaSaisi|number_format('2', '.', ' ') }}">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="pcctiers{{ ecritureid }}">PCC Tiers</label>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <select class="form-control chosen" name="pcctiers" id="pcctiers{{ ecritureid }}">
+                        <option value="-1"></option>
+                            {#{% if pccTvaId != '' %}#}
+                                {#{{ include('@Tenue/SaisieUniverselle/optionTiers.html.twig') }}#}
+                            {#{% else %}#}
+                                {#{{ include('@Tenue/SaisieUniverselle/optionPcc.html.twig', {'pccId': pccBilanId, 'pccs': pccBilans}) }}#}
+                            {#{% endif %}#}
+
+                            {{ include('@Tenue/SaisieUniverselle/optionTiers.html.twig') }}
+
+                        </select>
+
+                        <span class="input-group-addon"><i class="fa fa-plus pointer" id="tiers-add"></i></span>
+
+                    </div>
+                </div>
+                <label class="col-lg-2 control-label" for="montanttiers{{ ecritureid }}">Montant HT</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control montant-tiers montant" name="montanttiers" id="montanttiers{{ ecritureid }}" value="{{ (montantTiers is not defined) ? '' : montantTiers|number_format('2', '.', ' ') }}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-2 col-lg-offset-6 control-label" for="tauxtva{{ ecritureid }}">Taux TVA</label>
+                <div class="col-lg-4">
+                    <select class="form-control taux-tva" name="tauxtva" id="tauxtva{{ ecritureid }}">
+                        <option value="-1"></option>
+                        {% for tvaTaux in tvaTauxs %}
+                            <option value="{{ tvaTaux.id }}" {{ (tvaTauxId is not defined) ? '' : (tvaTaux.id == tvaTauxId) ? 'selected' : '' }}>{{ tvaTaux.taux }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 col-lg-offset-6 control-label" for="montanttva{{ ecritureid }}">Montant TVA Calculé</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control montant-tva montant" name="motanttva" id="montanttva{{ ecritureid }}" value="{{ (montantTva is not defined) ? '' : montantTva|number_format('2', '.', ' ') }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2 pull-right">
+                        <span class="btn btn-primary btn-xs btn-block btn-save-ecriture" id="btn-save-{{ ecritureid }}"><i class="fa fa-check"></i>&nbsp;&nbsp;Valider</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

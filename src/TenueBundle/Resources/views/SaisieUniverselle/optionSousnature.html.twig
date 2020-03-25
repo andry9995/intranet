@@ -1,0 +1,11 @@
+{% set selected = (sousnatures|length == 1) ? 'selected' :  '' %}
+{% if jqgrid is defined and jqgrid == true %}
+    <select>
+{% endif %}
+        <option value="-1"></option>
+        {% for sousnature in sousnatures %}
+            <option value="{{ sousnature.id }}" {{ selected }}>{{ sousnature.libelle }}</option>
+        {% endfor %}
+{% if jqgrid is defined and jqgrid == true %}
+    </select>
+{% endif %}

@@ -1,0 +1,12 @@
+.remove-responsable-item:before {
+    content: 'x';
+}
+.dd-item > button.remove-responsable-item:before {
+    content: 'x';
+}
+.remove-client-item:before {
+    content: 'x';
+}
+.dd-item > button.remove-client-item:before {
+    content: 'x';
+}

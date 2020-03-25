@@ -1,0 +1,34 @@
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    /*line-height: 0.5;*/
+	padding: 8px; 
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    background: #fcfdfd;
+    color: #222;
+}
+.set_doublon{
+	    color: #337ab7;
+		cursor:pointer;
+}
+
+
+
+.blink {
+    color:red; background-color:pink;
+    animation: allblink 2s infinite;
+}
+@keyframes allblink {
+    0% { }
+    50% { color:green; background-color:lightgreen; }
+}
+
+th {
+    font-weight: normal;
+    color: #000000;
+    background-color: #dcdcdc !important;
+}
+
+td.dataTables_empty{
+    text-align: center;
+    color: #F44336 !important;
+}

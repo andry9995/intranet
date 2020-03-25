@@ -1,0 +1,56 @@
+{% if tacheEntityClient is not null %}
+    {{ include('@Tache/TacheAdmin/extends-client.html.twig') }}
+{% endif %}
+
+<div class="row cl_container_tache_param" id="id_tache_legale_edited" data-id="{{ tacheLegale.id }}" data-id_old="{{ (tacheEntity is not null) ? tacheEntity.id : 0 }}" data-client="{{ (client is not null) ? client.id : 0 }}" data-dossier="{{ (dossier is not null) ? dossier.id : 0 }}">
+    <div class="col-lg-12">
+        <table class="table" id="id_table_tlg_actions">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Action</th>
+                    <th>Date</th>
+                    <th>Jour +/-</th>
+                    <th>Responsable</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for key, tacheEntityLgAction in tacheEntityLegaleActions %}
+                {% set tacheLegaleAction = tacheEntityLgAction.tacheLegaleAction %}
+                {% set tacheEntityLegaleAction = tacheEntityLgAction.tacheEntityLegaleAction %}
+                <tr data-id="{{ tacheLegaleAction.id }}" data-id_old="{{ (tacheEntityLegaleAction is not null) ? tacheEntityLegaleAction.id : 0 }}">
+                    <td>
+                        <div class="checkbox checkbox-success" style="margin: 0">
+                            <input id="id_chk_{{ key }}" class="cl_chk_tache_action" type="checkbox" {{ (tacheEntityLegaleAction is not null and tacheEntity is not null and tacheEntity.desactiver == 0) ? 'checked' : '' }}>
+                            <label for="id_chk_{{ key }}"></label>
+                        </div>
+                    </td>
+                    <td>{{ tacheLegaleAction.tacheListeAction.nom }}</td>
+                    <td>{{ tacheLegaleAction.dateAction }}</td>
+                    <td><input type="text" class="text-right cl_jour_additif" value="{{ (tacheEntityLegaleAction is not null and tacheEntity is not null and tacheEntity.desactiver == 0) ? tacheEntityLegaleAction.jourAdditif : 0 }}" style="border: none;max-width: 50px;background: transparent"></td>
+                    <td>
+                        {% set responsable = (tacheEntityLegaleAction is not null and tacheEntity is not null and tacheEntity.desactiver == 0) ? tacheEntityLegaleAction.responsable : -1 %}
+                        <div class="row">
+                            <div class="btn-group btn-group-sm cl_tache_resp_container">
+                                <span class="btn {{ (responsable == 0) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="0">Scriptura</span>
+                                <span class="btn {{ (responsable == 1) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="1">EC</span>
+                                <span class="btn {{ (responsable == 2) ? 'btn-primary' : 'btn-white' }} cl_tache_resp" data-value="2">Client</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        {% if tacheEntity is not null and tacheEntity.desactiver == 0 %}
+            <span class="btn btn-sm btn-danger" id="id_delete_tlg"><i class="fa fa-bell-slash-o" aria-hidden="true"></i>&nbsp;D&eacute;sactiver</span>
+        {% endif %}
+        <span class="btn btn-sm btn-white" id="id_save_tlg_actions"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

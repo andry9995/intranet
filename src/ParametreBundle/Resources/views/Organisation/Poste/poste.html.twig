@@ -1,0 +1,139 @@
+{# src/ParametreBundle/Resources/views/Parametre/Poste/poste.html.twig #}
+
+{% extends '@App/index/base-menu-intranet.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        '@ParametreBundle/Resources/public/js/poste.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} POSTES
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Gestion des postes</h5>
+
+                    <div class="ibox-tools">
+                        <button id="btn-add-poste" class="btn btn-sm btn-primary" style="margin-right: 50px;">
+                            <i class="fa fa-plus-circle"></i> Ajouter un poste
+                        </button>
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    {#Liste des Postes chargé avec AJAX#}
+                    <table id="js_poste_liste"></table>
+                    <div id="pager_liste_poste"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# Modal pour ajouter ou modifier un Poste #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="poste-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-poste-title" class="modal-title">Ajouter un poste</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger hidden" id="add-poste-erreur">
+
+                    </div>
+                    <form class="form-horizontal">
+                        <input type="hidden" id="add-poste-id">
+
+                        <div class="form-group">
+                            <label for="add-poste-entite" class="col-sm-3 control-label">Entité</label>
+
+                            <div class="col-sm-6">
+                                <select id="add-poste-entite" class="form-control">
+                                    <option value="0">Séléctionner l'entité</option>
+                                    {% for entite in entites %}
+                                        <option value="{{ entite.id }}">{{ entite.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-departement" class="col-sm-3 control-label">Département</label>
+
+                            <div class="col-sm-6">
+                                <select id="add-poste-departement" class="form-control">
+                                    <option value="0">Séléctionner le département</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-service" class="col-sm-3 control-label">Service</label>
+
+                            <div class="col-sm-6">
+                                <select id="add-poste-service" class="form-control">
+                                    <option value="0">Séléctionner le service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-cellule" class="col-sm-3 control-label">Cellule</label>
+
+                            <div class="col-sm-6">
+                                <select id="add-poste-cellule" class="form-control">
+                                    <option value="0">Séléctionner la cellule</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-nom" class="col-sm-3 control-label">Nom</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="add-poste-nom" placeholder="nom"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-capacite" class="col-sm-3 control-label">Capacité</label>
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="add-poste-capacite" aria-describedby="capacite-addon">
+                                    <span class="input-group-addon" id="capacite-addon">images/j</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-poste-description" class="col-sm-3 control-label">Description</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add-poste-description" rows="8"
+                                          placeholder="description"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btn-add-poste-save">Enregistrer
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}

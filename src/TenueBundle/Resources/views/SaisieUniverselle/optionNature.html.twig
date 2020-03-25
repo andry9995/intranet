@@ -1,0 +1,4 @@
+<option value="-1"></option>
+{% for nature in natures %}
+    <option value="{{ nature.id }}" {{ (natures|length == 1) ? 'selected' : '' }}>{{ nature.libelle }}</option>
+{% endfor %}

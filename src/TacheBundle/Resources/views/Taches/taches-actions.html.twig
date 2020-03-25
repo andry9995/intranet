@@ -1,0 +1,42 @@
+{% if tachesItem.regimeImposition %}
+    {% set libelle = tachesItem.regimeImposition.libelle %}
+{% elseif tachesItem.regimeTva %}
+    {% set libelle = tachesItem.regimeTva.libelle %}
+{% else %}
+    {% set libelle = 'Tous Regime d imposition' %}
+{% endif %}
+
+<table class="footable table table-stripped toggle-arrow-tiny" data-dossier="{{ dossier is null ? 0 : dossier.id }}" data-page-size="20" data-id="{{ tachesItem.id }}">
+    <thead>
+        <tr>
+            <th width="50%" data-toggle="true">{{ libelle }}</th>
+            <th width="50%" class="text-left" data-sort-ignore="true">
+                {% if dossier is null %}
+                    <span class="qtip_new btn btn-xs btn-default btn-outline cl_taches_action_edit js_add" title="Ajouter une action dans {{ libelle }}" data-action="0"><i class="fa fa-plus"></i></span>
+                    <span class="qtip_new btn btn-xs btn-danger btn-outline cl_taches_item_edit" title="Supprimer {{ libelle }}" data-action="2"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                {% endif %}
+            </th>
+            <th data-hide="all"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tachesAction in tachesActions %}
+            <tr data-id="{{ tachesAction.id }}">
+                <td>
+                    <input type="text" class="cl_code_taches_action" style="border: none!important;width: 75px;background-color: #f5f5f5" placeholder="Code" value="{{ tachesAction.code }}">&nbsp;
+                    <input type="text" class="cl_code_name_taches_action" style="border: none!important;width: 100px;background-color: #f5f5f5" placeholder="Libelle" value="{{ tachesAction.libelle }}">&nbsp;
+                    <input type="text" class="cl_code_descri_taches_action" style="border: none!important;width: 200px;background-color: #f5f5f5" placeholder="Description" value="{{ tachesAction.tacheListeAction.nom }}" data-id="{{tachesAction.tacheListeAction.id}}">
+                </td>
+                <td class="text-left">
+                    <span class="qtip_new btn btn-xs btn-default btn-outline cl_taches_date_edit js_add hidden" data-action="0" title="Ajouter une date dans {{ tachesAction.tacheListeAction.nom }}"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                    {% if dossier is null %}
+                        <span class="qtip_new btn btn-xs btn-danger btn-outline cl_taches_action_edit hidden" data-action="2" title="Supprimer {{ tachesAction.tacheListeAction.nom }}"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ render(controller('TacheBundle:Taches:tachesDates',{'tachesAction' : tachesAction, 'dossier' : dossier, 'isRequest' : 0 })) }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

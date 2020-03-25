@@ -1,0 +1,23 @@
+{% if tachesGroup is null %}
+    {% set idPanel = 'id_tache_accordion_' ~ regimeFiscal.id %}
+{% else %}
+    {% set idPanel = 'id_tache_g_accordion_' ~ tachesGroup.id %}
+{% endif %}
+
+<div class="panel-group" id="{{ idPanel }}">
+    {% for tache in taches %}
+        <div class="panel panel-{{ tachesGroup is null ? 'white' : 'default' }} js_taches" data-id="{{ tache.id }}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#{{ idPanel }}" href="#{{ tache.id }}">{{ tache.nom }}</a>
+                    <span class="qtip_new btn btn-xs btn-danger btn-outline pull-right hidden cl_taches_edit" title="Supprimer la tache {{ tache.nom }}" data-action="2" style="margin:0;margin-left:6px!important;"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    <span class="qtip_new btn btn-xs btn-warning btn-outline pull-right hidden cl_taches_edit" title="Modifier la tache {{ tache.nom }}" data-action="0" style="margin:0;margin-left:6px!important;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <span class="qtip_new btn btn-xs btn-default btn-outline pull-right hidden cl_taches_item_edit" title="Ajouter une sous tache dans {{ tache.nom }}" data-action="0" style="margin:0;margin-left:6px!important;"><i class="fa fa-plus pointer" aria-hidden="true"></i></span>
+                </h4>
+            </div>
+            <div id="{{ tache.id }}" class="panel-collapse collapse">
+                <div class="panel-body cl_taches_item_container"></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,34 @@
+{% set nbImages = (images is defined) ? images|length : 0 %}
+<input type="hidden" id="titletemp" value="{{ title }}">
+<input type="hidden" id="statustemp" value="{{ status }}">
+<input type="hidden" id="sdebutgtemp" value="{{ soldeDebutG }}">
+<input type="hidden" id="sfingtemp" value="{{ soldeFinG }}">
+<input type="hidden" id="banquecomptetempid"
+       value="{{ (banquecompte is not defined)? '' : (banquecompte is null) ? '' : banquecompte.id }}">
+<input type="hidden" id="banquecomptetempnum"
+       value="{{ (banquecompte is not defined)? '' : (banquecompte is null) ? '' : banquecompte.numcompte }}">
+<input type="hidden" id="banquenomtemp"
+       value="{{ (banquecompte is not defined)? '' : (banquecompte is null) ? '' : banquecompte.banque.nom }}">
+<input type="hidden" id="exercicetemp"
+       value="{{ (exercice is not defined) ? '' : exercice }}">
+<input type="hidden" id="dossieridtemp"
+       value="{{ dossierIdTemp }}">
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th style="border:none;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="label">Images</span><span class="label label-warning" id="nombre">{{ nbImages }}</span>
+            </th>
+            <th style="border:none;"><a href="#" class="closebtn" id="imageclose">&times;</a></th>
+        </tr>
+        </thead>
+        <tbody id="allimage">
+
+        {{ include('@Banque/Banque/saisie/saisie_image.html.twig') }}
+
+        </tbody>
+    </table>
+</div>

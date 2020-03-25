@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="groupe-stocks" class="control-label col-lg-2">
+                            <span>Groupe</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select data-placeholder="Séléctionner un groupe" class="form-control" name="filtre_groupe" id="groupe-stocks">
+                                <option value=""></option>
+                                <option value="0">Tous</option>
+                                {% for responsable in responsables %}
+                                <option value="{{ responsable.operateur_id }}">{{ responsable.prenom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group"  style="margin-bottom: 10px;">
+                        <label for="client-stocks" class="col-lg-2 control-label">Client</label>
+                        <div class="col-lg-10">
+                            <select id="client-stocks" data-placeholder="Séléctionner un client" class="form-control chosen-select-client-stocks">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="hidden">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site-stocks" class="col-lg-3 control-label">Site</label>
+                    <div class="col-lg-10">
+                        <select id="site-stocks" data-placeholder="Séléctionner un site" class="form-control chosen-select-site-stocks">
+                            <option value=""></option>
+                            {#Liste site#}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':0, 'label_col':2, 'select_col':10, 'in_form' : false, 'attr_id' : 'exercice-stocks' } )) }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal" style="margin-bottom: 10px;">
+                    <div class="form-group">
+                        <label for="dossier-stocks" class="col-lg-2 control-label">Dossier</label>
+                        <div class="col-lg-10">
+                            <select id="dossier-stocks" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier-stocks">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div> 
+
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 150px;">
+                    <button id="btn_get_images_stocks" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Go</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

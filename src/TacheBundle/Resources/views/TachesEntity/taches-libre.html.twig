@@ -1,0 +1,58 @@
+{#{{ dump(tache) }}
+{{ dump(tachesLibre) }}#}
+<div id="test1"></div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-info">
+            <strong>{{ tache.nom }}</strong>&nbsp;
+            <span>({{ tache.description }})</span>
+        </div>
+    </div>
+
+    {% if dossier and tachedLibreParent %}
+        {{ include('@Tache/TachesEntity/extends-client.html.twig') }}
+    {% endif %}
+</div>
+
+<div class="row" data-id="{{ tache.id }}" id="id_tache" data-client="{{ client ? client.id : 0 }}" data-dossier="{{ dossier ? dossier.id : 0 }}">
+    {#<div class="col-lg-1 fix text-right">
+        <span class="btn btn-primary btn-outline cl_taches_entity_edit" data-dossier="{{ dossier is not null ? dossier.id : 0 }}"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></span>
+    </div>#}
+
+    <div class="col-lg-12">
+        {% set responsable = tachesLibre ? tachesLibre.responsable : 0 %}
+        {#0:scriptura;1:ec;2:client#}
+        <div class="radio radio-inline">
+            <input type="radio" id="radio-scriptura" value="0" name="radio-responsable" {{ responsable == 0 ? 'checked' : '' }}>
+            <label for="radio-scriptura">Scriptura</label>
+        </div>
+        <div class="radio radio-info radio-inline">
+            <input type="radio" id="radio-ec" value="1" name="radio-responsable" {{ responsable == 1 ? 'checked' : '' }}>
+            <label for="radio-ec">Expert&nbsp;Comptable</label>
+        </div>
+        <div class="radio radio-danger radio-inline">
+            <input type="radio" id="radio-cl" value="2" name="radio-responsable" {{ responsable == 2 ? 'checked' : '' }}>
+            <label for="radio-cl">Client</label>
+        </div>
+    </div>
+
+    <div class="col-lg-12" style="margin-top: 10px!important;">
+        <table class="table" id="id_table_taches_date">
+            <thead>
+                <tr>
+                    <th>P&eacute;riode</th>
+                    <th>Demmarage</th>
+                    <th>Jour</th>
+                    <th>Date</th>
+                    <th class="pointer cl_edit_tache_libre_date js_add" data-action="0"><i class="fa fa-plus" aria-hidden="true"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tachesLibreDate in tachesLibreDates %}
+                    {{ include('TacheBundle:TachesEntity:tache-libre-date_tr.html.twig', { 'tachesLibreDate':tachesLibreDate }) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

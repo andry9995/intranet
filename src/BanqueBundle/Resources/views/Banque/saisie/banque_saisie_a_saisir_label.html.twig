@@ -1,0 +1,37 @@
+{#{% if ribIntrouvable == true %}#}
+    {#<span class="btn btn-danger btn-sm"><i class="fa fa-info-circle"></i> RIB Introuvable</span>#}
+
+{#{% else %}#}
+    {#{% if banquecompte.obASaisir == 1 %}#}
+        {#{% if releveMonths is defined %}#}
+            {#{% if releveMonths|length > 0 %}#}
+                {#<span class="btn btn-primary btn-sm"><i class="fa fa-info-circle" data-releve-id="{{ ids }}"></i> A saisir</span>#}
+            {#{% else %}#}
+                {#<span class="btn btn-warning btn-sm"><i class="fa fa-info-circle" data-releve-id="{{ ids }}"></i> Ligne(s) non importée(s) mais à saisir</span>#}
+            {#{% endif %}#}
+        {#{% else %}#}
+            {#<span class="btn btn-primary btn-sm"><i class="fa fa-info-circle"></i> A saisir</span>#}
+        {#{% endif %}#}
+
+    {#{% else %}#}
+        {#{% if  banquecompte.obASaisir is not null %}#}
+            {#{% set nepassaisir = 1 %}#}
+            {#{% if releveMonths is defined %}#}
+                {#{% if releveMonths|length == 0 %}#}
+                    {#<span class="btn btn-danger btn-sm"><i class="fa fa-info-circle"></i> Ligne(s) non importée(s)</span>#}
+                    {#{% set nepassaisir = 0 %}#}
+                {#{% endif %}#}
+            {#{% endif %}#}
+            {#{% if nepassaisir == 1 %}#}
+                {#<span class="btn btn-danger btn-sm"><i class="fa fa-warning"></i>  A ne pas saisir</span>#}
+            {#{% endif %}#}
+        {#{% endif %}#}
+    {#{% endif %}#}
+{#{% endif %}#}
+
+{% if souscategoriePasSaisie|length > 0 %}
+    <span class="btn btn-danger btn-sm"><i class="fa fa-warning"></i>  A ne pas saisir</span>
+{% else %}
+    <span class="btn btn-primary btn-sm"><i class="fa fa-info-circle"></i> A saisir</span>
+{% endif %}
+

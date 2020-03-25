@@ -1,0 +1,48 @@
+<div class="form-group">
+    <div class="col-md-2"><label class="control-label">Client</label>
+        <select id="client" data-placeholder="Séléctionner un client" class="form-control chosen-select-client">
+            <option value=""></option>
+            <option value="0">Tous</option>
+            {% for client in clients %}
+                <option value="{{ client.id }}">{{ client.nom }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2"><label for="dossier" class="control-label">Dossier</label>
+        <select id="dossier" data-placeholder="Séléctionner un dossier" class="form-control chosen-select-dossier">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="col-md-2 hidden"><label class="control-label">Sous catégorie</label>
+        <select class="form-control" id="souscat">
+            <option value="10">Relevés bancaires</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="control-label">Banque</label>
+        <select class="form-control" id="banque">
+            {#<option value="0">Sociétés Générales</option>#}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="control-label">Banque Compte</label>
+        <select class="form-control " id="banquecompte">
+            <option></option>
+        </select>
+    </div>
+
+    <div class="col-md-1"><label class="control-label">Exercice</label>
+        <select class="form-control" id="exercice">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="col-md-2"><label class="control-label">Date scan</label>
+        <select class="form-control" id="dscan">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button id="btn_go" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-check"></i> Go</button>
+        <button id="btn_panier" class="btn btn-sm btn-primary btn-block" ><i class="fa fa-archive"></i> Panier</button>
+    </div>
+</div>

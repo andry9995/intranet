@@ -1,0 +1,9 @@
+{% for item in etapeDisponible %}
+    <li class="dd-item" data-id="{{ item.id}}" data-code="{{ item.code }}" >
+        <div class="dd-handle">
+            <span class="label label-success"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+            &nbsp;{{ item.libelle }}
+        </div>
+    </li>
+{% endfor %}
+
